@@ -15,53 +15,85 @@ import {
 
 export default function Habilities() {
   const Habs = [
-    { name: 'Força', val: 0, mod: 0 },
-    { name: 'Destreza', val: 0, mod: 0 },
-    { name: 'Constituição', val: 0, mod: 0 },
-    { name: 'Inteligência', val: 0, mod: 0 },
-    { name: 'Sabedoria', val: 0, mod: 0 },
-    { name: 'Carisma', val: 0, mod: 0 },
+    { name: 'Força', value: 0, mod: 0 },
+    { name: 'Destreza', value: 0, mod: 0 },
+    { name: 'Constituição', value: 0, mod: 0 },
+    { name: 'Inteligência', value: 0, mod: 0 },
+    { name: 'Sabedoria', value: 0, mod: 0 },
+    { name: 'Carisma', value: 0, mod: 0 },
   ];
 
   const [habs, setHabs] = useState(Habs);
   const [data, setData] = useState(true);
 
-  function handleHabChange(item) {
-    const newMod = (() => {
-      switch (item.val) {
-        case 1:
-          return -5;
-        case 2 || 3:
-          return -4;
-        case 4 || 5:
-          return -3;
-        case 6 || 7:
-          return -2;
-        case 8 || 9:
-          return -1;
-        case 10 || 11:
-          return 0;
-        case 12 || 13:
-          return 1;
-        case 14 || 15:
-          return 2;
-        case 16 || 17:
-          return 3;
-        case 18 || 19:
-          return 4;
-        case 20 || 21:
-          return 5;
-        case 22 || 23:
-          return 6;
-        case 24 || 25:
-          return 7;
-        default:
-          return 0;
-      }
-    })();
+  function handleHabChange(
+    { nativeEvent: { eventCount, target, text } },
+    item,
+  ) {
+    let newMod = 0;
 
+    switch (Number(text)) {
+      case 1:
+        newMod = -5;
+        break;
+      case 2:
+      case 3:
+        newMod = -4;
+        break;
+      case 4:
+      case 5:
+        newMod = -3;
+        break;
+      case 6:
+      case 7:
+        newMod = -2;
+        break;
+      case 8:
+      case 9:
+        newMod = -1;
+        break;
+      case 10:
+      case 11:
+        newMod = 0;
+        break;
+      case 12:
+      case 13:
+        newMod = 1;
+        break;
+      case 14:
+      case 15:
+        newMod = 2;
+        break;
+      case 16:
+      case 17:
+        newMod = 3;
+        break;
+      case 18:
+      case 19:
+        newMod = 4;
+        break;
+      case 20:
+      case 21:
+        newMod = 5;
+        break;
+      case 22:
+      case 23:
+        newMod = 6;
+        break;
+      case 24:
+      case 25:
+        newMod = 7;
+        break;
+      default:
+        newMod = 0;
+    }
+    // console.error(item.name);
     setData(!data);
-    setHabs(habs.map(h => (h.name === item.name ? { ...h, mod: 5 } : h)));
+    setHabs(
+      habs.map(h =>
+        h.name === item.name ? { ...h, value: text, mod: newMod } : h,
+      ),
+    );
   }
 
   return (
@@ -97,10 +129,10 @@ export default function Habilities() {
           <Row>
             <FlexLabel>{item.name}</FlexLabel>
             <FixedInput
-              onChangeText={() => handleHabChange(item)}
-              keyboardType="numeric">
-              {item.val}
-            </FixedInput>
+              onChange={e => handleHabChange(e, item)}
+              value={String(item.value)}
+              keyboardType="numeric"
+            />
             <FixedInput editable={false} keyboardType="numeric">
               {item.mod}
             </FixedInput>

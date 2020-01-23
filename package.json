@@ -10,13 +10,16 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.7.1",
     "react": "16.9.0",
     "react-native": "0.61.5",
+    "react-native-dotenv": "^0.2.0",
     "react-native-gesture-handler": "^1.5.3",
     "react-native-reanimated": "^1.7.0",
     "react-native-safe-area-context": "^0.6.2",
     "react-native-screens": "^2.0.0-alpha.26",
     "react-navigation": "^4.0.10",
+    "reactotron-react-native": "^4.0.3",
     "styled-components": "^5.0.0"
   },
   "devDependencies": {
