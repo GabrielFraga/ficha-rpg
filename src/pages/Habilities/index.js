@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Picker } from 'react-native';
 
 import {
@@ -26,10 +26,7 @@ export default function Habilities() {
   const [habs, setHabs] = useState(Habs);
   const [data, setData] = useState(true);
 
-  function handleHabChange(
-    { nativeEvent: { eventCount, target, text } },
-    item,
-  ) {
+  function handleHabChange({ nativeEvent: { text } }, item) {
     let newMod = 0;
 
     switch (Number(text)) {
@@ -87,7 +84,6 @@ export default function Habilities() {
       default:
         newMod = 0;
     }
-    // console.error(item.name);
     setData(!data);
     setHabs(
       habs.map(h =>
@@ -130,9 +126,9 @@ export default function Habilities() {
             <FlexLabel>{item.name}</FlexLabel>
             <FixedInput
               onChange={e => handleHabChange(e, item)}
-              value={String(item.value)}
-              keyboardType="numeric"
-            />
+              keyboardType="numeric">
+              {item.value}
+            </FixedInput>
             <FixedInput editable={false} keyboardType="numeric">
               {item.mod}
             </FixedInput>
