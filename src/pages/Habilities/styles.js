@@ -21,18 +21,15 @@ export const Label = styled.Text`
   font-weight: bold;
   font-size: 17px;
 `;
-export const Title = styled.Text`
-  color: #333;
-  font-weight: bold;
-  font-size: 19px;
-`;
 
-export const FlexLabel = styled.Text`
-  color: #555;
-  font-weight: bold;
-  font-size: 16px;
-  flex-basis: 25%;
-  flex-grow: 0;
+export const PickerView = styled.View`
+  flex: 1;
+  background-color: #fff;
+  height: 50px;
+  margin: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  text-align: center;
 `;
 
 export const InputBox = styled.TextInput`
@@ -45,15 +42,29 @@ export const InputBox = styled.TextInput`
   text-align: center;
 `;
 
+export const Title = styled.Text`
+  flex-basis: 15%;
+  color: #333;
+  font-weight: bold;
+  font-size: 16px;
+`;
+
+export const FlexLabel = styled.Text`
+  flex-basis: 15%;
+  color: #555;
+  font-weight: bold;
+  font-size: 16px;
+`;
 export const FixedInput = styled.TextInput`
-  flex-basis: 25%;
-  flex-grow: 0;
+  flex-basis: 15%;
   background-color: #fff;
   height: 50px;
-  margin: 10px;
+  margin: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
   text-align: center;
 `;
 
 export const List = styled.FlatList``;
+
+export const SimpleText = styled.Text``;
