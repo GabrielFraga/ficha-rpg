@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import { Picker, TouchableHighlight, Modal } from 'react-native';
 
+import { useSelector, useDispatch } from 'react-redux';
+
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { editHability } from '../../store/modules/profile/actions';
+
 import { Habs, checkModificator } from '../../services/DefaultHabilities';
 
 import { Races } from '../../services/DefaultRaces';
@@ -23,21 +27,16 @@ import {
 } from './styles';
 
 export default function Habilities() {
-  const [habs, setHabs] = useState(Habs);
+  const dispatch = useDispatch();
+  const habilities = useSelector(state => state.profile.habilities);
+
   const [race, setRace] = useState([]);
   const [data, setData] = useState(true);
   const [raceModal, setRaceModal] = useState(false);
 
-  function handleHabChange({ nativeEvent: { text } }, item) {
-    const modificator = checkModificator(text);
-    setData(!data);
-    setHabs(
-      habs.map(h =>
-        h.name === item.name ? { ...h, value: text, mod: modificator } : h,
-      ),
-    );
+  function handleHabilityChange({ nativeEvent: { text } }, item) {
+    dispatch(editHability(item.name, Number(text)));
   }
-
   const SelectRaces = Races.map((raceItem, i) => {
     return (
       <Picker.Item key={i} value={raceItem.value} label={raceItem.label} />
@@ -59,6 +58,12 @@ export default function Habilities() {
       </Container>
     </Modal>
   );
+
+  function handleRace(raceName) {
+    const raceIndex = Races.findIndex(r => r.value === raceName);
+    console.tron.log(Races[raceIndex]);
+    setRace(raceName);
+  }
 
   return (
     <Container>
@@ -84,7 +89,7 @@ export default function Habilities() {
               }}
               prompt="Defina uma raça"
               selectedValue={race}
-              onValueChange={itemValue => setRace(itemValue)}>
+              onValueChange={itemValue => handleRace(itemValue)}>
               {SelectRaces}
             </Picker>
           </PickerView>
@@ -110,7 +115,7 @@ export default function Habilities() {
       <RaceInfoModal />
 
       <List
-        data={habs}
+        data={habilities}
         keyExtractor={hab => hab.name}
         extraData={data}
         renderItem={({ item }) => (
@@ -119,9 +124,9 @@ export default function Habilities() {
               {item.name}
             </FlexLabel>
             <FixedInput
-              onChange={e => handleHabChange(e, item)}
+              onChange={e => handleHabilityChange(e, item)}
               keyboardType="numeric">
-              {item.value}
+              {item.initialValue}
             </FixedInput>
             <FixedInput editable={false} keyboardType="numeric">
               17
