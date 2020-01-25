@@ -47,6 +47,8 @@ export const Title = styled.Text`
   color: #333;
   font-weight: bold;
   font-size: 16px;
+  height: 50px;
+  margin: 0 5px;
 `;
 
 export const FlexLabel = styled.Text`
@@ -67,4 +69,18 @@ export const FixedInput = styled.TextInput`
 
 export const List = styled.FlatList``;
 
-export const SimpleText = styled.Text``;
+export const TitleView = styled.View``;
+
+export const FinalValue = styled.Text`
+  color: #333;
+  font-weight: bold;
+  font-size: 16px;
+`;
+
+export const ModalView = styled.View`
+  background: #fff;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 4px;
+  /* height: 80%; */
+`;

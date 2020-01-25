@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Picker } from 'react-native';
+import { Picker, TouchableHighlight, Modal } from 'react-native';
 
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Habs, checkModificator } from '../../services/DefaultHabilities';
 
 import { Races } from '../../services/DefaultRaces';
@@ -16,17 +17,19 @@ import {
   List,
   Title,
   PickerView,
-  SimpleText,
+  TitleView,
+  FinalValue,
+  ModalView,
 } from './styles';
 
 export default function Habilities() {
   const [habs, setHabs] = useState(Habs);
   const [race, setRace] = useState([]);
   const [data, setData] = useState(true);
+  const [raceModal, setRaceModal] = useState(false);
 
   function handleHabChange({ nativeEvent: { text } }, item) {
     const modificator = checkModificator(text);
-
     setData(!data);
     setHabs(
       habs.map(h =>
@@ -40,6 +43,22 @@ export default function Habilities() {
       <Picker.Item key={i} value={raceItem.value} label={raceItem.label} />
     );
   });
+
+  const RaceInfoModal = () => (
+    <Modal
+      animationType="slide"
+      transparent={false}
+      visible={raceModal}
+      onRequestClose={() => {
+        setRaceModal(false);
+      }}>
+      <Container>
+        <ModalView>
+          <Title>Descrição da Raça: {race}</Title>
+        </ModalView>
+      </Container>
+    </Modal>
+  );
 
   return (
     <Container>
@@ -65,7 +84,7 @@ export default function Habilities() {
               }}
               prompt="Defina uma raça"
               selectedValue={race}
-              onValueChange={(itemValue, itemIndex) => setRace(itemValue)}>
+              onValueChange={itemValue => setRace(itemValue)}>
               {SelectRaces}
             </Picker>
           </PickerView>
@@ -74,11 +93,21 @@ export default function Habilities() {
 
       <Row>
         <Title>Habilidade</Title>
-        <Title>Valor Inicial</Title>
-        <Title>Modificadores</Title>
-        <Title>Valor Final</Title>
-        <Title>Mod.</Title>
+        <Title>Val. Inicial</Title>
+        <TitleView>
+          <TouchableHighlight onPress={() => setRaceModal(true)}>
+            <>
+              <FinalValue>
+                Val. Final
+                <Icon name="help-outline" size={16} color="#ed9a79" />
+              </FinalValue>
+            </>
+          </TouchableHighlight>
+        </TitleView>
+        <Title>Mod. </Title>
       </Row>
+
+      <RaceInfoModal />
 
       <List
         data={habs}
@@ -94,11 +123,6 @@ export default function Habilities() {
               keyboardType="numeric">
               {item.value}
             </FixedInput>
-            <SimpleText> + </SimpleText>
-            <SimpleText editable={false} keyboardType="numeric">
-              2
-            </SimpleText>
-            <SimpleText> = </SimpleText>
             <FixedInput editable={false} keyboardType="numeric">
               17
             </FixedInput>

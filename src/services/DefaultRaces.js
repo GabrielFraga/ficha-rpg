@@ -1,5 +1,9 @@
 export const Races = [
   {
+    label: 'Selecione uma Raça',
+    value: 'default',
+  },
+  {
     label: 'Anões',
     value: 'Anões',
     habilities: [
