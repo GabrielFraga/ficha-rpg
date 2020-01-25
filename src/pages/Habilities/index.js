@@ -95,9 +95,9 @@ export default function Habilities() {
               {item.value}
             </FixedInput>
             <SimpleText> + </SimpleText>
-            <FixedInput editable={false} keyboardType="numeric">
+            <SimpleText editable={false} keyboardType="numeric">
               2
-            </FixedInput>
+            </SimpleText>
             <SimpleText> = </SimpleText>
             <FixedInput editable={false} keyboardType="numeric">
               17
