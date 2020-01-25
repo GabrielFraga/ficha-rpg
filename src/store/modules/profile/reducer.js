@@ -11,49 +11,85 @@ const INITIAL_STATE = {
       id: 1,
       name: 'Força',
       initialValue: 0,
-      raceMod: 0,
       finalValue: 0,
       mod: -5,
+      modificators: {
+        raceMod: 0,
+        ageMod: 0,
+        levelMod: 0,
+        modelMod: 0,
+        othersMod: 0,
+      },
     },
     {
       id: 2,
       name: 'Destreza',
       initialValue: 0,
-      raceMod: 0,
       finalValue: 0,
       mod: -5,
+      modificators: {
+        raceMod: 0,
+        ageMod: 0,
+        levelMod: 0,
+        modelMod: 0,
+        othersMod: 0,
+      },
     },
     {
       id: 3,
       name: 'Constituição',
       initialValue: 0,
-      raceMod: 0,
       finalValue: 0,
       mod: -5,
+      modificators: {
+        raceMod: 0,
+        ageMod: 0,
+        levelMod: 0,
+        modelMod: 0,
+        othersMod: 0,
+      },
     },
     {
       id: 4,
       name: 'Inteligência',
       initialValue: 0,
-      raceMod: 0,
       finalValue: 0,
       mod: -5,
+      modificators: {
+        raceMod: 0,
+        ageMod: 0,
+        levelMod: 0,
+        modelMod: 0,
+        othersMod: 0,
+      },
     },
     {
       id: 5,
       name: 'Sabedoria',
       initialValue: 0,
-      raceMod: 0,
       finalValue: 0,
       mod: -5,
+      modificators: {
+        raceMod: 0,
+        ageMod: 0,
+        levelMod: 0,
+        modelMod: 0,
+        othersMod: 0,
+      },
     },
     {
       id: 6,
       name: 'Carisma',
       initialValue: 0,
-      raceMod: 0,
       finalValue: 0,
       mod: -5,
+      modificators: {
+        raceMod: 0,
+        ageMod: 0,
+        levelMod: 0,
+        modelMod: 0,
+        othersMod: 0,
+      },
     },
   ],
 };
@@ -67,11 +103,19 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         const hability = draft.habilities[habilityIndex];
 
-        const modificator = checkModificator(value + hability.raceMod);
+        const totalValue =
+          value +
+          hability.modificators.raceMod +
+          hability.modificators.ageMod +
+          hability.modificators.levelMod +
+          hability.modificators.modelMod +
+          hability.modificators.othersMod;
+
+        const modificator = checkModificator(totalValue);
 
         hability.initialValue = value;
         hability.mod = modificator;
-        hability.finalValue = value + hability.raceMod;
+        hability.finalValue = totalValue;
 
         break;
       }
@@ -82,9 +126,12 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         const newHabs = state.habilities.map((r, i) => ({
           ...r,
-          raceMod: race.habilities[i].value,
           finalValue: r.initialValue + race.habilities[i].value,
           mod: checkModificator(r.initialValue + race.habilities[i].value),
+          modificators: {
+            ...r.modificators,
+            raceMod: race.habilities[i].value,
+          },
         }));
         draft.habilities = newHabs;
 

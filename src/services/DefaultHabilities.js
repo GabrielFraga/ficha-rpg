@@ -11,6 +11,7 @@ export const checkModificator = value => {
   let newMod = 0;
 
   switch (Number(value)) {
+    case 0:
     case 1:
       newMod = -5;
       break;
