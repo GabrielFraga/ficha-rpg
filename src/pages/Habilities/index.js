@@ -4,9 +4,8 @@ import { Picker, TouchableHighlight, Modal } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { editHability } from '../../store/modules/profile/actions';
 
-import { Habs, checkModificator } from '../../services/DefaultHabilities';
+import { editHability, editRace } from '../../store/modules/profile/actions';
 
 import { Races } from '../../services/DefaultRaces';
 
@@ -31,15 +30,18 @@ export default function Habilities() {
   const habilities = useSelector(state => state.profile.habilities);
 
   const [race, setRace] = useState([]);
-  const [data, setData] = useState(true);
   const [raceModal, setRaceModal] = useState(false);
 
   function handleHabilityChange({ nativeEvent: { text } }, item) {
     dispatch(editHability(item.name, Number(text)));
   }
-  const SelectRaces = Races.map((raceItem, i) => {
+  const SelectRaces = Races.map(raceItem => {
     return (
-      <Picker.Item key={i} value={raceItem.value} label={raceItem.label} />
+      <Picker.Item
+        key={raceItem.value}
+        value={raceItem.value}
+        label={raceItem.label}
+      />
     );
   });
 
@@ -61,7 +63,8 @@ export default function Habilities() {
 
   function handleRace(raceName) {
     const raceIndex = Races.findIndex(r => r.value === raceName);
-    console.tron.log(Races[raceIndex]);
+    // console.tron.log(Races[raceIndex]);
+    dispatch(editRace(Races[raceIndex]));
     setRace(raceName);
   }
 
@@ -116,8 +119,7 @@ export default function Habilities() {
 
       <List
         data={habilities}
-        keyExtractor={hab => hab.name}
-        extraData={data}
+        keyExtractor={hab => String(hab.id)}
         renderItem={({ item }) => (
           <Row>
             <FlexLabel numberOfLines={1} ellipsizeMode="tail">
@@ -129,7 +131,7 @@ export default function Habilities() {
               {item.initialValue}
             </FixedInput>
             <FixedInput editable={false} keyboardType="numeric">
-              17
+              {item.finalValue}
             </FixedInput>
             <FixedInput editable={false} keyboardType="numeric">
               {item.mod}

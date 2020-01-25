@@ -5,3 +5,9 @@ export function editHability(name, value) {
     value,
   };
 }
+export function editRace(race) {
+  return {
+    type: '@race/EDIT',
+    race,
+  };
+}
