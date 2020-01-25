@@ -138,6 +138,22 @@ export default function editProfile(state = INITIAL_STATE, action) {
         break;
       }
 
+      case '@age/EDIT': {
+        const { age } = action;
+
+        draft.age = age;
+
+        break;
+      }
+
+      case '@level/EDIT': {
+        const { level } = action;
+
+        draft.level = level;
+
+        break;
+      }
+
       default:
     }
   });

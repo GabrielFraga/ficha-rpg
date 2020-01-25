@@ -5,9 +5,23 @@ export function editHability(name, value) {
     value,
   };
 }
+
 export function editRace(race) {
   return {
     type: '@race/EDIT',
     race,
+  };
+}
+
+export function editAge(age) {
+  return {
+    type: '@age/EDIT',
+    age,
+  };
+}
+export function editLevel(level) {
+  return {
+    type: '@level/EDIT',
+    level,
   };
 }

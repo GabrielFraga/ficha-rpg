@@ -5,7 +5,12 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { editHability, editRace } from '../../store/modules/profile/actions';
+import {
+  editHability,
+  editRace,
+  editAge,
+  editLevel,
+} from '../../store/modules/profile/actions';
 
 import { Races } from '../../services/DefaultRaces';
 
@@ -28,6 +33,8 @@ import {
 export default function Habilities() {
   const dispatch = useDispatch();
   const habilities = useSelector(state => state.profile.habilities);
+  const age = useSelector(state => state.profile.age);
+  const level = useSelector(state => state.profile.level);
 
   const [race, setRace] = useState([]);
   const [raceModal, setRaceModal] = useState(false);
@@ -63,9 +70,15 @@ export default function Habilities() {
 
   function handleRace(raceName) {
     const raceIndex = Races.findIndex(r => r.value === raceName);
-    // console.tron.log(Races[raceIndex]);
     dispatch(editRace(Races[raceIndex]));
     setRace(raceName);
+  }
+
+  function handleAge({ nativeEvent: { text } }) {
+    dispatch(editAge(text));
+  }
+  function handleLevel({ nativeEvent: { text } }) {
+    dispatch(editLevel(text));
   }
 
   return (
@@ -79,8 +92,18 @@ export default function Habilities() {
           <InputBox placeholder="Hab.Auto" editable={false} />
         </Row>
         <Row>
-          <InputBox placeholder="Idade" keyboardType="numeric" />
-          <InputBox placeholder="Nível" keyboardType="numeric" />
+          <InputBox
+            placeholder="Idade"
+            value={age}
+            onChange={e => handleAge(e)}
+            keyboardType="numeric"
+          />
+          <InputBox
+            placeholder="Nível"
+            value={level}
+            onChange={e => handleLevel(e)}
+            keyboardType="numeric"
+          />
         </Row>
         <Row>
           <Label>Raça:</Label>
