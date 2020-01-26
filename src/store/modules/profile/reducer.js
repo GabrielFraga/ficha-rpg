@@ -125,8 +125,6 @@ export default function editProfile(state = INITIAL_STATE, action) {
           name: race.value,
           info: race.racialInfo,
         };
-        // draft.race.push({ name: race.value });
-        // draft.race.push({ info: race.racialInfo });
         const newHabs = state.habilities.map((r, i) => ({
           ...r,
           finalValue: r.initialValue + race.habilities[i].value,
@@ -138,7 +136,30 @@ export default function editProfile(state = INITIAL_STATE, action) {
         }));
         draft.habilities = newHabs;
 
-        console.tron.log(draft);
+        break;
+      }
+
+      case '@otherMod/EDIT': {
+        const { id, text } = action;
+
+        const habIndex = draft.habilities.findIndex(p => p.id === id);
+        const hability = draft.habilities[habIndex];
+
+        hability.modificators.othersMod = text;
+
+        const totalValue =
+          hability.initialValue +
+          hability.modificators.raceMod +
+          hability.modificators.ageMod +
+          hability.modificators.levelMod +
+          hability.modificators.modelMod +
+          hability.modificators.othersMod;
+
+        const modificator = checkModificator(totalValue);
+
+        hability.finalValue = totalValue;
+        hability.mod = modificator;
+
         break;
       }
 

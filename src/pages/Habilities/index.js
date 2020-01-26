@@ -11,6 +11,7 @@ import {
   editAge,
   editLevel,
   editName,
+  editOtherMod,
 } from '../../store/modules/profile/actions';
 
 import { Races } from '../../services/DefaultRaces';
@@ -52,6 +53,9 @@ export default function Habilities() {
     dispatch(editHability(item.name, Number(text)));
   }
 
+  function handleModChange({ nativeEvent: { text } }, { id }) {
+    dispatch(editOtherMod(id, Number(text)));
+  }
   const SelectRaces = Races.map(raceItem => {
     return (
       <Picker.Item
@@ -81,7 +85,9 @@ export default function Habilities() {
           <ModalFixedInput editable={false} keyboardType="numeric">
             {item.modificators.modelMod}
           </ModalFixedInput>
-          <ModalFixedInput keyboardType="numeric">
+          <ModalFixedInput
+            keyboardType="numeric"
+            onChange={e => handleModChange(e, item)}>
             {item.modificators.othersMod}
           </ModalFixedInput>
         </ModalHabsRow>
@@ -186,11 +192,16 @@ export default function Habilities() {
         <Title>Habilidade</Title>
         <Title>Val. Inicial</Title>
         <TitleView style={{ alignItems: 'center' }}>
-          <TouchableHighlight onPress={() => setRaceModal(true)}>
-            <FinalValue>
-              Val. Final
+          <TouchableHighlight
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+            }}
+            onPress={() => setRaceModal(true)}>
+            <>
+              <FinalValue style={{ marginRight: 2 }}>Val. Final</FinalValue>
               <Icon name="help-outline" size={16} color="#ed9a79" />
-            </FinalValue>
+            </>
           </TouchableHighlight>
         </TitleView>
         <Title>Mod. </Title>

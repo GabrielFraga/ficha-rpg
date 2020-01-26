@@ -31,3 +31,10 @@ export function editName(name) {
     name,
   };
 }
+export function editOtherMod(id, text) {
+  return {
+    type: '@otherMod/EDIT',
+    id,
+    text,
+  };
+}
