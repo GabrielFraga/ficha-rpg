@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Picker, TouchableHighlight, Modal } from 'react-native';
+import { Picker, TouchableHighlight, Modal, ScrollView } from 'react-native';
 
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -34,7 +34,7 @@ import {
   ModalFlexLabel,
   ModalFixedInput,
   Text,
-  BigTitle
+  BigTitle,
 } from './styles';
 
 export default function Habilities() {
@@ -51,6 +51,7 @@ export default function Habilities() {
   function handleHabilityChange({ nativeEvent: { text } }, item) {
     dispatch(editHability(item.name, Number(text)));
   }
+
   const SelectRaces = Races.map(raceItem => {
     return (
       <Picker.Item
@@ -60,6 +61,32 @@ export default function Habilities() {
       />
     );
   });
+
+  const RaceModsList = () =>
+    habilities.map(item => {
+      return (
+        <ModalHabsRow key={item.id}>
+          <ModalFlexLabel numberOfLines={1} ellipsizeMode="tail">
+            {item.name}
+          </ModalFlexLabel>
+          <ModalFixedInput editable={false} keyboardType="numeric">
+            {item.modificators.raceMod}
+          </ModalFixedInput>
+          <ModalFixedInput editable={false} keyboardType="numeric">
+            {item.modificators.ageMod}
+          </ModalFixedInput>
+          <ModalFixedInput editable={false} keyboardType="numeric">
+            {item.modificators.levelMod}
+          </ModalFixedInput>
+          <ModalFixedInput editable={false} keyboardType="numeric">
+            {item.modificators.modelMod}
+          </ModalFixedInput>
+          <ModalFixedInput keyboardType="numeric">
+            {item.modificators.othersMod}
+          </ModalFixedInput>
+        </ModalHabsRow>
+      );
+    });
 
   const RaceInfoModal = () => (
     <Modal
@@ -71,49 +98,26 @@ export default function Habilities() {
       }}>
       <Container>
         <ModalView>
-          <BigTitle>Modificadores da Raça: {race.name}</BigTitle>
-          <Section>
-            <ModalHabsRow>
-              <Title>Hab.</Title>
-              <Title>Raça</Title>
-              <Title>Nível</Title>
-              <Title>Idade</Title>
-              <Title>Modelo</Title>
-              <Title>Outros</Title>
-            </ModalHabsRow>
-            <List
-              data={habilities}
-              keyExtractor={hab => String(hab.id)}
-              renderItem={({ item }) => (
-                <ModalHabsRow>
-                  <ModalFlexLabel numberOfLines={1} ellipsizeMode="tail">
-                    {item.name}
-                  </ModalFlexLabel>
-                  <ModalFixedInput editable={false} keyboardType="numeric">
-                    {item.modificators.raceMod}
-                  </ModalFixedInput>
-                  <ModalFixedInput editable={false} keyboardType="numeric">
-                    {item.modificators.ageMod}
-                  </ModalFixedInput>
-                  <ModalFixedInput editable={false} keyboardType="numeric">
-                    {item.modificators.levelMod}
-                  </ModalFixedInput>
-                  <ModalFixedInput editable={false} keyboardType="numeric">
-                    {item.modificators.modelMod}
-                  </ModalFixedInput>
-                  <ModalFixedInput keyboardType="numeric">
-                    {item.modificators.othersMod}
-                  </ModalFixedInput>
-                </ModalHabsRow>
-              )}
-            />
-          </Section>
-          <Row>
-            <BigTitle>Detalhes da raça:</BigTitle>
-          </Row>
-          <Row>
-            <Text>{race.info}</Text>
-          </Row>
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <BigTitle>Modificadores da Raça: {race.name}</BigTitle>
+            <Section>
+              <ModalHabsRow style={{ height: 50 }}>
+                <Title>Hab.</Title>
+                <Title>Raça</Title>
+                <Title>Nível</Title>
+                <Title>Idade</Title>
+                <Title>Modelo</Title>
+                <Title>Outros</Title>
+              </ModalHabsRow>
+              <RaceModsList />
+            </Section>
+            <Row>
+              <BigTitle>Detalhes da raça:</BigTitle>
+            </Row>
+            <Row>
+              <Text>{race.info}</Text>
+            </Row>
+          </ScrollView>
         </ModalView>
       </Container>
     </Modal>
@@ -146,10 +150,7 @@ export default function Habilities() {
             onChange={e => handleName(e)}
           />
         </Row>
-        <Row>
-          <InputBox placeholder="Hab.Manual" />
-          <InputBox placeholder="Hab.Auto" editable={false} />
-        </Row>
+
         <Row>
           <Label>Idade:</Label>
           <InputBox
@@ -181,17 +182,15 @@ export default function Habilities() {
         </Row>
       </Section>
 
-      <HabsRow>
+      <HabsRow style={{ height: 50 }}>
         <Title>Habilidade</Title>
         <Title>Val. Inicial</Title>
-        <TitleView>
+        <TitleView style={{ alignItems: 'center' }}>
           <TouchableHighlight onPress={() => setRaceModal(true)}>
-            <>
-              <FinalValue>
-                Val. Final
-                <Icon name="help-outline" size={16} color="#ed9a79" />
-              </FinalValue>
-            </>
+            <FinalValue>
+              Val. Final
+              <Icon name="help-outline" size={16} color="#ed9a79" />
+            </FinalValue>
           </TouchableHighlight>
         </TitleView>
         <Title>Mod. </Title>

@@ -4,6 +4,7 @@ export const Container = styled.View`
   flex: 1;
   padding: 15px;
   background-color: #dedede;
+  flex-grow: 1;
 `;
 
 export const Row = styled.View`
@@ -35,8 +36,7 @@ export const PickerView = styled.View`
 export const InputBox = styled.TextInput`
   flex: 1;
   background-color: #fff;
-  height: 50px;
-  margin: 10px;
+  margin: 5px;
   border: 1px solid #ccc;
   border-radius: 4px;
   text-align: center;
@@ -47,7 +47,7 @@ export const Title = styled.Text`
   color: #333;
   font-weight: bold;
   font-size: 16px;
-  height: 50px;
+  /* height: 50px; */
   margin: 0 5px;
 `;
 
@@ -56,14 +56,12 @@ export const FlexLabel = styled.Text`
   color: #555;
   font-weight: bold;
   font-size: 16px;
-  text-align: left;
 `;
 export const FixedInput = styled.TextInput`
   flex-basis: 15%;
   background-color: #fff;
-  height: 50px;
-  margin: 5px;
   border: 1px solid #ccc;
+  margin: 5px;
   border-radius: 4px;
   text-align: center;
 `;
@@ -79,9 +77,6 @@ export const FinalValue = styled.Text`
 `;
 
 export const ModalView = styled.View`
-  /* flex: 1; */
-  /* height: 100%; */
-  flex-grow: 1;
   background: #fff;
   padding: 10px;
   border-radius: 4px;
@@ -90,11 +85,13 @@ export const ModalView = styled.View`
 export const HabsRow = styled.View`
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 `;
 
 export const ModalHabsRow = styled.View`
   flex-direction: row;
   justify-content: space-evenly;
+  align-items: center;
 `;
 
 export const ModalFlexLabel = styled.Text`
