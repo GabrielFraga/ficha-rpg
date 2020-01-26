@@ -29,6 +29,11 @@ import {
   TitleView,
   FinalValue,
   ModalView,
+  HabsRow,
+  ModalHabsRow,
+  ModalFlexLabel,
+  ModalFixedInput,
+  Text,
 } from './styles';
 
 export default function Habilities() {
@@ -40,7 +45,6 @@ export default function Habilities() {
   const level = useSelector(state => state.profile.level);
   const name = useSelector(state => state.profile.name);
 
-  // const [race, setRace] = useState([]);
   const [raceModal, setRaceModal] = useState(false);
 
   function handleHabilityChange({ nativeEvent: { text } }, item) {
@@ -66,7 +70,45 @@ export default function Habilities() {
       }}>
       <Container>
         <ModalView>
-          <Title>Descrição da Raça: {race}</Title>
+          <Title>Modificadores da Raça: {race}</Title>
+          <ModalHabsRow>
+            <Title>Hab.</Title>
+            <Title>Raça</Title>
+            <Title>Nível</Title>
+            <Title>Idade</Title>
+            <Title>Modelo</Title>
+            <Title>Outros</Title>
+          </ModalHabsRow>
+          <List
+            data={habilities}
+            keyExtractor={hab => String(hab.id)}
+            renderItem={({ item }) => (
+              <ModalHabsRow>
+                <ModalFlexLabel numberOfLines={1} ellipsizeMode="tail">
+                  {item.name}
+                </ModalFlexLabel>
+                <ModalFixedInput editable={false} keyboardType="numeric">
+                  {item.modificators.raceMod}
+                </ModalFixedInput>
+                <ModalFixedInput editable={false} keyboardType="numeric">
+                  {item.modificators.ageMod}
+                </ModalFixedInput>
+                <ModalFixedInput editable={false} keyboardType="numeric">
+                  {item.modificators.levelMod}
+                </ModalFixedInput>
+                <ModalFixedInput editable={false} keyboardType="numeric">
+                  {item.modificators.modelMod}
+                </ModalFixedInput>
+                <ModalFixedInput keyboardType="numeric">
+                  {item.modificators.othersMod}
+                </ModalFixedInput>
+              </ModalHabsRow>
+            )}
+          />
+          <Row>
+            <Title>Detalhes:</Title>
+            <Text>{/* {habilities.} */}</Text>
+          </Row>
         </ModalView>
       </Container>
     </Modal>
@@ -104,14 +146,14 @@ export default function Habilities() {
           <InputBox placeholder="Hab.Auto" editable={false} />
         </Row>
         <Row>
+          <Label>Idade:</Label>
           <InputBox
-            placeholder="Idade"
             value={age}
             onChange={e => handleAge(e)}
             keyboardType="numeric"
           />
+          <Label>Nível:</Label>
           <InputBox
-            placeholder="Nível"
             value={level}
             onChange={e => handleLevel(e)}
             keyboardType="numeric"
@@ -134,7 +176,7 @@ export default function Habilities() {
         </Row>
       </Section>
 
-      <Row>
+      <HabsRow>
         <Title>Habilidade</Title>
         <Title>Val. Inicial</Title>
         <TitleView>
@@ -148,7 +190,7 @@ export default function Habilities() {
           </TouchableHighlight>
         </TitleView>
         <Title>Mod. </Title>
-      </Row>
+      </HabsRow>
 
       <RaceInfoModal />
 
@@ -156,7 +198,7 @@ export default function Habilities() {
         data={habilities}
         keyExtractor={hab => String(hab.id)}
         renderItem={({ item }) => (
-          <Row>
+          <HabsRow>
             <FlexLabel numberOfLines={1} ellipsizeMode="tail">
               {item.name}
             </FlexLabel>
@@ -171,7 +213,7 @@ export default function Habilities() {
             <FixedInput editable={false} keyboardType="numeric">
               {item.mod}
             </FixedInput>
-          </Row>
+          </HabsRow>
         )}
       />
     </Container>
