@@ -5,7 +5,7 @@ const INITIAL_STATE = {
   name: null,
   age: null,
   level: null,
-  race: [],
+  race: [{ name: null, info: null }],
   habilities: [
     {
       id: 1,
@@ -121,9 +121,12 @@ export default function editProfile(state = INITIAL_STATE, action) {
       }
       case '@race/EDIT': {
         const { race } = action;
-
-        draft.race = race.value;
-
+        draft.race = {
+          name: race.value,
+          info: race.racialInfo,
+        };
+        // draft.race.push({ name: race.value });
+        // draft.race.push({ info: race.racialInfo });
         const newHabs = state.habilities.map((r, i) => ({
           ...r,
           finalValue: r.initialValue + race.habilities[i].value,
@@ -135,6 +138,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
         }));
         draft.habilities = newHabs;
 
+        console.tron.log(draft);
         break;
       }
 
