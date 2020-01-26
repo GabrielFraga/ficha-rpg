@@ -2,7 +2,7 @@ import produce from 'immer';
 import { checkModificator } from '../../../services/DefaultHabilities';
 
 const INITIAL_STATE = {
-  name: [],
+  name: null,
   age: null,
   level: null,
   race: [],
@@ -142,7 +142,6 @@ export default function editProfile(state = INITIAL_STATE, action) {
         const { age } = action;
 
         draft.age = age;
-
         break;
       }
 
@@ -153,7 +152,13 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         break;
       }
+      case '@name/EDIT': {
+        const { name } = action;
 
+        draft.name = name;
+
+        break;
+      }
       default:
     }
   });

@@ -10,6 +10,7 @@ import {
   editRace,
   editAge,
   editLevel,
+  editName,
 } from '../../store/modules/profile/actions';
 
 import { Races } from '../../services/DefaultRaces';
@@ -32,11 +33,14 @@ import {
 
 export default function Habilities() {
   const dispatch = useDispatch();
+
   const habilities = useSelector(state => state.profile.habilities);
+  const race = useSelector(state => state.profile.race);
   const age = useSelector(state => state.profile.age);
   const level = useSelector(state => state.profile.level);
+  const name = useSelector(state => state.profile.name);
 
-  const [race, setRace] = useState([]);
+  // const [race, setRace] = useState([]);
   const [raceModal, setRaceModal] = useState(false);
 
   function handleHabilityChange({ nativeEvent: { text } }, item) {
@@ -71,21 +75,29 @@ export default function Habilities() {
   function handleRace(raceName) {
     const raceIndex = Races.findIndex(r => r.value === raceName);
     dispatch(editRace(Races[raceIndex]));
-    setRace(raceName);
   }
 
   function handleAge({ nativeEvent: { text } }) {
     dispatch(editAge(text));
   }
+
   function handleLevel({ nativeEvent: { text } }) {
     dispatch(editLevel(text));
+  }
+
+  function handleName({ nativeEvent: { text } }) {
+    dispatch(editName(text));
   }
 
   return (
     <Container>
       <Section>
         <Row>
-          <InputBox placeholder="Nome" />
+          <InputBox
+            placeholder="Nome"
+            value={name}
+            onChange={e => handleName(e)}
+          />
         </Row>
         <Row>
           <InputBox placeholder="Hab.Manual" />

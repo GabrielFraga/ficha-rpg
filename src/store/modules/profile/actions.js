@@ -25,3 +25,9 @@ export function editLevel(level) {
     level,
   };
 }
+export function editName(name) {
+  return {
+    type: '@name/EDIT',
+    name,
+  };
+}
