@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Picker, TouchableHighlight, Modal, ScrollView } from 'react-native';
+import React from 'react';
+import { Picker, TouchableHighlight } from 'react-native';
 
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -11,7 +11,6 @@ import {
   editAge,
   editLevel,
   editName,
-  editOtherMod,
 } from '../../store/modules/profile/actions';
 
 import { Races } from '../../services/DefaultRaces';
@@ -29,16 +28,10 @@ import {
   PickerView,
   TitleView,
   FinalValue,
-  ModalView,
   HabsRow,
-  ModalHabsRow,
-  ModalFlexLabel,
-  ModalFixedInput,
-  Text,
-  BigTitle,
 } from './styles';
 
-export default function Habilities() {
+export default function Habilities({ navigation }) {
   const dispatch = useDispatch();
 
   const habilities = useSelector(state => state.profile.habilities);
@@ -47,15 +40,10 @@ export default function Habilities() {
   const level = useSelector(state => state.profile.level);
   const name = useSelector(state => state.profile.name);
 
-  const [raceModal, setRaceModal] = useState(false);
-
   function handleHabilityChange({ nativeEvent: { text } }, item) {
     dispatch(editHability(item.name, Number(text)));
   }
 
-  function handleModChange({ nativeEvent: { text } }, { id }) {
-    dispatch(editOtherMod(id, Number(text)));
-  }
   const SelectRaces = Races.map(raceItem => {
     return (
       <Picker.Item
@@ -65,69 +53,6 @@ export default function Habilities() {
       />
     );
   });
-
-  const RaceModsList = () =>
-    habilities.map(item => {
-      return (
-        <ModalHabsRow key={item.id}>
-          <ModalFlexLabel numberOfLines={1} ellipsizeMode="tail">
-            {item.name}
-          </ModalFlexLabel>
-          <ModalFixedInput editable={false} keyboardType="numeric">
-            {item.modificators.raceMod}
-          </ModalFixedInput>
-          <ModalFixedInput editable={false} keyboardType="numeric">
-            {item.modificators.ageMod}
-          </ModalFixedInput>
-          <ModalFixedInput editable={false} keyboardType="numeric">
-            {item.modificators.levelMod}
-          </ModalFixedInput>
-          <ModalFixedInput editable={false} keyboardType="numeric">
-            {item.modificators.modelMod}
-          </ModalFixedInput>
-          <ModalFixedInput
-            keyboardType="numeric"
-            onChange={e => handleModChange(e, item)}>
-            {item.modificators.othersMod}
-          </ModalFixedInput>
-        </ModalHabsRow>
-      );
-    });
-
-  const RaceInfoModal = () => (
-    <Modal
-      animationType="slide"
-      transparent={false}
-      visible={raceModal}
-      onRequestClose={() => {
-        setRaceModal(false);
-      }}>
-      <Container>
-        <ModalView>
-          <ScrollView showsVerticalScrollIndicator={false}>
-            <BigTitle>Modificadores da Raça: {race.name}</BigTitle>
-            <Section>
-              <ModalHabsRow style={{ height: 50 }}>
-                <Title>Hab.</Title>
-                <Title>Raça</Title>
-                <Title>Nível</Title>
-                <Title>Idade</Title>
-                <Title>Modelo</Title>
-                <Title>Outros</Title>
-              </ModalHabsRow>
-              <RaceModsList />
-            </Section>
-            <Row>
-              <BigTitle>Detalhes da raça:</BigTitle>
-            </Row>
-            <Row>
-              <Text>{race.info}</Text>
-            </Row>
-          </ScrollView>
-        </ModalView>
-      </Container>
-    </Modal>
-  );
 
   function handleRace(raceName) {
     const raceIndex = Races.findIndex(r => r.value === raceName);
@@ -197,7 +122,7 @@ export default function Habilities() {
               flexDirection: 'row',
               alignItems: 'center',
             }}
-            onPress={() => setRaceModal(true)}>
+            onPress={() => navigation.navigate('Raça')}>
             <>
               <FinalValue style={{ marginRight: 2 }}>Val. Final</FinalValue>
               <Icon name="help-outline" size={16} color="#ed9a79" />
@@ -206,8 +131,6 @@ export default function Habilities() {
         </TitleView>
         <Title>Mod. </Title>
       </HabsRow>
-
-      <RaceInfoModal />
 
       <List
         data={habilities}
