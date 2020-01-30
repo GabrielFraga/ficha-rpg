@@ -1,22 +1,5 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
-  flex: 1;
-  padding: 15px;
-  background-color: #dedede;
-  flex-grow: 1;
-`;
-
-export const Row = styled.View`
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-export const Section = styled.View`
-  margin-bottom: 25px;
-`;
-
 export const ModalView = styled.View`
   background: #fff;
   padding: 10px;

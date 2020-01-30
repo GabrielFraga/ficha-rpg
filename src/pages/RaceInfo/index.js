@@ -5,11 +5,9 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { editOtherMod } from '../../store/modules/profile/actions';
 
+import { Container, Row, Section, Title } from '../../components/Global/styles';
+
 import {
-  Container,
-  Row,
-  Section,
-  Title,
   ModalView,
   ModalHabsRow,
   ModalFlexLabel,

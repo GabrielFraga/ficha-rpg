@@ -1,5 +1,5 @@
 import React from 'react';
-import { Picker, TouchableHighlight } from 'react-native';
+import { Picker, TouchableHighlight, ScrollView } from 'react-native';
 
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -15,20 +15,19 @@ import {
 
 import { Races } from '../../services/DefaultRaces';
 
+import { Container, Row, Section, Title } from '../../components/Global/styles';
+
 import {
-  Container,
-  Row,
   Label,
   FlexLabel,
   InputBox,
   FixedInput,
-  Section,
-  List,
-  Title,
   PickerView,
   TitleView,
   FinalValue,
   HabsRow,
+  LvlHabButton,
+  ButtonContent,
 } from './styles';
 
 export default function Habilities({ navigation }) {
@@ -71,89 +70,115 @@ export default function Habilities({ navigation }) {
     dispatch(editName(text));
   }
 
+  const HabilitiesList = () =>
+    habilities.map(item => {
+      return (
+        <HabsRow key={item.id}>
+          <FlexLabel numberOfLines={1} ellipsizeMode="tail">
+            {item.name}
+          </FlexLabel>
+          <FixedInput
+            onChange={e => handleHabilityChange(e, item)}
+            keyboardType="numeric">
+            {item.initialValue}
+          </FixedInput>
+          <FixedInput editable={false}>{item.finalValue}</FixedInput>
+          <FixedInput editable={false}>{item.mod}</FixedInput>
+        </HabsRow>
+      );
+    });
+
+  const LevelHabilityList = () => {
+    const list = [];
+    for (let i = 2; i <= 40; i++) {
+      if (i % 2 === 0) {
+        list.push(i);
+      }
+    }
+    return (
+      <HabsRow
+        style={{
+          flexWrap: 'wrap',
+          marginTop: 20,
+          marginBottom: 20,
+        }}>
+        <Title>Defina as habilidades que recebem +1 nos níveis pares</Title>
+
+        {list.map(itemLevel => {
+          return (
+            <LvlHabButton key={String(itemLevel)}>
+              <ButtonContent>LVL: {itemLevel}</ButtonContent>
+            </LvlHabButton>
+          );
+        })}
+      </HabsRow>
+    );
+  };
+
   return (
     <Container>
-      <Section>
-        <Row>
-          <InputBox
-            placeholder="Nome"
-            value={name}
-            onChange={e => handleName(e)}
-          />
-        </Row>
+      <ScrollView>
+        <Section>
+          <Row>
+            <Label>Nome:</Label>
+            <InputBox value={name} onChange={e => handleName(e)} />
+          </Row>
 
-        <Row>
-          <Label>Idade:</Label>
-          <InputBox
-            value={age}
-            onChange={e => handleAge(e)}
-            keyboardType="numeric"
-          />
-          <Label>Nível:</Label>
-          <InputBox
-            value={level}
-            onChange={e => handleLevel(e)}
-            keyboardType="numeric"
-          />
-        </Row>
-        <Row>
-          <Label>Raça:</Label>
-          <PickerView>
-            <Picker
+          <Row>
+            <Label>Idade:</Label>
+            <InputBox
+              value={age}
+              onChange={e => handleAge(e)}
+              keyboardType="numeric"
+            />
+            <Label>Nível:</Label>
+            <InputBox
+              value={level}
+              onChange={e => handleLevel(e)}
+              keyboardType="numeric"
+            />
+          </Row>
+          <Row>
+            <Label>Raça:</Label>
+            <PickerView>
+              <Picker
+                style={{
+                  borderRadius: 4,
+                  color: '#fff',
+                  background: '#823b38a8',
+                }}
+                prompt="Defina uma raça"
+                selectedValue={race.name}
+                onValueChange={itemValue => handleRace(itemValue)}>
+                {SelectRaces}
+              </Picker>
+            </PickerView>
+          </Row>
+        </Section>
+
+        <HabsRow style={{ height: 50 }}>
+          <Title>Habilidade</Title>
+          <Title>Val. Inicial</Title>
+          <TitleView style={{ alignItems: 'center' }}>
+            <TouchableHighlight
               style={{
-                borderRadius: 4,
-                color: '#333',
+                flexDirection: 'row',
+                alignItems: 'center',
               }}
-              prompt="Defina uma raça"
-              selectedValue={race.name}
-              onValueChange={itemValue => handleRace(itemValue)}>
-              {SelectRaces}
-            </Picker>
-          </PickerView>
-        </Row>
-      </Section>
+              onPress={() => navigation.navigate('Raça')}>
+              <>
+                <FinalValue style={{ marginRight: 5 }}>Val. Final</FinalValue>
+                <Icon name="help-outline" size={16} color="#ed9a79" />
+              </>
+            </TouchableHighlight>
+          </TitleView>
+          <Title>Mod. </Title>
+        </HabsRow>
 
-      <HabsRow style={{ height: 50 }}>
-        <Title>Habilidade</Title>
-        <Title>Val. Inicial</Title>
-        <TitleView style={{ alignItems: 'center' }}>
-          <TouchableHighlight
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-            }}
-            onPress={() => navigation.navigate('Raça')}>
-            <>
-              <FinalValue style={{ marginRight: 2 }}>Val. Final</FinalValue>
-              <Icon name="help-outline" size={16} color="#ed9a79" />
-            </>
-          </TouchableHighlight>
-        </TitleView>
-        <Title>Mod. </Title>
-      </HabsRow>
+        <HabilitiesList />
 
-      <List
-        data={habilities}
-        keyExtractor={hab => String(hab.id)}
-        renderItem={({ item }) => (
-          <HabsRow>
-            <FlexLabel numberOfLines={1} ellipsizeMode="tail">
-              {item.name}
-            </FlexLabel>
-            <FixedInput
-              onChange={e => handleHabilityChange(e, item)}
-              keyboardType="numeric">
-              {item.initialValue}
-            </FixedInput>
-            <FixedInput editable={false} keyboardType="numeric">
-              {item.finalValue}
-            </FixedInput>
-            <FixedInput editable={false} keyboardType="numeric">
-              {item.mod}
-            </FixedInput>
-          </HabsRow>
-        )}
-      />
+        <LevelHabilityList />
+      </ScrollView>
     </Container>
   );
 }
