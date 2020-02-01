@@ -105,11 +105,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         const totalValue =
           value +
-          hability.modificators.raceMod +
-          hability.modificators.ageMod +
-          hability.modificators.levelMod +
-          hability.modificators.modelMod +
-          hability.modificators.othersMod;
+          Object.values(hability.modificators).reduce((x, y) => x + y, 0);
 
         const modificator = checkModificator(totalValue);
 
@@ -119,6 +115,27 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         break;
       }
+
+      case '@otherMod/EDIT': {
+        const { id, text } = action;
+
+        const habIndex = draft.habilities.findIndex(p => p.id === id);
+        const hability = draft.habilities[habIndex];
+
+        hability.modificators.othersMod = text;
+
+        const totalValue =
+          hability.initialValue +
+          Object.values(hability.modificators).reduce((x, y) => x + y, 0);
+
+        const modificator = checkModificator(totalValue);
+
+        hability.finalValue = totalValue;
+        hability.mod = modificator;
+
+        break;
+      }
+
       case '@race/EDIT': {
         const { race } = action;
         draft.race = {
@@ -135,30 +152,6 @@ export default function editProfile(state = INITIAL_STATE, action) {
           },
         }));
         draft.habilities = newHabs;
-
-        break;
-      }
-
-      case '@otherMod/EDIT': {
-        const { id, text } = action;
-
-        const habIndex = draft.habilities.findIndex(p => p.id === id);
-        const hability = draft.habilities[habIndex];
-
-        hability.modificators.othersMod = text;
-
-        const totalValue =
-          hability.initialValue +
-          hability.modificators.raceMod +
-          hability.modificators.ageMod +
-          hability.modificators.levelMod +
-          hability.modificators.modelMod +
-          hability.modificators.othersMod;
-
-        const modificator = checkModificator(totalValue);
-
-        hability.finalValue = totalValue;
-        hability.mod = modificator;
 
         break;
       }

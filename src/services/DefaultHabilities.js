@@ -1,10 +1,10 @@
 export const Habs = [
-  { name: 'Força', value: 0, mod: -5 },
-  { name: 'Destreza', value: 0, mod: -5 },
-  { name: 'Constituição', value: 0, mod: -5 },
-  { name: 'Inteligência', value: 0, mod: -5 },
-  { name: 'Sabedoria', value: 0, mod: -5 },
-  { name: 'Carisma', value: 0, mod: -5 },
+  { label: 'Força', name: 'Força', value: 0, mod: -5 },
+  { label: 'Destreza', name: 'Destreza', value: 0, mod: -5 },
+  { label: 'Constituição', name: 'Constituição', value: 0, mod: -5 },
+  { label: 'Inteligência', name: 'Inteligência', value: 0, mod: -5 },
+  { label: 'Sabedoria', name: 'Sabedoria', value: 0, mod: -5 },
+  { label: 'Carisma', name: 'Carisma', value: 0, mod: -5 },
 ];
 
 export const checkModificator = value => {

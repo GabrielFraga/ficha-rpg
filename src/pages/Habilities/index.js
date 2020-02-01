@@ -1,5 +1,5 @@
-import React from 'react';
-import { Picker, TouchableHighlight, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { Picker, TouchableHighlight, ScrollView, Modal } from 'react-native';
 
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -14,6 +14,7 @@ import {
 } from '../../store/modules/profile/actions';
 
 import { Races } from '../../services/DefaultRaces';
+import { Habs } from '../../services/DefaultHabilities';
 
 import { Container, Row, Section, Title } from '../../components/Global/styles';
 
@@ -28,10 +29,20 @@ import {
   HabsRow,
   LvlHabButton,
   ButtonContent,
+  ModalContainer,
+  ModalContent,
+  RadioButtonContainer,
+  TouchableOpacity,
+  CheckedCircle,
+  RadioOptionsContainer,
 } from './styles';
 
 export default function Habilities({ navigation }) {
   const dispatch = useDispatch();
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const [checkedValue, setCheckedValue] = useState([]);
+  const [selectedLevel, setSelectedLevel] = useState([]);
 
   const habilities = useSelector(state => state.profile.habilities);
   const race = useSelector(state => state.profile.race);
@@ -70,6 +81,11 @@ export default function Habilities({ navigation }) {
     dispatch(editName(text));
   }
 
+  function handleLevelHability(level) {
+    setSelectedLevel(level);
+    setModalVisible(true);
+  }
+
   const HabilitiesList = () =>
     habilities.map(item => {
       return (
@@ -88,6 +104,42 @@ export default function Habilities({ navigation }) {
       );
     });
 
+  const LvlModal = () => {
+    const RadioButtons = ({ options }) => {
+      return options.map(item => {
+        return (
+          <RadioButtonContainer key={item.name}>
+            <ButtonContent>{item.name}</ButtonContent>
+            <TouchableOpacity onPress={() => setCheckedValue(item.name)}>
+              {checkedValue === item.name && <CheckedCircle />}
+            </TouchableOpacity>
+          </RadioButtonContainer>
+        );
+      });
+    };
+
+    return (
+      <Modal
+        animationType="slide"
+        transparent
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}>
+        <ModalContainer>
+          <ModalContent>
+            <TitleView>
+              <Title>
+                Bônus acrescentado ao atingir o Nível {selectedLevel}
+              </Title>
+            </TitleView>
+            <RadioOptionsContainer>
+              <RadioButtons options={Habs} />
+            </RadioOptionsContainer>
+          </ModalContent>
+        </ModalContainer>
+      </Modal>
+    );
+  };
+
   const LevelHabilityList = () => {
     const list = [];
     for (let i = 2; i <= 40; i++) {
@@ -95,6 +147,7 @@ export default function Habilities({ navigation }) {
         list.push(i);
       }
     }
+
     return (
       <HabsRow
         style={{
@@ -106,7 +159,9 @@ export default function Habilities({ navigation }) {
 
         {list.map(itemLevel => {
           return (
-            <LvlHabButton key={String(itemLevel)}>
+            <LvlHabButton
+              key={String(itemLevel)}
+              onPress={() => handleLevelHability(itemLevel)}>
               <ButtonContent>LVL: {itemLevel}</ButtonContent>
             </LvlHabButton>
           );
@@ -176,8 +231,8 @@ export default function Habilities({ navigation }) {
         </HabsRow>
 
         <HabilitiesList />
-
         <LevelHabilityList />
+        <LvlModal />
       </ScrollView>
     </Container>
   );

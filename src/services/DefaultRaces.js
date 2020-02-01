@@ -9,7 +9,7 @@ export const Races = [
     habilities: [
       { name: 'Força', value: 0 },
       { name: 'Destreza', value: -2 },
-      { name: 'Constituição', value: 2 },
+      { name: 'Constituição', value: 4 },
       { name: 'Inteligência', value: 0 },
       { name: 'Sabedoria', value: 2 },
       { name: 'Carisma', value: 0 },
