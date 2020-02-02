@@ -200,7 +200,7 @@ export default function Habilities({ navigation }) {
             />
             <Label>Nível:</Label>
             <InputBox
-              value={level}
+              value={String(level)}
               onChange={e => handleLevel(e)}
               keyboardType="numeric"
             />
