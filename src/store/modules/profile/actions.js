@@ -38,3 +38,11 @@ export function editOtherMod(id, text) {
     text,
   };
 }
+
+export function editLevelMod({ id, level }) {
+  return {
+    type: '@levelMod/EDIT',
+    id,
+    inputLevel: level,
+  };
+}

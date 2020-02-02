@@ -11,6 +11,7 @@ import {
   editAge,
   editLevel,
   editName,
+  editLevelMod,
 } from '../../store/modules/profile/actions';
 
 import { Races } from '../../services/DefaultRaces';
@@ -81,9 +82,20 @@ export default function Habilities({ navigation }) {
     dispatch(editName(text));
   }
 
-  function handleLevelHability(level) {
-    setSelectedLevel(level);
+  function openLevelModal(lvl) {
+    setSelectedLevel(lvl);
     setModalVisible(true);
+  }
+
+  function handleLevelHability(HabId) {
+    setCheckedValue(HabId);
+    // console.tron.log(selectedLevel, HabId);
+    dispatch(
+      editLevelMod({
+        id: HabId,
+        level: selectedLevel,
+      }),
+    );
   }
 
   const HabilitiesList = () =>
@@ -108,10 +120,10 @@ export default function Habilities({ navigation }) {
     const RadioButtons = ({ options }) => {
       return options.map(item => {
         return (
-          <RadioButtonContainer key={item.name}>
+          <RadioButtonContainer key={item.id}>
             <ButtonContent>{item.name}</ButtonContent>
-            <TouchableOpacity onPress={() => setCheckedValue(item.name)}>
-              {checkedValue === item.name && <CheckedCircle />}
+            <TouchableOpacity onPress={() => handleLevelHability(item.id)}>
+              {checkedValue === item.id && <CheckedCircle />}
             </TouchableOpacity>
           </RadioButtonContainer>
         );
@@ -161,7 +173,7 @@ export default function Habilities({ navigation }) {
           return (
             <LvlHabButton
               key={String(itemLevel)}
-              onPress={() => handleLevelHability(itemLevel)}>
+              onPress={() => openLevelModal(itemLevel)}>
               <ButtonContent>LVL: {itemLevel}</ButtonContent>
             </LvlHabButton>
           );

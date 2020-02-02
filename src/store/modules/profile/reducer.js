@@ -8,11 +8,37 @@ const INITIAL_STATE = {
   race: [{ name: null, info: null }],
   habilities: [
     {
-      id: 1,
+      id: 0,
       name: 'Força',
       initialValue: 0,
       finalValue: 0,
       mod: -5,
+      levelMod: [
+        {
+          level: 2,
+          value: 0,
+        },
+      ],
+      modificators: {
+        raceMod: 0,
+        ageMod: 0,
+        levelMod: 0,
+        modelMod: 0,
+        othersMod: 0,
+      },
+    },
+    {
+      id: 1,
+      name: 'Destreza',
+      initialValue: 0,
+      finalValue: 0,
+      mod: -5,
+      levelMod: [
+        {
+          level: 2,
+          value: 0,
+        },
+      ],
       modificators: {
         raceMod: 0,
         ageMod: 0,
@@ -23,10 +49,16 @@ const INITIAL_STATE = {
     },
     {
       id: 2,
-      name: 'Destreza',
+      name: 'Constituição',
       initialValue: 0,
       finalValue: 0,
       mod: -5,
+      levelMod: [
+        {
+          level: 2,
+          value: 0,
+        },
+      ],
       modificators: {
         raceMod: 0,
         ageMod: 0,
@@ -37,10 +69,16 @@ const INITIAL_STATE = {
     },
     {
       id: 3,
-      name: 'Constituição',
+      name: 'Inteligência',
       initialValue: 0,
       finalValue: 0,
       mod: -5,
+      levelMod: [
+        {
+          level: 2,
+          value: 0,
+        },
+      ],
       modificators: {
         raceMod: 0,
         ageMod: 0,
@@ -51,10 +89,16 @@ const INITIAL_STATE = {
     },
     {
       id: 4,
-      name: 'Inteligência',
+      name: 'Sabedoria',
       initialValue: 0,
       finalValue: 0,
       mod: -5,
+      levelMod: [
+        {
+          level: 2,
+          value: 0,
+        },
+      ],
       modificators: {
         raceMod: 0,
         ageMod: 0,
@@ -65,24 +109,16 @@ const INITIAL_STATE = {
     },
     {
       id: 5,
-      name: 'Sabedoria',
-      initialValue: 0,
-      finalValue: 0,
-      mod: -5,
-      modificators: {
-        raceMod: 0,
-        ageMod: 0,
-        levelMod: 0,
-        modelMod: 0,
-        othersMod: 0,
-      },
-    },
-    {
-      id: 6,
       name: 'Carisma',
       initialValue: 0,
       finalValue: 0,
       mod: -5,
+      levelMod: [
+        {
+          level: 2,
+          value: 0,
+        },
+      ],
       modificators: {
         raceMod: 0,
         ageMod: 0,
@@ -132,6 +168,74 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         hability.finalValue = totalValue;
         hability.mod = modificator;
+
+        break;
+      }
+
+      case '@levelMod/EDIT': {
+        const { id, inputLevel } = action;
+        const habIndex = draft.habilities.findIndex(p => p.id === id);
+        const hability = draft.habilities[habIndex];
+
+        const { habilities } = draft;
+
+        const createIndex = [];
+
+        Object.values(habilities).forEach(e => {
+          if (id !== e.id) {
+            e.levelMod.forEach(mod => {
+              if (mod.level === inputLevel) {
+                // nível já definido porém em outra habilitdade
+                // remove objeto duplicado
+                const index = e.levelMod.findIndex(p => p === mod);
+                habilities[e.id].levelMod.splice(index, 1);
+              }
+            });
+          } else if (id === e.id) {
+            // habilidade enviada encontrada
+            if (e.levelMod !== []) {
+              console.tron.log(
+                'objeto levelMod não está vazio',
+                e.levelMod.length,
+              );
+
+              //  se objeto já existe...
+              e.levelMod.forEach(mod => {
+                if (mod.level === inputLevel) {
+                  // se o nível definido for o mesmo. Permanece com o valor atual
+                  mod.level = inputLevel;
+                  mod.value = 1;
+                  createIndex.push(false);
+                } else {
+                  // se não possui nível, irá criar o elemento posteriormente
+                  createIndex.push(true);
+                }
+              });
+            } else {
+              // Se o elemento está vazio, cria o mesmo
+              e.levelMod.push({
+                level: inputLevel,
+                value: 1,
+              });
+            }
+          }
+        });
+
+        const checkValue = element => {
+          if (element === true) {
+            return true;
+          }
+
+          return false;
+        };
+
+        if (createIndex.every(checkValue)) {
+          console.tron.log('retornou true', createIndex.every(checkValue));
+          hability.levelMod.push({
+            level: inputLevel,
+            value: 1,
+          });
+        }
 
         break;
       }
