@@ -63,8 +63,8 @@ export default function RaceInfo() {
             <ModalHabsRow style={{ height: 50 }}>
               <Title>Hab.</Title>
               <Title>Raça</Title>
-              <Title>Nível</Title>
               <Title>Idade</Title>
+              <Title>Nível</Title>
               <Title>Modelo</Title>
               <Title>Outros</Title>
             </ModalHabsRow>

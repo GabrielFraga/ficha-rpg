@@ -4,7 +4,7 @@ import { checkModificator } from '../../../services/DefaultHabilities';
 const INITIAL_STATE = {
   name: null,
   age: null,
-  level: null,
+  level: '',
   race: [{ name: null, info: null }],
   habilities: [
     {
@@ -194,11 +194,6 @@ export default function editProfile(state = INITIAL_STATE, action) {
           } else if (id === e.id) {
             // habilidade enviada encontrada
             if (e.levelMod !== []) {
-              console.tron.log(
-                'objeto levelMod não está vazio',
-                e.levelMod.length,
-              );
-
               //  se objeto já existe...
               e.levelMod.forEach(mod => {
                 if (mod.level === inputLevel) {
@@ -225,18 +220,30 @@ export default function editProfile(state = INITIAL_STATE, action) {
           if (element === true) {
             return true;
           }
-
           return false;
         };
 
         if (createIndex.every(checkValue)) {
-          console.tron.log('retornou true', createIndex.every(checkValue));
           hability.levelMod.push({
             level: inputLevel,
             value: 1,
           });
         }
 
+        Object.values(habilities).forEach(element => {
+          element.modificators.levelMod = element.levelMod.reduce(
+            (x, y) => x + y.value,
+            0,
+          );
+          const totalValue =
+            element.initialValue +
+            Object.values(element.modificators).reduce((x, y) => x + y, 0);
+
+          const modificator = checkModificator(totalValue);
+
+          element.mod = modificator;
+          element.finalValue = totalValue;
+        });
         break;
       }
 
@@ -246,16 +253,21 @@ export default function editProfile(state = INITIAL_STATE, action) {
           name: race.value,
           info: race.racialInfo,
         };
-        const newHabs = state.habilities.map((r, i) => ({
-          ...r,
-          finalValue: r.initialValue + race.habilities[i].value,
-          mod: checkModificator(r.initialValue + race.habilities[i].value),
-          modificators: {
-            ...r.modificators,
-            raceMod: race.habilities[i].value,
-          },
-        }));
-        draft.habilities = newHabs;
+
+        const { habilities } = draft;
+
+        Object.values(habilities).forEach((element, i) => {
+          element.modificators.raceMod = race.habilities[i].value;
+
+          const totalValue =
+            element.initialValue +
+            Object.values(element.modificators).reduce((x, y) => x + y, 0);
+
+          const modificator = checkModificator(totalValue);
+
+          element.mod = modificator;
+          element.finalValue = totalValue;
+        });
 
         break;
       }
