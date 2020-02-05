@@ -46,6 +46,13 @@ export default function Habilities({ navigation }) {
   const [selectedLevel, setSelectedLevel] = useState([]);
 
   const habilities = useSelector(state => state.profile.habilities);
+  const HablevelMod = useSelector(state =>
+    state.profile.habilities.map(e => ({
+      id: e.id,
+      level: e.levelMod.level,
+      total: e.levelMod.reduce((x, y) => x + y.value, 0),
+    })),
+  );
   const race = useSelector(state => state.profile.race);
   const age = useSelector(state => state.profile.age);
   const level = useSelector(state => state.profile.level);
@@ -89,13 +96,30 @@ export default function Habilities({ navigation }) {
 
   function handleLevelHability(HabId) {
     setCheckedValue(HabId);
-    // console.tron.log(selectedLevel, HabId);
     dispatch(
       editLevelMod({
         id: HabId,
         level: selectedLevel,
       }),
     );
+  }
+
+  function checkValue(item) {
+    let levelM = null;
+
+    habilities.forEach(h => {
+      h.levelMod.forEach(m => {
+        if (h.id === item  &&  m.level === selectedLevel) {
+          levelM = m.level;
+        }
+      });
+    });
+
+    if (levelM) {
+      return <CheckedCircle />;
+    }
+
+    return false;
   }
 
   const HabilitiesList = () =>
@@ -123,7 +147,7 @@ export default function Habilities({ navigation }) {
           <RadioButtonContainer key={item.id}>
             <ButtonContent>{item.name}</ButtonContent>
             <TouchableOpacity onPress={() => handleLevelHability(item.id)}>
-              {checkedValue === item.id && <CheckedCircle />}
+              {checkValue(item.id)}
             </TouchableOpacity>
           </RadioButtonContainer>
         );
