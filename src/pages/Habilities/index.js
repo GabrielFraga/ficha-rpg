@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { Picker, TouchableHighlight, ScrollView, Modal } from 'react-native';
+import {
+  Picker,
+  TouchableHighlight,
+  ScrollView,
+  Modal,
+  Alert,
+} from 'react-native';
 
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -42,17 +48,9 @@ export default function Habilities({ navigation }) {
   const dispatch = useDispatch();
 
   const [modalVisible, setModalVisible] = useState(false);
-  const [checkedValue, setCheckedValue] = useState([]);
   const [selectedLevel, setSelectedLevel] = useState([]);
 
   const habilities = useSelector(state => state.profile.habilities);
-  const HablevelMod = useSelector(state =>
-    state.profile.habilities.map(e => ({
-      id: e.id,
-      level: e.levelMod.level,
-      total: e.levelMod.reduce((x, y) => x + y.value, 0),
-    })),
-  );
   const race = useSelector(state => state.profile.race);
   const age = useSelector(state => state.profile.age);
   const level = useSelector(state => state.profile.level);
@@ -95,13 +93,19 @@ export default function Habilities({ navigation }) {
   }
 
   function handleLevelHability(HabId) {
-    setCheckedValue(HabId);
-    dispatch(
-      editLevelMod({
-        id: HabId,
-        level: selectedLevel,
-      }),
-    );
+    if (level >= selectedLevel) {
+      dispatch(
+        editLevelMod({
+          id: HabId,
+          level: selectedLevel,
+        }),
+      );
+    } else {
+      Alert.alert(
+        `Você ainda não atingiu ou não informou este nível na ficha!`,
+      );
+      setModalVisible(false);
+    }
   }
 
   function checkValue(item) {
@@ -109,7 +113,7 @@ export default function Habilities({ navigation }) {
 
     habilities.forEach(h => {
       h.levelMod.forEach(m => {
-        if (h.id === item  &&  m.level === selectedLevel) {
+        if (h.id === item && m.level === selectedLevel) {
           levelM = m.level;
         }
       });
