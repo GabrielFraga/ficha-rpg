@@ -1,11 +1,5 @@
 import React, { useState } from 'react';
-import {
-  Picker,
-  TouchableHighlight,
-  ScrollView,
-  Modal,
-  Alert,
-} from 'react-native';
+import { TouchableHighlight, ScrollView, Modal, Alert } from 'react-native';
 
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -23,14 +17,20 @@ import {
 import { Races } from '../../services/DefaultRaces';
 import { Habs } from '../../services/DefaultHabilities';
 
-import { Container, Row, Section, Title } from '../../components/Global/styles';
+import {
+  Container,
+  Row,
+  Section,
+  Title,
+  Label,
+  Picker,
+  PickerView,
+  InputBox,
+} from '../../components/Global/styles';
 
 import {
-  Label,
   FlexLabel,
-  InputBox,
   FixedInput,
-  PickerView,
   TitleView,
   FinalValue,
   HabsRow,
@@ -235,11 +235,6 @@ export default function Habilities({ navigation }) {
             <Label>Raça:</Label>
             <PickerView>
               <Picker
-                style={{
-                  borderRadius: 4,
-                  color: '#fff',
-                  background: '#823b38a8',
-                }}
                 prompt="Defina uma raça"
                 selectedValue={race.name}
                 onValueChange={itemValue => handleRace(itemValue)}>
@@ -271,6 +266,11 @@ export default function Habilities({ navigation }) {
         <HabilitiesList />
         <LevelHabilityList />
         <LvlModal />
+        <TouchableHighlight onPress={() => navigation.navigate('Classes')}>
+          <TitleView>
+            <Title>Classes</Title>
+          </TitleView>
+        </TouchableHighlight>
       </ScrollView>
     </Container>
   );

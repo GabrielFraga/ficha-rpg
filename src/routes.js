@@ -5,6 +5,8 @@ import Habilities from './pages/Habilities';
 
 import RaceInfo from './pages/RaceInfo';
 
+import Classes from './pages/Classes';
+
 const Routes = createAppContainer(
   // createSwitchNavigator(
   createStackNavigator(
@@ -17,6 +19,9 @@ const Routes = createAppContainer(
         navigationOptions: {
           headerTitle: 'Detalhes da Raça',
         },
+      },
+      Classes: {
+        screen: Classes,
       },
     },
     {
