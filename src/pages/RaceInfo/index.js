@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { editOtherMod } from '../../store/modules/profile/actions';
 
-import { Container, Row, Section, Title } from '../../components/Global/styles';
+import { Container, Row, Section } from '../../components/Global/styles';
 
 import {
   ModalView,
@@ -13,6 +13,7 @@ import {
   ModalFlexLabel,
   ModalFixedInput,
   Text,
+  Title,
   BigTitle,
 } from './styles';
 
@@ -56,8 +57,8 @@ export default function RaceInfo() {
 
   return (
     <Container>
-      <ModalView>
-        <ScrollView showsVerticalScrollIndicator={false}>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <ModalView>
           <BigTitle>Modificadores da Raça: {race.name}</BigTitle>
           <Section>
             <ModalHabsRow style={{ height: 50 }}>
@@ -70,14 +71,16 @@ export default function RaceInfo() {
             </ModalHabsRow>
             <RaceModsList />
           </Section>
+        </ModalView>
+        <ModalView>
           <Row>
-            <BigTitle>Detalhes da raça:</BigTitle>
+            <BigTitle>Descrição da raça:</BigTitle>
           </Row>
           <Row>
             <Text>{race.info}</Text>
           </Row>
-        </ScrollView>
-      </ModalView>
+        </ModalView>
+      </ScrollView>
     </Container>
   );
 }
