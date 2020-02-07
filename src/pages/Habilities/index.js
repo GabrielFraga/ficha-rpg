@@ -200,7 +200,7 @@ export default function Habilities({ navigation }) {
             <LvlHabButton
               key={String(itemLevel)}
               onPress={() => openLevelModal(itemLevel)}>
-              <ButtonContent>LVL: {itemLevel}</ButtonContent>
+              <ButtonContent>Nível: {itemLevel}</ButtonContent>
             </LvlHabButton>
           );
         })}
