@@ -109,17 +109,15 @@ export default function Habilities({ navigation }) {
   }
 
   function checkValue(item) {
-    let levelM = null;
+    const index = habilities.findIndex(h => h.id === item);
+    const hability = habilities[index];
 
-    habilities.forEach(h => {
-      h.levelMod.forEach(m => {
-        if (h.id === item && m.level === selectedLevel) {
-          levelM = m.level;
-        }
-      });
-    });
+    const modIndex = hability.levelMod.findIndex(
+      m => m.level === selectedLevel && m.value > 0,
+    );
+    const modExists = hability.levelMod[modIndex];
 
-    if (levelM) {
+    if (modExists) {
       return <CheckedCircle />;
     }
 
