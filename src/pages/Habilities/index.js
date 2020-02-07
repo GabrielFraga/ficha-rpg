@@ -180,10 +180,10 @@ export default function Habilities({ navigation }) {
 
   const LevelHabilityList = () => {
     const list = [];
-    for (let i = 2; i <= 40; i++) {
-      if (i % 2 === 0) {
-        list.push(i);
-      }
+    let cont = 2;
+    while (cont <= 40) {
+      list.push(cont);
+      cont += 2;
     }
 
     return (
