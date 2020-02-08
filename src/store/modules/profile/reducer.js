@@ -255,6 +255,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
       case '@race/EDIT': {
         const { race } = action;
+
         draft.race = {
           name: race.value,
           info: race.racialInfo,

@@ -14,7 +14,7 @@ import {
   editLevelMod,
 } from '../../store/modules/profile/actions';
 
-import { Races } from '../../services/DefaultRaces';
+import { Races, PickerRaces } from '../../services/DefaultRaces';
 import { Habs } from '../../services/DefaultHabilities';
 
 import {
@@ -59,16 +59,6 @@ export default function Habilities({ navigation }) {
   function handleHabilityChange({ nativeEvent: { text } }, item) {
     dispatch(editHability(item.name, Number(text)));
   }
-
-  const SelectRaces = Races.map(raceItem => {
-    return (
-      <Picker.Item
-        key={raceItem.value}
-        value={raceItem.value}
-        label={raceItem.label}
-      />
-    );
-  });
 
   function handleRace(raceName) {
     const raceIndex = Races.findIndex(r => r.value === raceName);
@@ -238,7 +228,7 @@ export default function Habilities({ navigation }) {
                 prompt="Defina uma raça"
                 selectedValue={race.name}
                 onValueChange={itemValue => handleRace(itemValue)}>
-                {SelectRaces}
+                {PickerRaces}
               </Picker>
             </PickerView>
           </Row>
