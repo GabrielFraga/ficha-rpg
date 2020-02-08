@@ -98,7 +98,7 @@ export default function Habilities({ navigation }) {
     setModalVisible(true);
   }
 
-  const LvlModal = () => {
+  function LvlModal() {
     function checkValue(item) {
       const index = habilities.findIndex(h => h.id === item);
       const hability = habilities[index];
@@ -145,9 +145,9 @@ export default function Habilities({ navigation }) {
         </ModalContainer>
       </Modal>
     );
-  };
+  }
 
-  const LevelHabilityList = () => {
+  function LevelHabilityList() {
     const list = [];
     let cont = 2;
     while (cont <= 40) {
@@ -175,7 +175,7 @@ export default function Habilities({ navigation }) {
         })}
       </HabsRow>
     );
-  };
+  }
 
   return (
     <Container>
