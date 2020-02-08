@@ -7,10 +7,9 @@ const INITIAL_STATE = {
   level: '',
   race: [{ name: null, info: null }],
   classes: [
-    {
-      name: '',
-      level: '',
-    },
+    { id: 0, name: '', level: '' },
+    { id: 1, name: '', level: '' },
+    { id: 2, name: '', level: '' },
   ],
   habilities: [
     {
@@ -301,7 +300,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
         break;
       }
       case '@class/CREATE': {
-        draft.classes.push({ name: '', level: '' });
+        draft.classes.push({ id: '', name: '', level: '' });
         break;
       }
       default:
