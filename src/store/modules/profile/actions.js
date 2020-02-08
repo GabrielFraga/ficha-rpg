@@ -46,3 +46,9 @@ export function editLevelMod({ id, level }) {
     inputLevel: level,
   };
 }
+
+export function createClass() {
+  return {
+    type: '@class/CREATE',
+  };
+}

@@ -6,6 +6,12 @@ const INITIAL_STATE = {
   age: null,
   level: '',
   race: [{ name: null, info: null }],
+  classes: [
+    {
+      name: '',
+      level: '',
+    },
+  ],
   habilities: [
     {
       id: 0,
@@ -291,6 +297,10 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         draft.name = name;
 
+        break;
+      }
+      case '@class/CREATE': {
+        draft.classes.push({ name: '', level: '' });
         break;
       }
       default:
