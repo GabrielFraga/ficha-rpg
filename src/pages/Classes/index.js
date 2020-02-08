@@ -4,7 +4,11 @@ import { TouchableHighlight, ScrollView, Modal, Alert } from 'react-native';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { createClass } from '../../store/modules/profile/actions';
+import {
+  createClass,
+  editClass,
+  editClassLevel,
+} from '../../store/modules/profile/actions';
 
 import {
   DefaultClasses,
@@ -32,32 +36,45 @@ export default function Classes() {
   const level = useSelector(state => state.profile.level);
   const classes = useSelector(state => state.profile.classes);
 
-  const [classType, setClassType] = useState('basic');
-  const [defaultClass, setDefaultClass] = useState();
+  // const [classType, setClassType] = useState('basic');
+  const [levelState, setLevelState] = useState(0);
 
   function handleCreateClass() {
     dispatch(createClass());
   }
 
-  // function handleEditClass(){
-  //   dispatch(editClass)
-  // }
+  function handleEditClass(id, name) {
+    dispatch(editClass(id, name));
+  }
+
+  function handleEditClassLevel({ nativeEvent: { text } }, { id }) {
+    const total = Number(text) + levelState;
+
+    if (total <= level) {
+      setLevelState(total);
+      dispatch(editClassLevel(id, Number(text)));
+    } else {
+      Alert.alert(
+        'Você não pode usar mais níveis do que seu personagem possui!',
+      );
+    }
+  }
 
   function ShowClasses() {
     return classes.map(c => {
       return (
         <Section key={String(c.id)}>
-          <Row>
+          {/* <Row>
             <Label>Tipo</Label>
             <PickerView>
               <Picker
                 prompt="Defina o tipo de classe"
-                selectedValue={classType}
+                selectedValue={c.type}
                 onValueChange={itemValue => setClassType(itemValue)}>
                 {SelectClassType}
               </Picker>
             </PickerView>
-          </Row>
+          </Row> */}
           <Row>
             <Label>Classe</Label>
             <PickerView
@@ -66,13 +83,17 @@ export default function Classes() {
               }}>
               <Picker
                 prompt="Defina uma classe"
-                selectedValue={defaultClass}
-                onValueChange={itemValue => setDefaultClass(itemValue)}>
+                selectedValue={c.name}
+                onValueChange={itemValue => handleEditClass(c.id, itemValue)}>
                 {SelectClass}
               </Picker>
             </PickerView>
             <Label>Nível</Label>
-            <InputBox />
+            <InputBox
+              keyboardType="numeric"
+              value={String(c.level)}
+              onChange={itemValue => handleEditClassLevel(itemValue, c)}
+            />
           </Row>
         </Section>
       );

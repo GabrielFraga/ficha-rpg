@@ -31,11 +31,11 @@ export function editName(name) {
     name,
   };
 }
-export function editOtherMod(id, text) {
+export function editOtherMod({ id, value }) {
   return {
     type: '@otherMod/EDIT',
     id,
-    text,
+    value,
   };
 }
 
@@ -50,5 +50,21 @@ export function editLevelMod({ id, level }) {
 export function createClass() {
   return {
     type: '@class/CREATE',
+  };
+}
+
+export function editClass(id, name) {
+  return {
+    type: '@class/EDIT',
+    id,
+    name,
+  };
+}
+
+export function editClassLevel(id, level) {
+  return {
+    type: '@class/LEVEL_EDIT',
+    id,
+    level,
   };
 }

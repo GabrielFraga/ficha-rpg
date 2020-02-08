@@ -65,16 +65,16 @@ export default function Habilities({ navigation }) {
     dispatch(editRace(Races[raceIndex]));
   }
 
-  function handleAge({ nativeEvent: { text } }) {
-    dispatch(editAge(text));
+  function handleAge(ageP) {
+    dispatch(editAge(ageP));
   }
 
-  function handleLevel({ nativeEvent: { text } }) {
-    dispatch(editLevel(text));
+  function handleLevel(levelP) {
+    dispatch(editLevel(levelP));
   }
 
-  function handleName({ nativeEvent: { text } }) {
-    dispatch(editName(text));
+  function handleName(nameP) {
+    dispatch(editName(nameP));
   }
 
   function handleLevelHability(HabId) {
@@ -183,20 +183,20 @@ export default function Habilities({ navigation }) {
         <Section>
           <Row>
             <Label>Nome:</Label>
-            <InputBox value={name} onChange={e => handleName(e)} />
+            <InputBox value={name} onChangeText={nameP => handleName(nameP)} />
           </Row>
 
           <Row>
             <Label>Idade:</Label>
             <InputBox
               value={age}
-              onChange={e => handleAge(e)}
+              onChangeText={ageP => handleAge(ageP)}
               keyboardType="numeric"
             />
             <Label>Nível:</Label>
             <InputBox
               value={String(level)}
-              onChange={e => handleLevel(e)}
+              onChangeText={levelP => handleLevel(levelP)}
               keyboardType="numeric"
             />
           </Row>

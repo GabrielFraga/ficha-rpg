@@ -24,7 +24,7 @@ export default function RaceInfo() {
   const race = useSelector(state => state.profile.race);
 
   function handleModChange({ nativeEvent: { text } }, { id }) {
-    dispatch(editOtherMod(id, Number(text)));
+    dispatch(editOtherMod({ id, value: Number(text) }));
   }
 
   const RaceModsList = () =>

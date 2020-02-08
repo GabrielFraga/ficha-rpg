@@ -6,11 +6,7 @@ const INITIAL_STATE = {
   age: null,
   level: '',
   race: [{ name: null, info: null }],
-  classes: [
-    { id: 0, name: '', level: '' },
-    { id: 1, name: '', level: '' },
-    { id: 2, name: '', level: '' },
-  ],
+  classes: [{ id: 0, name: '', level: '' }],
   habilities: [
     {
       id: 0,
@@ -158,12 +154,12 @@ export default function editProfile(state = INITIAL_STATE, action) {
       }
 
       case '@otherMod/EDIT': {
-        const { id, text } = action;
+        const { id, value } = action;
 
         const habIndex = draft.habilities.findIndex(p => p.id === id);
         const hability = draft.habilities[habIndex];
 
-        hability.modificators.othersMod = text;
+        hability.modificators.othersMod = value;
 
         const totalValue =
           hability.initialValue +
@@ -299,8 +295,31 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         break;
       }
+
       case '@class/CREATE': {
-        draft.classes.push({ id: '', name: '', level: '' });
+        const { id } = draft.classes.slice(-1).pop();
+
+        draft.classes.push({ id: id + 1, name: '', level: '' });
+        break;
+      }
+
+      case '@class/EDIT': {
+        const { id, name } = action;
+
+        const index = draft.classes.findIndex(c => c.id === id);
+        const mainClass = draft.classes[index];
+        mainClass.name = name;
+
+        break;
+      }
+
+      case '@class/LEVEL_EDIT': {
+        const { id, level } = action;
+
+        const index = draft.classes.findIndex(c => c.id === id);
+        const mainClass = draft.classes[index];
+        mainClass.level = level;
+
         break;
       }
       default:
