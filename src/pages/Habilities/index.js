@@ -77,11 +77,6 @@ export default function Habilities({ navigation }) {
     dispatch(editName(text));
   }
 
-  function openLevelModal(lvl) {
-    setSelectedLevel(lvl);
-    setModalVisible(true);
-  }
-
   function handleLevelHability(HabId) {
     if (level >= selectedLevel) {
       dispatch(
@@ -98,53 +93,27 @@ export default function Habilities({ navigation }) {
     }
   }
 
-  function checkValue(item) {
-    const index = habilities.findIndex(h => h.id === item);
-    const hability = habilities[index];
-
-    const modIndex = hability.levelMod.findIndex(
-      m => m.level === selectedLevel && m.value > 0,
-    );
-    const modExists = hability.levelMod[modIndex];
-
-    if (modExists) {
-      return <CheckedCircle />;
-    }
-
-    return false;
+  function openLevelModal(lvl) {
+    setSelectedLevel(lvl);
+    setModalVisible(true);
   }
 
-  const HabilitiesList = () =>
-    habilities.map(item => {
-      return (
-        <HabsRow key={item.id}>
-          <FlexLabel numberOfLines={1} ellipsizeMode="tail">
-            {item.name}
-          </FlexLabel>
-          <FixedInput
-            onChange={e => handleHabilityChange(e, item)}
-            keyboardType="numeric">
-            {item.initialValue}
-          </FixedInput>
-          <FixedInput editable={false}>{item.finalValue}</FixedInput>
-          <FixedInput editable={false}>{item.mod}</FixedInput>
-        </HabsRow>
-      );
-    });
-
   const LvlModal = () => {
-    const RadioButtons = ({ options }) => {
-      return options.map(item => {
-        return (
-          <RadioButtonContainer key={item.id}>
-            <ButtonContent>{item.name}</ButtonContent>
-            <TouchableOpacity onPress={() => handleLevelHability(item.id)}>
-              {checkValue(item.id)}
-            </TouchableOpacity>
-          </RadioButtonContainer>
-        );
-      });
-    };
+    function checkValue(item) {
+      const index = habilities.findIndex(h => h.id === item);
+      const hability = habilities[index];
+
+      const modIndex = hability.levelMod.findIndex(
+        m => m.level === selectedLevel && m.value > 0,
+      );
+      const modExists = hability.levelMod[modIndex];
+
+      if (modExists) {
+        return <CheckedCircle />;
+      }
+
+      return false;
+    }
 
     return (
       <Modal
@@ -160,7 +129,17 @@ export default function Habilities({ navigation }) {
               </Title>
             </TitleView>
             <RadioOptionsContainer>
-              <RadioButtons options={Habs} />
+              {Habs.map(item => {
+                return (
+                  <RadioButtonContainer key={item.id}>
+                    <ButtonContent>{item.name}</ButtonContent>
+                    <TouchableOpacity
+                      onPress={() => handleLevelHability(item.id)}>
+                      {checkValue(item.id)}
+                    </TouchableOpacity>
+                  </RadioButtonContainer>
+                );
+              })}
             </RadioOptionsContainer>
           </ModalContent>
         </ModalContainer>
@@ -253,8 +232,25 @@ export default function Habilities({ navigation }) {
           <Title>Mod. </Title>
         </HabsRow>
 
-        <HabilitiesList />
+        {habilities.map(item => {
+          return (
+            <HabsRow key={item.id}>
+              <FlexLabel numberOfLines={1} ellipsizeMode="tail">
+                {item.name}
+              </FlexLabel>
+              <FixedInput
+                onChange={e => handleHabilityChange(e, item)}
+                keyboardType="numeric">
+                {item.initialValue}
+              </FixedInput>
+              <FixedInput editable={false}>{item.finalValue}</FixedInput>
+              <FixedInput editable={false}>{item.mod}</FixedInput>
+            </HabsRow>
+          );
+        })}
+
         <LevelHabilityList />
+
         <LvlModal />
         <TouchableHighlight onPress={() => navigation.navigate('Classes')}>
           <TitleView>
