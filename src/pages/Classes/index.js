@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { RectButton } from 'react-native-gesture-handler';
 import { TouchableHighlight, ScrollView, Modal, Alert } from 'react-native';
 
@@ -36,8 +36,13 @@ export default function Classes() {
   const level = useSelector(state => state.profile.level);
   const classes = useSelector(state => state.profile.classes);
 
-  // const [classType, setClassType] = useState('basic');
+  const [classType, setClassType] = useState('basic');
   const [levelState, setLevelState] = useState(0);
+
+  useEffect(() => {
+    const total = classes.reduce((x, y) => x + y.level, 0);
+    setLevelState(total);
+  }, [classes, level]);
 
   function handleCreateClass() {
     dispatch(createClass());
@@ -64,7 +69,7 @@ export default function Classes() {
     return classes.map(c => {
       return (
         <Section key={String(c.id)}>
-          {/* <Row>
+          <Row>
             <Label>Tipo</Label>
             <PickerView>
               <Picker
@@ -74,7 +79,7 @@ export default function Classes() {
                 {SelectClassType}
               </Picker>
             </PickerView>
-          </Row> */}
+          </Row>
           <Row>
             <Label>Classe</Label>
             <PickerView
@@ -106,7 +111,9 @@ export default function Classes() {
         <Section>
           <Section>
             <Row>
-              <Title>Nível do personagem: {level}</Title>
+              <Title>
+                Nívels disponíveis para distribuir: {level - levelState}
+              </Title>
             </Row>
           </Section>
           <ShowClasses />

@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   age: null,
   level: '',
   race: [{ name: null, info: null }],
-  classes: [{ id: 0, name: '', level: '' }],
+  classes: [{ id: 0, name: '', level: '', type: '' }],
   habilities: [
     {
       id: 0,
@@ -299,16 +299,17 @@ export default function editProfile(state = INITIAL_STATE, action) {
       case '@class/CREATE': {
         const { id } = draft.classes.slice(-1).pop();
 
-        draft.classes.push({ id: id + 1, name: '', level: '' });
+        draft.classes.push({ id: id + 1, name: '', level: '', type: '' });
         break;
       }
 
       case '@class/EDIT': {
-        const { id, name } = action;
+        const { id, name, type } = action;
 
         const index = draft.classes.findIndex(c => c.id === id);
         const mainClass = draft.classes[index];
         mainClass.name = name;
+        mainClass.name = type;
 
         break;
       }
