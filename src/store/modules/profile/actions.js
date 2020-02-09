@@ -68,3 +68,10 @@ export function editClassLevel(id, level) {
     level,
   };
 }
+
+export function deleteClass(id) {
+  return {
+    type: '@class/DELETE',
+    id,
+  };
+}

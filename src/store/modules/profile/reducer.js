@@ -304,12 +304,11 @@ export default function editProfile(state = INITIAL_STATE, action) {
       }
 
       case '@class/EDIT': {
-        const { id, name, type } = action;
+        const { id, name } = action;
 
         const index = draft.classes.findIndex(c => c.id === id);
         const mainClass = draft.classes[index];
         mainClass.name = name;
-        mainClass.name = type;
 
         break;
       }
@@ -321,6 +320,14 @@ export default function editProfile(state = INITIAL_STATE, action) {
         const mainClass = draft.classes[index];
         mainClass.level = level;
 
+        break;
+      }
+
+      case '@class/DELETE': {
+        const { id } = action;
+
+        const index = draft.classes.findIndex(c => c.id === id);
+        draft.classes.splice(index, 1);
         break;
       }
       default:

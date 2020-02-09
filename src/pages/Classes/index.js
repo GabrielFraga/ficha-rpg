@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from 'react';
+
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+
 import { RectButton } from 'react-native-gesture-handler';
 import { TouchableHighlight, ScrollView, Modal, Alert } from 'react-native';
 
@@ -6,6 +9,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import {
   createClass,
+  deleteClass,
   editClass,
   editClassLevel,
 } from '../../store/modules/profile/actions';
@@ -65,6 +69,10 @@ export default function Classes() {
     }
   }
 
+  function handleDeleteClass(id) {
+    dispatch(deleteClass(id));
+  }
+
   function ShowClasses() {
     return classes.map(c => {
       return (
@@ -79,6 +87,11 @@ export default function Classes() {
                 {SelectClassType}
               </Picker>
             </PickerView>
+            {c.id !== 0 && (
+              <TouchableHighlight onPress={() => handleDeleteClass(c.id)}>
+                <Icon name="trash-can" size={36} color="#823b38a8" />
+              </TouchableHighlight>
+            )}
           </Row>
           <Row>
             <Label>Classe</Label>
