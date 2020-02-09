@@ -52,19 +52,11 @@ export default function Classes() {
     dispatch(createClass());
   }
 
-  function handleEditClass(id, name) {
-    const mainClass =
-      DefaultClasses[DefaultClasses.findIndex(c => c.value === name)];
-
-    dispatch(
-      editClass(
-        id,
-        name,
-        mainClass.initialLF,
-        mainClass.lfEachLevel,
-        mainClass.trainedExpertise,
-      ),
-    );
+  function handleEditClass(id, classLevel, name) {
+    const { initialLF, lfEachLevel, trainedExpertise } = DefaultClasses[
+      DefaultClasses.findIndex(c => c.value === name)
+    ];
+    dispatch(editClass(id, name, initialLF, lfEachLevel, trainedExpertise));
   }
 
   function handleEditClassLevel({ nativeEvent: { text } }, { id }) {
@@ -113,7 +105,9 @@ export default function Classes() {
               <Picker
                 prompt="Defina uma classe"
                 selectedValue={c.name}
-                onValueChange={itemValue => handleEditClass(c.id, itemValue)}>
+                onValueChange={itemValue =>
+                  handleEditClass(c.id, c.level, itemValue)
+                }>
                 {SelectClass}
               </Picker>
             </PickerView>

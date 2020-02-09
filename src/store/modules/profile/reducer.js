@@ -1,5 +1,6 @@
 import produce from 'immer';
 import { checkModificator } from '../../../services/DefaultHabilities';
+import { DefaultClasses } from '../../../services/DefaultClasses';
 
 const INITIAL_STATE = {
   name: null,
@@ -144,6 +145,23 @@ export default function editProfile(state = INITIAL_STATE, action) {
           0,
         ) -
         initialClass.lifePointsEachLevel;
+    }
+
+    function calcBBA(mainClass) {
+      const { bba } = DefaultClasses[
+        DefaultClasses.findIndex(c => c.value === mainClass.name)
+      ];
+
+      let bonusC = 0;
+
+      if (mainClass.level) {
+        const { bonus } = bba.filter(c => c.level === mainClass.level)[0];
+        bonusC = bonus;
+      }
+
+      mainClass.bba = bonusC;
+
+      draft.bba = Object.values(draft.classes).reduce((x, y) => x + y.bba, 0);
     }
 
     switch (action.type) {
@@ -332,10 +350,12 @@ export default function editProfile(state = INITIAL_STATE, action) {
         if (mainClass.id === 0) {
           mainClass.initialLifePoints = initialLifePoints;
         }
+
         mainClass.name = name;
         mainClass.lifePointsEachLevel = lifePointsEachLevel;
         mainClass.trainedExpertise = trainedExpertise;
 
+        calcBBA(mainClass);
         calcLifePoints();
 
         break;
@@ -346,8 +366,10 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         const index = draft.classes.findIndex(c => c.id === id);
         const mainClass = draft.classes[index];
+
         mainClass.level = level;
 
+        calcBBA(mainClass);
         calcLifePoints();
 
         break;
@@ -357,8 +379,14 @@ export default function editProfile(state = INITIAL_STATE, action) {
         const { id } = action;
 
         const index = draft.classes.findIndex(c => c.id === id);
-        draft.classes.splice(index, 1);
+        const mainClass = draft.classes[index];
 
+        if (mainClass.level) {
+          mainClass.level = null;
+          calcBBA(mainClass);
+        }
+
+        draft.classes.splice(index, 1);
         calcLifePoints();
 
         break;
