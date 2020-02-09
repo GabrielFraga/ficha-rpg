@@ -143,7 +143,8 @@ export default function editProfile(state = INITIAL_STATE, action) {
         Object.values(draft.classes).reduce(
           (x, y) => x + y.lifePointsEachLevel * y.level,
           0,
-        ) -
+        ) +
+        draft.habilities[2].mod * draft.level -
         initialClass.lifePointsEachLevel;
     }
 
@@ -182,6 +183,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
         hability.mod = modificator;
         hability.finalValue = totalValue;
 
+        calcLifePoints();
         break;
       }
 
@@ -202,6 +204,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
         hability.finalValue = totalValue;
         hability.mod = modificator;
 
+        calcLifePoints();
         break;
       }
 
@@ -277,6 +280,8 @@ export default function editProfile(state = INITIAL_STATE, action) {
           element.mod = modificator;
           element.finalValue = totalValue;
         });
+
+        calcLifePoints();
         break;
       }
 
@@ -303,6 +308,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
           element.finalValue = totalValue;
         });
 
+        calcLifePoints();
         break;
       }
 
@@ -318,6 +324,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         draft.level = level;
 
+        calcLifePoints();
         break;
       }
       case '@name/EDIT': {
