@@ -53,7 +53,18 @@ export default function Classes() {
   }
 
   function handleEditClass(id, name) {
-    dispatch(editClass(id, name));
+    const mainClass =
+      DefaultClasses[DefaultClasses.findIndex(c => c.value === name)];
+
+    dispatch(
+      editClass(
+        id,
+        name,
+        mainClass.initialLF,
+        mainClass.lfEachLevel,
+        mainClass.trainedExpertise,
+      ),
+    );
   }
 
   function handleEditClassLevel({ nativeEvent: { text } }, { id }) {

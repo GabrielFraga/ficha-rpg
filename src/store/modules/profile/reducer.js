@@ -7,6 +7,8 @@ const INITIAL_STATE = {
   level: '',
   race: [{ name: null, info: null }],
   classes: [{ id: 0, name: '', level: '', type: '' }],
+  lifePoints: 0,
+  bba: 0,
   habilities: [
     {
       id: 0,
@@ -130,8 +132,20 @@ const INITIAL_STATE = {
     },
   ],
 };
+
 export default function editProfile(state = INITIAL_STATE, action) {
   return produce(state, draft => {
+    function calcLifePoints() {
+      const initialClass = draft.classes[0];
+      draft.lifePoints =
+        initialClass.initialLifePoints +
+        Object.values(draft.classes).reduce(
+          (x, y) => x + y.lifePointsEachLevel * y.level,
+          0,
+        ) -
+        initialClass.lifePointsEachLevel;
+    }
+
     switch (action.type) {
       case '@hability/EDIT': {
         const { name, value } = action;
@@ -299,16 +313,30 @@ export default function editProfile(state = INITIAL_STATE, action) {
       case '@class/CREATE': {
         const { id } = draft.classes.slice(-1).pop();
 
-        draft.classes.push({ id: id + 1, name: '', level: '', type: '' });
+        draft.classes.push({ id: id + 1, name: '', level: 0, type: '' });
         break;
       }
 
       case '@class/EDIT': {
-        const { id, name } = action;
+        const {
+          id,
+          name,
+          initialLifePoints,
+          lifePointsEachLevel,
+          trainedExpertise,
+        } = action;
 
         const index = draft.classes.findIndex(c => c.id === id);
         const mainClass = draft.classes[index];
+
+        if (mainClass.id === 0) {
+          mainClass.initialLifePoints = initialLifePoints;
+        }
         mainClass.name = name;
+        mainClass.lifePointsEachLevel = lifePointsEachLevel;
+        mainClass.trainedExpertise = trainedExpertise;
+
+        calcLifePoints();
 
         break;
       }
@@ -320,6 +348,8 @@ export default function editProfile(state = INITIAL_STATE, action) {
         const mainClass = draft.classes[index];
         mainClass.level = level;
 
+        calcLifePoints();
+
         break;
       }
 
@@ -328,6 +358,9 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         const index = draft.classes.findIndex(c => c.id === id);
         draft.classes.splice(index, 1);
+
+        calcLifePoints();
+
         break;
       }
       default:

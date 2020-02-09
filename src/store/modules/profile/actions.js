@@ -53,11 +53,20 @@ export function createClass() {
   };
 }
 
-export function editClass(id, name) {
+export function editClass(
+  id,
+  name,
+  initialLifePoints,
+  lifePointsEachLevel,
+  trainedExpertise,
+) {
   return {
     type: '@class/EDIT',
     id,
     name,
+    initialLifePoints,
+    lifePointsEachLevel,
+    trainedExpertise,
   };
 }
 
