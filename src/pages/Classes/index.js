@@ -41,30 +41,45 @@ export default function Classes() {
   const classes = useSelector(state => state.profile.classes);
 
   const [classType, setClassType] = useState('basic');
-  const [levelState, setLevelState] = useState(0);
+  const [classLevel, setClassLevel] = useState(0);
+  const [avaliableLevel, setAvaliableLevel] = useState([]);
 
   useEffect(() => {
     const total = classes.reduce((x, y) => x + y.level, 0);
-    setLevelState(total);
+    setClassLevel(total);
   }, [classes, level]);
+
+  useEffect(() => {
+    // const avaliableLevels = level - classLevel;
+    let cont = 0;
+    const list = [];
+    while (cont <= level) {
+      list.push(cont);
+
+      cont += 1;
+    }
+    setAvaliableLevel(list);
+  }, [level, classLevel]);
 
   function handleCreateClass() {
     dispatch(createClass());
   }
 
-  function handleEditClass(id, classLevel, name) {
+  function handleEditClass(id, name) {
     const { initialLF, lfEachLevel, trainedExpertise } = DefaultClasses[
       DefaultClasses.findIndex(c => c.value === name)
     ];
     dispatch(editClass(id, name, initialLF, lfEachLevel, trainedExpertise));
   }
 
-  function handleEditClassLevel({ nativeEvent: { text } }, { id }) {
-    const total = Number(text) + levelState;
+  function handleEditClassLevel({ id, name }, levelClass) {
+    const total = Number(levelClass) - classLevel;
 
-    if (total <= level) {
-      setLevelState(total);
-      dispatch(editClassLevel(id, Number(text)));
+    if (total <= level && name) {
+      setClassLevel(total);
+      dispatch(editClassLevel(id, Number(levelClass)));
+    } else if (!name) {
+      Alert.alert('Defina uma classe!');
     } else {
       Alert.alert(
         'Você não pode usar mais níveis do que seu personagem possui!',
@@ -96,27 +111,35 @@ export default function Classes() {
               </TouchableHighlight>
             )}
           </Row>
+
           <Row>
             <Label>Classe</Label>
-            <PickerView
-              style={{
-                flexBasis: 100,
-              }}>
+            <PickerView>
               <Picker
                 prompt="Defina uma classe"
                 selectedValue={c.name}
-                onValueChange={itemValue =>
-                  handleEditClass(c.id, c.level, itemValue)
-                }>
+                onValueChange={itemValue => handleEditClass(c.id, itemValue)}>
                 {SelectClass}
               </Picker>
             </PickerView>
+
             <Label>Nível</Label>
-            <InputBox
-              keyboardType="numeric"
-              value={String(c.level)}
-              onChange={itemValue => handleEditClassLevel(itemValue, c)}
-            />
+            <PickerView>
+              <Picker
+                prompt="Defina o nível de classe"
+                selectedValue={c.level}
+                onValueChange={itemValue => handleEditClassLevel(c, itemValue)}>
+                {avaliableLevel.map(levelItem => {
+                  return (
+                    <Picker.Item
+                      key={String(levelItem)}
+                      value={levelItem}
+                      label={`${levelItem}`}
+                    />
+                  );
+                })}
+              </Picker>
+            </PickerView>
           </Row>
         </Section>
       );
@@ -130,7 +153,7 @@ export default function Classes() {
           <Section>
             <Row>
               <Title>
-                Nívels disponíveis para distribuir: {level - levelState}
+                Nívels disponíveis para distribuir: {level - classLevel}
               </Title>
             </Row>
           </Section>

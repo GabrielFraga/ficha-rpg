@@ -2,7 +2,7 @@ import React from 'react';
 import { Picker } from '../components/Global/styles';
 
 export const DefaultClasses = [
-  { id: 0, label: 'Selecione', value: 'default', group: '' },
+  { id: 0, label: 'Selecione', value: null, group: '' },
   {
     id: 1,
     label: 'Abençoado',

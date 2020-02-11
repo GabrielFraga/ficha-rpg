@@ -7,7 +7,7 @@ const INITIAL_STATE = {
   age: null,
   level: '',
   race: [{ name: null, info: null }],
-  classes: [{ id: 0, name: '', level: '', type: '' }],
+  classes: [{ id: 0, name: '', level: 0, type: '' }],
   lifePoints: 0,
   bba: 0,
   habilities: [
@@ -388,6 +388,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
         const index = draft.classes.findIndex(c => c.id === id);
         const mainClass = draft.classes[index];
 
+        // torna o nível null para que haja o recalculo correto do BBA
         if (mainClass.level) {
           mainClass.level = null;
           calcBBA(mainClass);
