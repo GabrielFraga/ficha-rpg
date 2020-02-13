@@ -15,11 +15,12 @@ import {
 } from '../../store/modules/profile/actions';
 
 import {
-  DefaultClasses,
   ClassTypes,
   SelectClass,
   SelectClassType,
-} from '../../services/DefaultClasses';
+} from '../../services/Classes/ClassesService';
+
+import ClassesModel from '../../services/Classes/model.clasess';
 
 import {
   Container,
@@ -66,9 +67,12 @@ export default function Classes() {
   }
 
   function handleEditClass(id, name) {
-    const { initialLF, lfEachLevel, trainedExpertise } = DefaultClasses[
-      DefaultClasses.findIndex(c => c.value === name)
+    // console.tron.log(id, name);
+
+    const { initialLF, lfEachLevel, trainedExpertise } = ClassesModel[
+      ClassesModel.findIndex(c => c.value === name)
     ];
+    console.tron.log(id, name, initialLF, lfEachLevel, trainedExpertise);
     dispatch(editClass(id, name, initialLF, lfEachLevel, trainedExpertise));
   }
 

@@ -1,7 +1,4 @@
-import React from 'react';
-import { Picker } from '../components/Global/styles';
-
-export const DefaultClasses = [
+const ClassesModel = [
   { id: 0, label: 'Selecione', value: null, group: '' },
   {
     id: 1,
@@ -626,35 +623,4 @@ export const DefaultClasses = [
   },
 ];
 
-export const ClassTypes = [
-  {
-    id: 0,
-    value: 'basic',
-    label: 'Básico',
-  },
-  {
-    id: 1,
-    value: 'prestigio',
-    label: 'Prestígio',
-  },
-];
-
-export const SelectClassType = ClassTypes.map(classTypeItem => {
-  return (
-    <Picker.Item
-      key={classTypeItem.id}
-      value={classTypeItem.value}
-      label={classTypeItem.label}
-    />
-  );
-});
-
-export const SelectClass = DefaultClasses.map(classItem => {
-  return (
-    <Picker.Item
-      key={classItem.id}
-      value={classItem.value}
-      label={classItem.label}
-    />
-  );
-});
+export default ClassesModel;

@@ -7,7 +7,7 @@ export const ModalView = styled.View`
   margin-bottom: 20px;
 `;
 
-export const ModalHabsRow = styled.View`
+export const ModalHabilitiesRow = styled.View`
   flex-direction: row;
   justify-content: space-evenly;
   align-items: center;

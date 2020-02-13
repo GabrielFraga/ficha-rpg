@@ -9,7 +9,7 @@ import { Container, Row, Section } from '../../components/Global/styles';
 
 import {
   ModalView,
-  ModalHabsRow,
+  ModalHabilitiesRow,
   ModalFlexLabel,
   ModalFixedInput,
   Text,
@@ -30,7 +30,7 @@ export default function RaceInfo() {
   const RaceModsList = () =>
     habilities.map(item => {
       return (
-        <ModalHabsRow key={item.id}>
+        <ModalHabilitiesRow key={item.id}>
           <ModalFlexLabel numberOfLines={1} ellipsizeMode="tail">
             {item.name}
           </ModalFlexLabel>
@@ -51,7 +51,7 @@ export default function RaceInfo() {
             onChange={e => handleModChange(e, item)}>
             {item.modificators.othersMod}
           </ModalFixedInput>
-        </ModalHabsRow>
+        </ModalHabilitiesRow>
       );
     });
 
@@ -61,14 +61,14 @@ export default function RaceInfo() {
         <ModalView>
           <BigTitle>Modificadores da Raça: {race.name}</BigTitle>
           <Section>
-            <ModalHabsRow style={{ height: 50 }}>
+            <ModalHabilitiesRow style={{ height: 50 }}>
               <Title>Hab.</Title>
               <Title>Raça</Title>
               <Title>Idade</Title>
               <Title>Nível</Title>
               <Title>Modelo</Title>
               <Title>Outros</Title>
-            </ModalHabsRow>
+            </ModalHabilitiesRow>
             <RaceModsList />
           </Section>
         </ModalView>

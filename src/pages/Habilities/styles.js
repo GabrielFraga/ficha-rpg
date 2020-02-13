@@ -25,7 +25,7 @@ export const FinalValue = styled.Text`
   font-size: 16px;
 `;
 
-export const HabsRow = styled.View`
+export const HabilitiesRow = styled.View`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;

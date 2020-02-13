@@ -14,8 +14,10 @@ import {
   editLevelMod,
 } from '../../store/modules/profile/actions';
 
-import { Races, PickerRaces } from '../../services/DefaultRaces';
-import { Habs } from '../../services/DefaultHabilities';
+import { PickerRaces } from '../../services/Races/RacesService';
+
+import RacesModel from '../../services/Races/model.races';
+import HabilitiesModel from '../../services/Habilities/model.habilities';
 
 import {
   Container,
@@ -33,7 +35,7 @@ import {
   FixedInput,
   TitleView,
   FinalValue,
-  HabsRow,
+  HabilitiesRow,
   LvlHabButton,
   ButtonContent,
   ModalContainer,
@@ -61,8 +63,9 @@ export default function Habilities({ navigation }) {
   }
 
   function handleRace(raceName) {
-    const raceIndex = Races.findIndex(r => r.value === raceName);
-    dispatch(editRace(Races[raceIndex]));
+    console.tron.log(raceName);
+    const raceIndex = RacesModel.findIndex(r => r.value === raceName);
+    dispatch(editRace(RacesModel[raceIndex]));
   }
 
   function handleAge(ageP) {
@@ -129,7 +132,7 @@ export default function Habilities({ navigation }) {
               </Title>
             </TitleView>
             <RadioOptionsContainer>
-              {Habs.map(item => {
+              {HabilitiesModel.map(item => {
                 return (
                   <RadioButtonContainer key={item.id}>
                     <ButtonContent>{item.name}</ButtonContent>
@@ -156,7 +159,7 @@ export default function Habilities({ navigation }) {
     }
 
     return (
-      <HabsRow
+      <HabilitiesRow
         style={{
           flexWrap: 'wrap',
           marginTop: 20,
@@ -173,7 +176,7 @@ export default function Habilities({ navigation }) {
             </LvlHabButton>
           );
         })}
-      </HabsRow>
+      </HabilitiesRow>
     );
   }
 
@@ -213,7 +216,7 @@ export default function Habilities({ navigation }) {
           </Row>
         </Section>
 
-        <HabsRow style={{ height: 50 }}>
+        <HabilitiesRow style={{ height: 50 }}>
           <Title>Habilidade</Title>
           <Title>Val. Inicial</Title>
           <TitleView style={{ alignItems: 'center' }}>
@@ -230,11 +233,11 @@ export default function Habilities({ navigation }) {
             </TouchableHighlight>
           </TitleView>
           <Title>Mod. </Title>
-        </HabsRow>
+        </HabilitiesRow>
 
         {habilities.map(item => {
           return (
-            <HabsRow key={item.id}>
+            <HabilitiesRow key={item.id}>
               <FlexLabel numberOfLines={1} ellipsizeMode="tail">
                 {item.name}
               </FlexLabel>
@@ -245,7 +248,7 @@ export default function Habilities({ navigation }) {
               </FixedInput>
               <FixedInput editable={false}>{item.finalValue}</FixedInput>
               <FixedInput editable={false}>{item.mod}</FixedInput>
-            </HabsRow>
+            </HabilitiesRow>
           );
         })}
 

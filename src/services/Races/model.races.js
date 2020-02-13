@@ -1,7 +1,4 @@
-import React from 'react';
-import { Picker } from '../components/Global/styles';
-
-export const Races = [
+const RacesModel = [
   {
     label: 'Selecione uma Raça',
     value: 'default',
@@ -1099,12 +1096,4 @@ Benefício: você recebe +2 em Constituição. Além disso, escolha duas habilid
   },
 ];
 
-export const PickerRaces = Races.map(raceItem => {
-  return (
-    <Picker.Item
-      key={raceItem.value}
-      value={raceItem.value}
-      label={raceItem.label}
-    />
-  );
-});
+export default RacesModel;
