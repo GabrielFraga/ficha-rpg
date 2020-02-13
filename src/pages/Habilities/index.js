@@ -6,20 +6,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import {
-  editHability,
-  editRace,
-  editAge,
-  editLevel,
-  editName,
-  editLevelMod,
-} from '../../store/modules/profile/actions';
-
-import { PickerRaces } from '../../services/Races/RacesService';
-
-import RacesModel from '../../services/Races/model.races';
-import HabilitiesModel from '../../services/Habilities/model.habilities';
-
-import {
   Container,
   Row,
   Section,
@@ -46,6 +32,19 @@ import {
   RadioOptionsContainer,
 } from './styles';
 
+import {
+  editHability,
+  editRace,
+  editAge,
+  editLevel,
+  editName,
+  editLevelMod,
+} from '../../store/modules/profile/actions';
+
+import { PickerRaces, findRace } from '../../services/Races/RacesService';
+
+import HabilitiesModel from '../../services/Habilities/model.habilities';
+
 export default function Habilities({ navigation }) {
   const dispatch = useDispatch();
 
@@ -63,9 +62,8 @@ export default function Habilities({ navigation }) {
   }
 
   function handleRace(raceName) {
-    console.tron.log(raceName);
-    const raceIndex = RacesModel.findIndex(r => r.value === raceName);
-    dispatch(editRace(RacesModel[raceIndex]));
+    const mainRace = findRace(raceName);
+    dispatch(editRace(mainRace));
   }
 
   function handleAge(ageP) {

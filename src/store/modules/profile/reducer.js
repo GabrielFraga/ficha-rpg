@@ -1,6 +1,6 @@
 import produce from 'immer';
 import { checkModificator } from '../../../services/Habilities/HabilitiesService';
-import ClassesModel from '../../../services/Classes/model.clasess';
+import { findBBA } from '../../../services/Classes/ClassesService';
 
 const INITIAL_STATE = {
   name: null,
@@ -149,9 +149,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
     }
 
     function calcBBA(mainClass) {
-      const { bba } = ClassesModel[
-        ClassesModel.findIndex(c => c.value === mainClass.name)
-      ];
+      const bba = findBBA(mainClass);
 
       let bonusC = 0;
 

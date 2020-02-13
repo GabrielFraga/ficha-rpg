@@ -3,6 +3,14 @@ import { Picker } from '../../components/Global/styles';
 
 import ClassesModel from './model.clasess';
 
+export const findBBA = className => {
+  const { bba } = ClassesModel[
+    ClassesModel.findIndex(c => c.value === className.name)
+  ];
+
+  return bba;
+};
+
 export const ClassTypes = [
   {
     id: 0,
