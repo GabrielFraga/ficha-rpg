@@ -42,7 +42,7 @@ import {
 } from '../../store/modules/profile/actions';
 
 import { PickerRaces, findRace } from '../../services/Races/RacesService';
-
+import { calcLevel } from '../../services/Levels/LevelsService';
 import HabilitiesModel from '../../services/Habilities/model.habilities';
 
 export default function Habilities({ navigation }) {
@@ -71,6 +71,7 @@ export default function Habilities({ navigation }) {
   }
 
   function handleLevel(levelP) {
+    // console.tron.log(calcLevel(levelP));
     dispatch(editLevel(levelP));
   }
 
