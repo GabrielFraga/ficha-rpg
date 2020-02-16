@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { RectButton } from 'react-native-gesture-handler';
-import { TouchableHighlight, ScrollView, Modal, Alert } from 'react-native';
+import { TouchableHighlight, ScrollView, Alert } from 'react-native';
 
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -30,7 +29,6 @@ import {
   Label,
   Picker,
   PickerView,
-  InputBox,
 } from '../../components/Global/styles';
 
 import { Button } from './styles';
@@ -40,114 +38,59 @@ export default function Classes() {
 
   const level = useSelector(state => state.profile.level);
   const classes = useSelector(state => state.profile.classes);
+  const totalClassesLevel = useSelector(state =>
+    state.profile.classes.reduce((x, y) => x + y.level, 0),
+  );
 
   const [classType, setClassType] = useState('basic');
-  const [classLevel, setClassLevel] = useState(0);
-  const [avaliableLevel, setAvaliableLevel] = useState([]);
+  const [profileLevel, setProfileLevel] = useState([]);
+  const [avaliableLevel, setAvaliableLevel] = useState();
 
   useEffect(() => {
-    const total = classes.reduce((x, y) => x + y.level, 0);
-    setClassLevel(total);
-  }, [classes, level]);
+    setAvaliableLevel(level.value - totalClassesLevel);
+  }, [level.value, totalClassesLevel]);
 
   useEffect(() => {
-    // const avaliableLevels = level - classLevel;
     let cont = 0;
     const list = [];
-    while (cont <= level) {
+    while (cont <= level.value) {
       list.push(cont);
-
       cont += 1;
     }
-    setAvaliableLevel(list);
-  }, [level, classLevel]);
+    setProfileLevel(list);
+  }, [level, totalClassesLevel]);
 
   function handleCreateClass() {
     dispatch(createClass());
   }
 
   function handleEditClass(id, name) {
-    // console.tron.log(id, name);
-
     const { initialLF, lfEachLevel, trainedExpertise } = ClassesModel[
       ClassesModel.findIndex(c => c.value === name)
     ];
-    console.tron.log(id, name, initialLF, lfEachLevel, trainedExpertise);
     dispatch(editClass(id, name, initialLF, lfEachLevel, trainedExpertise));
-  }
-
-  function handleEditClassLevel({ id, name }, levelClass) {
-    const total = Number(levelClass) - classLevel;
-
-    if (total <= level && name) {
-      setClassLevel(total);
-      dispatch(editClassLevel(id, Number(levelClass)));
-    } else if (!name) {
-      Alert.alert('Defina uma classe!');
-    } else {
-      Alert.alert(
-        'Você não pode usar mais níveis do que seu personagem possui!',
-      );
-    }
   }
 
   function handleDeleteClass(id) {
     dispatch(deleteClass(id));
   }
 
-  function ShowClasses() {
-    return classes.map(c => {
-      return (
-        <Section key={String(c.id)}>
-          <Row>
-            <Label>Tipo</Label>
-            <PickerView>
-              <Picker
-                prompt="Defina o tipo de classe"
-                selectedValue={c.type}
-                onValueChange={itemValue => setClassType(itemValue)}>
-                {SelectClassType}
-              </Picker>
-            </PickerView>
-            {c.id !== 0 && (
-              <TouchableHighlight onPress={() => handleDeleteClass(c.id)}>
-                <Icon name="trash-can" size={36} color="#823b38a8" />
-              </TouchableHighlight>
-            )}
-          </Row>
+  function handleEditClassLevel({ id, name }, selectedClassLevel) {
+    const selectedLevel = Number(selectedClassLevel);
+    const mainClass = classes.filter(e => e.name === name)[0];
+    const total = totalClassesLevel - mainClass.level + selectedLevel;
 
-          <Row>
-            <Label>Classe</Label>
-            <PickerView>
-              <Picker
-                prompt="Defina uma classe"
-                selectedValue={c.name}
-                onValueChange={itemValue => handleEditClass(c.id, itemValue)}>
-                {SelectClass}
-              </Picker>
-            </PickerView>
-
-            <Label>Nível</Label>
-            <PickerView>
-              <Picker
-                prompt="Defina o nível de classe"
-                selectedValue={c.level}
-                onValueChange={itemValue => handleEditClassLevel(c, itemValue)}>
-                {avaliableLevel.map(levelItem => {
-                  return (
-                    <Picker.Item
-                      key={String(levelItem)}
-                      value={levelItem}
-                      label={`${levelItem}`}
-                    />
-                  );
-                })}
-              </Picker>
-            </PickerView>
-          </Row>
-        </Section>
-      );
-    });
+    if (name) {
+      if (total <= level.value) {
+        dispatch(editClassLevel(id, selectedLevel));
+      } else {
+        Alert.alert(
+          'Você não pode usar mais níveis do que seu personagem possui!',
+        );
+      }
+    } else {
+      Alert.alert('Defina uma classe!');
+    }
   }
 
   return (
@@ -157,11 +100,68 @@ export default function Classes() {
           <Section>
             <Row>
               <Title>
-                Nívels disponíveis para distribuir: {level - classLevel}
+                Nívels disponíveis para distribuir: {avaliableLevel}
               </Title>
             </Row>
           </Section>
-          <ShowClasses />
+
+          {classes.map(c => {
+            return (
+              <Section key={String(c.id)}>
+                <Row>
+                  <Label>Tipo</Label>
+                  <PickerView>
+                    <Picker
+                      prompt="Defina o tipo de classe"
+                      selectedValue={c.type}
+                      onValueChange={itemValue => setClassType(itemValue)}>
+                      {SelectClassType}
+                    </Picker>
+                  </PickerView>
+                  {c.id !== 0 && (
+                    <TouchableHighlight onPress={() => handleDeleteClass(c.id)}>
+                      <Icon name="trash-can" size={36} color="#823b38a8" />
+                    </TouchableHighlight>
+                  )}
+                </Row>
+
+                <Row>
+                  <Label>Classe</Label>
+                  <PickerView>
+                    <Picker
+                      prompt="Defina uma classe"
+                      selectedValue={c.name}
+                      onValueChange={itemValue =>
+                        handleEditClass(c.id, itemValue)
+                      }>
+                      {SelectClass}
+                    </Picker>
+                  </PickerView>
+
+                  <Label>Nível</Label>
+                  <PickerView>
+                    <Picker
+                      prompt="Defina o nível de classe"
+                      selectedValue={c.level}
+                      onValueChange={itemValue =>
+                        handleEditClassLevel(c, itemValue)
+                      }>
+                      {profileLevel.map(levelItem => {
+                        return (
+                          <Picker.Item
+                            key={String(levelItem)}
+                            value={levelItem}
+                            label={`${levelItem}`}
+                          />
+                        );
+                      })}
+                    </Picker>
+                  </PickerView>
+                </Row>
+              </Section>
+            );
+          })}
+
           <Row>
             <Button onPress={() => handleCreateClass()}>
               <Title>Adicionar classe</Title>

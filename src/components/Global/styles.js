@@ -46,10 +46,10 @@ export const Picker = styled.Picker`
 `;
 export const InputBox = styled.TextInput`
   flex: 1;
-  background-color: #823b38a8;
-  color: #fff;
+  background-color: ${props => (props.editable ? '#823b38a8' : '#b58886')};
+  color: ${props => (props.editable ? '#fff' : '#f5f5f5')};
+  border: 1px solid ${props => (props.editable ? '#ccc' : '#b58886')};
   margin: 5px;
-  border: 1px solid #ccc;
   border-radius: 4px;
   text-align: center;
 `;

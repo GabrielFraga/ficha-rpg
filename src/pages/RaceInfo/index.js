@@ -47,6 +47,7 @@ export default function RaceInfo() {
             {item.modificators.modelMod}
           </ModalFixedInput>
           <ModalFixedInput
+            editable
             keyboardType="numeric"
             onChange={e => handleModChange(e, item)}>
             {item.modificators.othersMod}

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { TouchableHighlight, ScrollView, Modal, Alert } from 'react-native';
 
+import CheckBox from '@react-native-community/checkbox';
+
 import { useSelector, useDispatch } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -42,7 +44,7 @@ import {
 } from '../../store/modules/profile/actions';
 
 import { PickerRaces, findRace } from '../../services/Races/RacesService';
-import { calcLevel } from '../../services/Levels/LevelsService';
+import { calcLevel, calcXP } from '../../services/Levels/LevelsService';
 import HabilitiesModel from '../../services/Habilities/model.habilities';
 
 export default function Habilities({ navigation }) {
@@ -50,6 +52,7 @@ export default function Habilities({ navigation }) {
 
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedLevel, setSelectedLevel] = useState([]);
+  const [useXP, setUseXP] = useState(true);
 
   const habilities = useSelector(state => state.profile.habilities);
   const race = useSelector(state => state.profile.race);
@@ -69,10 +72,14 @@ export default function Habilities({ navigation }) {
   function handleAge(ageP) {
     dispatch(editAge(ageP));
   }
+  function handleXP(xp) {
+    const result = calcLevel(Number(xp));
+    dispatch(editLevel(result.level, xp));
+  }
 
   function handleLevel(levelP) {
-    // console.tron.log(calcLevel(levelP));
-    dispatch(editLevel(levelP));
+    const { experiencePoints } = calcXP(Number(levelP));
+    dispatch(editLevel(levelP, experiencePoints));
   }
 
   function handleName(nameP) {
@@ -80,7 +87,7 @@ export default function Habilities({ navigation }) {
   }
 
   function handleLevelHability(HabId) {
-    if (level >= selectedLevel) {
+    if (level.value >= selectedLevel) {
       dispatch(
         editLevelMod({
           id: HabId,
@@ -185,19 +192,42 @@ export default function Habilities({ navigation }) {
         <Section>
           <Row>
             <Label>Nome:</Label>
-            <InputBox value={name} onChangeText={nameP => handleName(nameP)} />
-          </Row>
-
-          <Row>
+            <InputBox
+              value={name}
+              editable
+              onChangeText={nameP => handleName(nameP)}
+            />
             <Label>Idade:</Label>
             <InputBox
               value={age}
+              editable
               onChangeText={ageP => handleAge(ageP)}
               keyboardType="numeric"
             />
+          </Row>
+
+          <Row
+            style={{
+              justifyContent: 'center',
+            }}>
+            <CheckBox
+              value={useXP}
+              onChange={() => setUseXP(!useXP)}
+              tintColors={{ true: '#d8c203', false: '#444' }}
+            />
+            <Label>Utilizar XP?</Label>
+          </Row>
+          <Row>
+            <Label>Pontos Experiência</Label>
+            <InputBox
+              editable={useXP}
+              keyboard="numeric"
+              onChangeText={xp => handleXP(xp)}
+            />
             <Label>Nível:</Label>
             <InputBox
-              value={String(level)}
+              editable={!useXP}
+              value={String(level.value)}
               onChangeText={levelP => handleLevel(levelP)}
               keyboardType="numeric"
             />
@@ -241,6 +271,7 @@ export default function Habilities({ navigation }) {
                 {item.name}
               </FlexLabel>
               <FixedInput
+                editable
                 onChange={e => handleHabilityChange(e, item)}
                 keyboardType="numeric">
                 {item.initialValue}

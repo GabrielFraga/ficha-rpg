@@ -23,10 +23,10 @@ export const ModalFlexLabel = styled.Text`
 
 export const ModalFixedInput = styled.TextInput`
   flex-basis: 10%;
-  color: #fff;
-  background-color: #823b38a8;
+  background-color: ${props => (props.editable ? '#823b38a8' : '#b58886')};
+  color: ${props => (props.editable ? '#fff' : '#f5f5f5')};
+  border: 1px solid ${props => (props.editable ? '#ccc' : '#b58886')};
   margin: 5px;
-  border: 1px solid #ccc;
   border-radius: 4px;
   text-align: center;
 `;

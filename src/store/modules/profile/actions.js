@@ -19,10 +19,11 @@ export function editAge(age) {
     age,
   };
 }
-export function editLevel(level) {
+export function editLevel(level, xp) {
   return {
     type: '@level/EDIT',
     level,
+    xp,
   };
 }
 export function editName(name) {
