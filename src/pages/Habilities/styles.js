@@ -95,14 +95,3 @@ export const CheckedCircle = styled.View`
   border-radius: 7px;
   background-color: #d8c203;
 `;
-
-export const LevelInputBox = styled.TextInput`
-  flex: 1;
-  margin: 5px;
-  background-color: ${props => (props.editableStyle ? '#823b38a8' : '#b58886')};
-  color: ${props => (props.editableStyle ? '#fff' : '#f5f5f5')};
-  border: 1px solid ${props => (props.editableStyle ? '#ccc' : '#b58886')};
-  border-radius: 4px;
-  text-align: center;
-`;
-export const LevelInput = styled.View``;

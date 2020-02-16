@@ -16,6 +16,7 @@ import {
   Picker,
   PickerView,
   InputBox,
+  LevelInputBox,
 } from '../../components/Global/styles';
 
 import {
@@ -32,8 +33,6 @@ import {
   TouchableOpacity,
   CheckedCircle,
   RadioOptionsContainer,
-  LevelInputBox,
-  LevelInput,
 } from './styles';
 
 import {
@@ -93,11 +92,6 @@ export default function Habilities({ navigation }) {
       const { experiencePoints } = calcXP(newLevel);
       dispatch(editLevel(newLevel, experiencePoints));
     }
-  }
-
-  function handleLevel(levelP) {
-    const { experiencePoints } = calcXP(Number(levelP));
-    dispatch(editLevel(levelP, experiencePoints));
   }
 
   function handleName(nameP) {
@@ -210,13 +204,13 @@ export default function Habilities({ navigation }) {
         <Section>
           <Section>
             <Row>
-              <Label>Nome:</Label>
+              <Label>Nome </Label>
               <InputBox
                 value={name}
                 editable
                 onChangeText={nameP => handleName(nameP)}
               />
-              <Label>Idade:</Label>
+              <Label>Idade</Label>
               <InputBox
                 value={age}
                 editable
@@ -245,7 +239,7 @@ export default function Habilities({ navigation }) {
                 value={String(level.experiencePoints)}
                 onChangeText={xp => handleXP(xp)}
               />
-              <Label>Nível:</Label>
+              <Label>Nível</Label>
               <TouchableHighlight onPress={() => handleSubLevel()}>
                 <Icon
                   name="remove-circle-outline"
@@ -257,7 +251,6 @@ export default function Habilities({ navigation }) {
                 editable={false}
                 editableStyle={!useXP}
                 value={String(level.value)}
-                onChangeText={levelP => handleLevel(levelP)}
                 keyboardType="numeric"
               />
               <TouchableHighlight onPress={() => handleSumLevel()}>

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import { TouchableHighlight, ScrollView, Alert } from 'react-native';
 
@@ -29,6 +29,7 @@ import {
   Label,
   Picker,
   PickerView,
+  LevelInputBox,
 } from '../../components/Global/styles';
 
 import { Button } from './styles';
@@ -43,22 +44,11 @@ export default function Classes() {
   );
 
   const [classType, setClassType] = useState('basic');
-  const [profileLevel, setProfileLevel] = useState([]);
   const [avaliableLevel, setAvaliableLevel] = useState();
 
   useEffect(() => {
     setAvaliableLevel(level.value - totalClassesLevel);
   }, [level.value, totalClassesLevel]);
-
-  useEffect(() => {
-    let cont = 0;
-    const list = [];
-    while (cont <= level.value) {
-      list.push(cont);
-      cont += 1;
-    }
-    setProfileLevel(list);
-  }, [level, totalClassesLevel]);
 
   function handleCreateClass() {
     dispatch(createClass());
@@ -75,21 +65,25 @@ export default function Classes() {
     dispatch(deleteClass(id));
   }
 
-  function handleEditClassLevel({ id, name }, selectedClassLevel) {
-    const selectedLevel = Number(selectedClassLevel);
+  function handleEditClassLevel({ id, name }, add) {
+    const newValue = add ? 1 : -1;
+
     const mainClass = classes.filter(e => e.name === name)[0];
+    const selectedLevel = mainClass.level + newValue;
     const total = totalClassesLevel - mainClass.level + selectedLevel;
 
-    if (name) {
-      if (total <= level.value) {
-        dispatch(editClassLevel(id, selectedLevel));
+    if (selectedLevel > 0) {
+      if (name) {
+        if (total <= level.value) {
+          dispatch(editClassLevel(id, selectedLevel));
+        } else {
+          Alert.alert(
+            'Você não pode usar mais níveis do que seu personagem possui!',
+          );
+        }
       } else {
-        Alert.alert(
-          'Você não pode usar mais níveis do que seu personagem possui!',
-        );
+        Alert.alert('Defina uma classe!');
       }
-    } else {
-      Alert.alert('Defina uma classe!');
     }
   }
 
@@ -120,7 +114,7 @@ export default function Classes() {
                   </PickerView>
                   {c.id !== 0 && (
                     <TouchableHighlight onPress={() => handleDeleteClass(c.id)}>
-                      <Icon name="trash-can" size={36} color="#823b38a8" />
+                      <Icon name="delete" size={36} color="#823b38a8" />
                     </TouchableHighlight>
                   )}
                 </Row>
@@ -138,25 +132,30 @@ export default function Classes() {
                     </Picker>
                   </PickerView>
 
-                  <Label>Nível</Label>
-                  <PickerView>
-                    <Picker
-                      prompt="Defina o nível de classe"
-                      selectedValue={c.level}
-                      onValueChange={itemValue =>
-                        handleEditClassLevel(c, itemValue)
-                      }>
-                      {profileLevel.map(levelItem => {
-                        return (
-                          <Picker.Item
-                            key={String(levelItem)}
-                            value={levelItem}
-                            label={`${levelItem}`}
-                          />
-                        );
-                      })}
-                    </Picker>
-                  </PickerView>
+                  <Label style={{ marginRight: 5 }}>Nível</Label>
+
+                  <TouchableHighlight
+                    onPress={() => handleEditClassLevel(c, false)}>
+                    <Icon
+                      name="remove-circle-outline"
+                      size={24}
+                      color="#823b38a8"
+                    />
+                  </TouchableHighlight>
+                  <LevelInputBox
+                    editable={false}
+                    editableStyle
+                    value={String(c.level)}
+                    keyboardType="numeric"
+                  />
+                  <TouchableHighlight
+                    onPress={() => handleEditClassLevel(c, true)}>
+                    <Icon
+                      name="add-circle-outline"
+                      size={24}
+                      color="#823b38a8"
+                    />
+                  </TouchableHighlight>
                 </Row>
               </Section>
             );
