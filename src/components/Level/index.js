@@ -5,12 +5,18 @@ import CheckBox from '@react-native-community/checkbox';
 
 import LevelSelector from './LevelSelector/index';
 
-import { editLevel, editLevelMod } from '../../store/modules/profile/actions';
+import {
+  editLevel,
+  editLevelMod,
+  editUseXP,
+} from '../../store/modules/profile/actions';
 
 import HabilitiesModel from '../../services/Habilities/model.habilities';
-import { calcLevel, calcXP } from '../../services/Levels/LevelsService';
-
-import LevelsModel from '../../services/Levels/model.levels';
+import {
+  calcLevel,
+  calcXP,
+  getEvenLevels,
+} from '../../services/Levels/LevelsService';
 
 import {
   Row,
@@ -28,7 +34,7 @@ import {
   ModalContainer,
   ModalContent,
   RadioButtonContainer,
-  TouchableOpacity,
+  RadioButton,
   CheckedCircle,
   RadioOptionsContainer,
 } from './styles';
@@ -37,7 +43,11 @@ export function Level() {
   const dispatch = useDispatch();
 
   const level = useSelector(state => state.profile.level);
-  const [useXP, setUseXP] = useState(true);
+  const useXP = useSelector(state => state.profile.level.useXP);
+
+  function handleUseXP(value) {
+    dispatch(editUseXP(value));
+  }
 
   function handleXP(xp) {
     if (xp) {
@@ -73,7 +83,7 @@ export function Level() {
         }}>
         <CheckBox
           value={useXP}
-          onChange={() => setUseXP(!useXP)}
+          onChange={() => handleUseXP(!useXP)}
           tintColors={{ true: '#d8c203', false: '#444' }}
         />
         <Label>Utilizar XP?</Label>
@@ -163,10 +173,9 @@ export function HabilityLevelOptions() {
                 return (
                   <RadioButtonContainer key={item.id}>
                     <ButtonContent>{item.name}</ButtonContent>
-                    <TouchableOpacity
-                      onPress={() => handleLevelHability(item.id)}>
+                    <RadioButton onPress={() => handleLevelHability(item.id)}>
                       {checkValue(item.id)}
-                    </TouchableOpacity>
+                    </RadioButton>
                   </RadioButtonContainer>
                 );
               })}
@@ -187,9 +196,10 @@ export function HabilityLevelOptions() {
         }}>
         <Title>Defina as habilidades que recebem +1 nos níveis pares</Title>
 
-        {LevelsModel.map(itemLevel => {
+        {getEvenLevels().map(itemLevel => {
           return (
             <LvlHabButton
+              disabled={!(level.value >= itemLevel.level)}
               key={String(itemLevel.level)}
               onPress={() => openLevelModal(itemLevel.level)}>
               <ButtonContent>Nível: {itemLevel.level}</ButtonContent>

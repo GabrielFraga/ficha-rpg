@@ -5,7 +5,7 @@ import { findBBA } from '../../../services/Classes/ClassesService';
 const INITIAL_STATE = {
   name: null,
   age: null,
-  level: { value: 0, experiencePoints: 0 },
+  level: { value: 0, experiencePoints: 0, useXP: true },
   race: [{ name: null, info: null }],
   classes: [{ id: 0, name: '', level: 0, type: '' }],
   lifePoints: 0,
@@ -327,6 +327,13 @@ export default function editProfile(state = INITIAL_STATE, action) {
         calcLifePoints();
         break;
       }
+      case '@level/USEXP': {
+        const { value } = action;
+
+        draft.level.useXP = value;
+        break;
+      }
+
       case '@name/EDIT': {
         const { name } = action;
 

@@ -1,21 +1,9 @@
 import styled from 'styled-components/native';
-import { RectButton } from 'react-native-gesture-handler';
 
-// TitleView,
-// HabilitiesRow,
-// LvlHabButton,
-// ButtonContent,
-// ModalContainer,
-// ModalContent,
-// RadioButtonContainer,
-// TouchableOpacity,
-// CheckedCircle,
-// RadioOptionsContainer,
-
-export const LvlHabButton = styled(RectButton)`
-  flex-basis: 20%;
+export const LvlHabButton = styled.TouchableOpacity`
+  flex-basis: 45%;
+  opacity: ${props => (props.disabled ? 0.5 : 1)};
   background-color: #823b38a8;
-  border: 1px solid #721410;
   margin: 5px;
   border-radius: 4px;
   height: 40px;
@@ -55,7 +43,7 @@ export const RadioButtonContainer = styled.View`
   justify-content: space-evenly;
 `;
 
-export const TouchableOpacity = styled.TouchableOpacity`
+export const RadioButton = styled.TouchableOpacity`
   height: 20px;
   width: 20px;
   border-radius: 10px;

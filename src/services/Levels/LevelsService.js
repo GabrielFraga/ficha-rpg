@@ -10,3 +10,7 @@ export const calcLevel = xp => {
 export const calcXP = level => {
   return LevelsModel.filter(element => element.level === level)[0];
 };
+
+export const getEvenLevels = () => {
+  return LevelsModel.filter(element => element.level % 2 === 0);
+};

@@ -132,6 +132,11 @@ export default function Habilities({ navigation }) {
             <Title>Classes</Title>
           </TitleView>
         </TouchableHighlight>
+        <TouchableHighlight onPress={() => navigation.navigate('Níveis')}>
+          <TitleView>
+            <Title>Níveis</Title>
+          </TitleView>
+        </TouchableHighlight>
       </ScrollView>
     </Container>
   );

@@ -1,8 +1,20 @@
 import React from 'react';
-import { View } from 'react-native';
 
-// import { Container } from './styles';
+import { ScrollView } from 'react-native';
+import { Container } from '../../components/Global/styles';
+
+import {
+  Level as LevelSelector,
+  HabilityLevelOptions,
+} from '../../components/Level';
 
 export default function Level() {
-  return <View />;
+  return (
+    <Container>
+      <ScrollView>
+        <LevelSelector />
+        <HabilityLevelOptions />
+      </ScrollView>
+    </Container>
+  );
 }

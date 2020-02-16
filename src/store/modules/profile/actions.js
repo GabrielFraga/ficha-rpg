@@ -19,6 +19,7 @@ export function editAge(age) {
     age,
   };
 }
+
 export function editLevel(level, xp) {
   return {
     type: '@level/EDIT',
@@ -26,6 +27,14 @@ export function editLevel(level, xp) {
     xp,
   };
 }
+
+export function editUseXP(value) {
+  return {
+    type: '@level/USEXP',
+    value,
+  };
+}
+
 export function editName(name) {
   return {
     type: '@name/EDIT',
