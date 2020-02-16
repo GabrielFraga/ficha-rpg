@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { TouchableHighlight, ScrollView, Modal, Alert } from 'react-native';
-
-import CheckBox from '@react-native-community/checkbox';
+import React from 'react';
+import { TouchableHighlight, ScrollView } from 'react-native';
 
 import { useSelector, useDispatch } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
+
+import { Level } from '../../components/Level';
 
 import {
   Container,
@@ -16,49 +16,27 @@ import {
   Picker,
   PickerView,
   InputBox,
-  LevelInputBox,
+  TitleView,
+  HabilitiesRow,
 } from '../../components/Global/styles';
 
-import {
-  FlexLabel,
-  FixedInput,
-  TitleView,
-  FinalValue,
-  HabilitiesRow,
-  LvlHabButton,
-  ButtonContent,
-  ModalContainer,
-  ModalContent,
-  RadioButtonContainer,
-  TouchableOpacity,
-  CheckedCircle,
-  RadioOptionsContainer,
-} from './styles';
+import { FlexLabel, FixedInput, FinalValue } from './styles';
 
 import {
   editHability,
   editRace,
   editAge,
-  editLevel,
   editName,
-  editLevelMod,
 } from '../../store/modules/profile/actions';
 
 import { PickerRaces, findRace } from '../../services/Races/RacesService';
-import { calcLevel, calcXP } from '../../services/Levels/LevelsService';
-import HabilitiesModel from '../../services/Habilities/model.habilities';
 
 export default function Habilities({ navigation }) {
   const dispatch = useDispatch();
 
-  const [modalVisible, setModalVisible] = useState(false);
-  const [selectedLevel, setSelectedLevel] = useState([]);
-  const [useXP, setUseXP] = useState(true);
-
   const habilities = useSelector(state => state.profile.habilities);
   const race = useSelector(state => state.profile.race);
   const age = useSelector(state => state.profile.age);
-  const level = useSelector(state => state.profile.level);
   const name = useSelector(state => state.profile.name);
 
   function handleHabilityChange({ nativeEvent: { text } }, item) {
@@ -73,129 +51,9 @@ export default function Habilities({ navigation }) {
   function handleAge(ageP) {
     dispatch(editAge(ageP));
   }
-  function handleXP(xp) {
-    const result = calcLevel(Number(xp));
-    dispatch(editLevel(result.level, xp));
-  }
-  function handleSubLevel() {
-    if (!useXP) {
-      const newLevel = level.value - 1;
-      if (newLevel !== 0) {
-        const { experiencePoints } = calcXP(newLevel);
-        dispatch(editLevel(newLevel, experiencePoints));
-      }
-    }
-  }
-  function handleSumLevel() {
-    if (!useXP) {
-      const newLevel = level.value + 1;
-      const { experiencePoints } = calcXP(newLevel);
-      dispatch(editLevel(newLevel, experiencePoints));
-    }
-  }
 
   function handleName(nameP) {
     dispatch(editName(nameP));
-  }
-
-  function handleLevelHability(HabId) {
-    if (level.value >= selectedLevel) {
-      dispatch(
-        editLevelMod({
-          id: HabId,
-          level: selectedLevel,
-        }),
-      );
-    } else {
-      Alert.alert(
-        `Você ainda não atingiu ou não informou este nível na ficha!`,
-      );
-      setModalVisible(false);
-    }
-  }
-
-  function openLevelModal(lvl) {
-    setSelectedLevel(lvl);
-    setModalVisible(true);
-  }
-
-  function LvlModal() {
-    function checkValue(item) {
-      const index = habilities.findIndex(h => h.id === item);
-      const hability = habilities[index];
-
-      const modIndex = hability.levelMod.findIndex(
-        m => m.level === selectedLevel && m.value > 0,
-      );
-      const modExists = hability.levelMod[modIndex];
-
-      if (modExists) {
-        return <CheckedCircle />;
-      }
-
-      return false;
-    }
-
-    return (
-      <Modal
-        animationType="slide"
-        transparent
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}>
-        <ModalContainer>
-          <ModalContent>
-            <TitleView>
-              <Title>
-                Bônus acrescentado ao atingir o Nível {selectedLevel}
-              </Title>
-            </TitleView>
-            <RadioOptionsContainer>
-              {HabilitiesModel.map(item => {
-                return (
-                  <RadioButtonContainer key={item.id}>
-                    <ButtonContent>{item.name}</ButtonContent>
-                    <TouchableOpacity
-                      onPress={() => handleLevelHability(item.id)}>
-                      {checkValue(item.id)}
-                    </TouchableOpacity>
-                  </RadioButtonContainer>
-                );
-              })}
-            </RadioOptionsContainer>
-          </ModalContent>
-        </ModalContainer>
-      </Modal>
-    );
-  }
-
-  function LevelHabilityList() {
-    const list = [];
-    let cont = 2;
-    while (cont <= 40) {
-      list.push(cont);
-      cont += 2;
-    }
-
-    return (
-      <HabilitiesRow
-        style={{
-          flexWrap: 'wrap',
-          marginTop: 20,
-          marginBottom: 20,
-        }}>
-        <Title>Defina as habilidades que recebem +1 nos níveis pares</Title>
-
-        {list.map(itemLevel => {
-          return (
-            <LvlHabButton
-              key={String(itemLevel)}
-              onPress={() => openLevelModal(itemLevel)}>
-              <ButtonContent>Nível: {itemLevel}</ButtonContent>
-            </LvlHabButton>
-          );
-        })}
-      </HabilitiesRow>
-    );
   }
 
   return (
@@ -219,49 +77,7 @@ export default function Habilities({ navigation }) {
               />
             </Row>
           </Section>
-          <Section>
-            <Row
-              style={{
-                justifyContent: 'center',
-              }}>
-              <CheckBox
-                value={useXP}
-                onChange={() => setUseXP(!useXP)}
-                tintColors={{ true: '#d8c203', false: '#444' }}
-              />
-              <Label>Utilizar XP?</Label>
-            </Row>
-            <Row>
-              <Label>Pontos Experiência</Label>
-              <InputBox
-                editable={useXP}
-                keyboard="numeric"
-                value={String(level.experiencePoints)}
-                onChangeText={xp => handleXP(xp)}
-              />
-              <Label>Nível</Label>
-              <TouchableHighlight onPress={() => handleSubLevel()}>
-                <Icon
-                  name="remove-circle-outline"
-                  size={24}
-                  color={!useXP ? '#823b38a8' : '#b58886'}
-                />
-              </TouchableHighlight>
-              <LevelInputBox
-                editable={false}
-                editableStyle={!useXP}
-                value={String(level.value)}
-                keyboardType="numeric"
-              />
-              <TouchableHighlight onPress={() => handleSumLevel()}>
-                <Icon
-                  name="add-circle-outline"
-                  size={24}
-                  color={!useXP ? '#823b38a8' : '#b58886'}
-                />
-              </TouchableHighlight>
-            </Row>
-          </Section>
+          <Level />
           <Row>
             <Label>Raça:</Label>
             <PickerView>
@@ -311,10 +127,6 @@ export default function Habilities({ navigation }) {
             </HabilitiesRow>
           );
         })}
-
-        <LevelHabilityList />
-
-        <LvlModal />
         <TouchableHighlight onPress={() => navigation.navigate('Classes')}>
           <TitleView>
             <Title>Classes</Title>

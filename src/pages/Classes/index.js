@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { TouchableHighlight, ScrollView, Alert } from 'react-native';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { TouchableHighlight, ScrollView, Alert } from 'react-native';
-
-import { useSelector, useDispatch } from 'react-redux';
+import LevelSelector from '../../components/Level/LevelSelector';
 
 import {
   createClass,
@@ -29,7 +29,6 @@ import {
   Label,
   Picker,
   PickerView,
-  LevelInputBox,
 } from '../../components/Global/styles';
 
 import { Button } from './styles';
@@ -131,31 +130,13 @@ export default function Classes() {
                       {SelectClass}
                     </Picker>
                   </PickerView>
-
-                  <Label style={{ marginRight: 5 }}>Nível</Label>
-
-                  <TouchableHighlight
-                    onPress={() => handleEditClassLevel(c, false)}>
-                    <Icon
-                      name="remove-circle-outline"
-                      size={24}
-                      color="#823b38a8"
-                    />
-                  </TouchableHighlight>
-                  <LevelInputBox
-                    editable={false}
+                  <LevelSelector
+                    color="#823b38a8"
                     editableStyle
                     value={String(c.level)}
-                    keyboardType="numeric"
+                    functionMinus={() => handleEditClassLevel(c, false)}
+                    functionPlus={() => handleEditClassLevel(c, true)}
                   />
-                  <TouchableHighlight
-                    onPress={() => handleEditClassLevel(c, true)}>
-                    <Icon
-                      name="add-circle-outline"
-                      size={24}
-                      color="#823b38a8"
-                    />
-                  </TouchableHighlight>
                 </Row>
               </Section>
             );
