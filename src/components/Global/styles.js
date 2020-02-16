@@ -46,9 +46,10 @@ export const Picker = styled.Picker`
 
 export const InputBox = styled.TextInput`
   flex: 1;
-  background-color: ${props => (props.editable ? '#823b38a8' : '#b58886')};
-  color: ${props => (props.editable ? '#fff' : '#f5f5f5')};
-  border: 1px solid ${props => (props.editable ? '#ccc' : '#b58886')};
+  opacity: ${props => (props.editable ? 1 : 0.5)};
+  background: #823b38a8;
+  color: #fff;
+  border: 1px solid #b58886;
   margin: 5px;
   border-radius: 4px;
   text-align: center;
@@ -58,9 +59,10 @@ export const LevelInputBox = styled.TextInput`
   /* flex: 1; */
   width: 50px;
   margin: 5px;
-  background-color: ${props => (props.editableStyle ? '#823b38a8' : '#b58886')};
-  color: ${props => (props.editableStyle ? '#fff' : '#f5f5f5')};
-  border: 1px solid ${props => (props.editableStyle ? '#ccc' : '#b58886')};
+  opacity: ${props => (props.editableStyle ? 1 : 0.5)};
+  background: #823b38a8;
+  color: #fff;
+  border: 1px solid #b58886;
   border-radius: 4px;
   text-align: center;
 `;

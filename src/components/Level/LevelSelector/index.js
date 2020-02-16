@@ -16,7 +16,14 @@ export default function LevelSelector({
     <>
       <Label style={{ marginRight: 5 }}>Nível</Label>
       <TouchableHighlight onPress={() => functionMinus()}>
-        <Icon name="remove-circle-outline" size={24} color={color} />
+        <Icon
+          name="remove-circle-outline"
+          size={24}
+          color={color}
+          style={{
+            opacity: editableStyle ? 1 : 0.5,
+          }}
+        />
       </TouchableHighlight>
       <LevelInputBox
         editable={false}
@@ -25,7 +32,14 @@ export default function LevelSelector({
         keyboardType="numeric"
       />
       <TouchableHighlight onPress={() => functionPlus()}>
-        <Icon name="add-circle-outline" size={24} color={color} />
+        <Icon
+          name="add-circle-outline"
+          size={24}
+          color={color}
+          style={{
+            opacity: editableStyle ? 1 : 0.5,
+          }}
+        />
       </TouchableHighlight>
     </>
   );

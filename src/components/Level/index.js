@@ -97,7 +97,10 @@ export function Level() {
           onChangeText={xp => handleXP(xp)}
         />
         <LevelSelector
-          color={!useXP ? '#823b38a8' : '#b58886'}
+          color="#823b38a8"
+          style={{
+            opacity: !useXP ? 1 : 0.5,
+          }}
           editableStyle={!useXP}
           value={String(level.value)}
           functionMinus={handleSubLevel}
