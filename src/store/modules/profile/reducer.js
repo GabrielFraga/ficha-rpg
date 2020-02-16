@@ -5,7 +5,7 @@ import { findBBA } from '../../../services/Classes/ClassesService';
 const INITIAL_STATE = {
   name: null,
   age: null,
-  level: [{ value: 0, experiencePoints: null }],
+  level: { value: 0, experiencePoints: 0 },
   race: [{ name: null, info: null }],
   classes: [{ id: 0, name: '', level: 0, type: '' }],
   lifePoints: 0,

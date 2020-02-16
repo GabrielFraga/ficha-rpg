@@ -32,6 +32,8 @@ import {
   TouchableOpacity,
   CheckedCircle,
   RadioOptionsContainer,
+  LevelInputBox,
+  LevelInput,
 } from './styles';
 
 import {
@@ -75,6 +77,22 @@ export default function Habilities({ navigation }) {
   function handleXP(xp) {
     const result = calcLevel(Number(xp));
     dispatch(editLevel(result.level, xp));
+  }
+  function handleSubLevel() {
+    if (!useXP) {
+      const newLevel = level.value - 1;
+      if (newLevel !== 0) {
+        const { experiencePoints } = calcXP(newLevel);
+        dispatch(editLevel(newLevel, experiencePoints));
+      }
+    }
+  }
+  function handleSumLevel() {
+    if (!useXP) {
+      const newLevel = level.value + 1;
+      const { experiencePoints } = calcXP(newLevel);
+      dispatch(editLevel(newLevel, experiencePoints));
+    }
   }
 
   function handleLevel(levelP) {
@@ -190,48 +208,67 @@ export default function Habilities({ navigation }) {
     <Container>
       <ScrollView>
         <Section>
-          <Row>
-            <Label>Nome:</Label>
-            <InputBox
-              value={name}
-              editable
-              onChangeText={nameP => handleName(nameP)}
-            />
-            <Label>Idade:</Label>
-            <InputBox
-              value={age}
-              editable
-              onChangeText={ageP => handleAge(ageP)}
-              keyboardType="numeric"
-            />
-          </Row>
-
-          <Row
-            style={{
-              justifyContent: 'center',
-            }}>
-            <CheckBox
-              value={useXP}
-              onChange={() => setUseXP(!useXP)}
-              tintColors={{ true: '#d8c203', false: '#444' }}
-            />
-            <Label>Utilizar XP?</Label>
-          </Row>
-          <Row>
-            <Label>Pontos Experiência</Label>
-            <InputBox
-              editable={useXP}
-              keyboard="numeric"
-              onChangeText={xp => handleXP(xp)}
-            />
-            <Label>Nível:</Label>
-            <InputBox
-              editable={!useXP}
-              value={String(level.value)}
-              onChangeText={levelP => handleLevel(levelP)}
-              keyboardType="numeric"
-            />
-          </Row>
+          <Section>
+            <Row>
+              <Label>Nome:</Label>
+              <InputBox
+                value={name}
+                editable
+                onChangeText={nameP => handleName(nameP)}
+              />
+              <Label>Idade:</Label>
+              <InputBox
+                value={age}
+                editable
+                onChangeText={ageP => handleAge(ageP)}
+                keyboardType="numeric"
+              />
+            </Row>
+          </Section>
+          <Section>
+            <Row
+              style={{
+                justifyContent: 'center',
+              }}>
+              <CheckBox
+                value={useXP}
+                onChange={() => setUseXP(!useXP)}
+                tintColors={{ true: '#d8c203', false: '#444' }}
+              />
+              <Label>Utilizar XP?</Label>
+            </Row>
+            <Row>
+              <Label>Pontos Experiência</Label>
+              <InputBox
+                editable={useXP}
+                keyboard="numeric"
+                value={String(level.experiencePoints)}
+                onChangeText={xp => handleXP(xp)}
+              />
+              <Label>Nível:</Label>
+              <TouchableHighlight onPress={() => handleSubLevel()}>
+                <Icon
+                  name="remove-circle-outline"
+                  size={24}
+                  color={!useXP ? '#823b38a8' : '#b58886'}
+                />
+              </TouchableHighlight>
+              <LevelInputBox
+                editable={false}
+                editableStyle={!useXP}
+                value={String(level.value)}
+                onChangeText={levelP => handleLevel(levelP)}
+                keyboardType="numeric"
+              />
+              <TouchableHighlight onPress={() => handleSumLevel()}>
+                <Icon
+                  name="add-circle-outline"
+                  size={24}
+                  color={!useXP ? '#823b38a8' : '#b58886'}
+                />
+              </TouchableHighlight>
+            </Row>
+          </Section>
           <Row>
             <Label>Raça:</Label>
             <PickerView>
