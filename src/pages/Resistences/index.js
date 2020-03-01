@@ -1,11 +1,7 @@
 import React from 'react';
-import { TouchableHighlight, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 
 import { useSelector, useDispatch } from 'react-redux';
-
-import Icon from 'react-native-vector-icons/MaterialIcons';
-
-import HandleLevel from '../../components/Level';
 
 import {
   Container,
@@ -13,14 +9,10 @@ import {
   Section,
   Title,
   Label,
-  Picker,
   InputBox,
-  PickerView,
-  TitleView,
-  HabilitiesRow,
 } from '../../components/Global/styles';
 
-import { PVColum, Column } from './styles';
+import { PVColum, ResistanceTitle, ResistanceLabel } from './styles';
 
 import {
   editOtherFieldLevel,
@@ -41,8 +33,6 @@ export default function Resistences() {
   const BaseBonusAttack = useSelector(state => state.profile.bba);
 
   const resistances = useSelector(state => state.profile.resistances);
-
-  console.tron.log(resistances);
 
   function handleOtherLevel(data) {
     dispatch(editOtherFieldLevel(Number(data)));
@@ -67,34 +57,6 @@ export default function Resistences() {
   return (
     <Container>
       <ScrollView>
-        {/* <Section>
-          <Title>Habilidades</Title>
-          <Row
-            style={{
-              flexWrap: 'wrap',
-            }}>
-            {habilities.map(item => {
-              return (
-                <Column
-                  key={item.id}
-                  style={{
-                    flexBasis: 100,
-                    justifyContent: 'center',
-                  }}>
-                  <Label numberOfLines={1} ellipsizeMode="tail">
-                    {item.name}
-                  </Label>
-                  <Row>
-                    <InputBox>
-                      {item.finalValue} ({item.mod})
-                    </InputBox>
-                  </Row>
-                </Column>
-              );
-            })}
-          </Row>
-        </Section>
- */}
         <Section>
           <Title>Pontos de vida (PVs)</Title>
           <Row>
@@ -138,20 +100,20 @@ export default function Resistences() {
 
           <Title>Resistências</Title>
           <Row>
-            <Title style={{ flexBasis: 80 }} />
-            <Title style={{ flexBasis: 60 }}>Total</Title>
-            <Title style={{ flexBasis: 60 }}>Nível / 2</Title>
-            <Title style={{ flexBasis: 60 }}>Hab</Title>
-            <Title style={{ flexBasis: 60 }}>Outros</Title>
+            <ResistanceTitle style={{ flexBasis: 80 }} />
+            <ResistanceTitle>Total</ResistanceTitle>
+            <ResistanceTitle>Nível / 2</ResistanceTitle>
+            <ResistanceTitle>Hab</ResistanceTitle>
+            <ResistanceTitle>Outros</ResistanceTitle>
           </Row>
 
           {resistances.map(item => {
             return (
               <>
                 <Row key={item.id}>
-                  <Label style={{ flexBasis: 80 }}>
+                  <ResistanceLabel>
                     {getResistenceName(item.habilityName)}
-                  </Label>
+                  </ResistanceLabel>
                   <InputBox>{item.total}</InputBox>
                   <InputBox>{item.half_level}</InputBox>
                   <InputBox>{item.hability}</InputBox>
