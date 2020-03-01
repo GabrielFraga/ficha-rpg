@@ -22,7 +22,10 @@ import {
 
 import { PVColum, Column } from './styles';
 
-import { editOtherFieldLevel } from '../../store/modules/profile/actions';
+import {
+  editOtherFieldLevel,
+  editOhterFieldResitence,
+} from '../../store/modules/profile/actions';
 
 export default function Resistences() {
   const dispatch = useDispatch();
@@ -39,8 +42,14 @@ export default function Resistences() {
 
   const resistances = useSelector(state => state.profile.resistances);
 
+  console.tron.log(resistances);
+
   function handleOtherLevel(data) {
     dispatch(editOtherFieldLevel(Number(data)));
+  }
+
+  function handleOtherResistence(id, value) {
+    dispatch(editOhterFieldResitence(id, Number(value)));
   }
 
   function getResistenceName(name) {
@@ -122,7 +131,7 @@ export default function Resistences() {
 
           <Section style={{ marginTop: 20 }}>
             <Row>
-              <Title>Bônus Base Ataque (BBA)</Title>
+              <Label>Bônus Base Ataque (BBA)</Label>
               <InputBox>{BaseBonusAttack}</InputBox>
             </Row>
           </Section>
@@ -136,7 +145,7 @@ export default function Resistences() {
             <Title style={{ flexBasis: 60 }}>Outros</Title>
           </Row>
 
-          {Object.values(resistances).map(item => {
+          {resistances.map(item => {
             return (
               <>
                 <Row key={item.id}>
@@ -146,7 +155,12 @@ export default function Resistences() {
                   <InputBox>{item.total}</InputBox>
                   <InputBox>{item.half_level}</InputBox>
                   <InputBox>{item.hability}</InputBox>
-                  <InputBox>{item.other}</InputBox>
+                  <InputBox
+                    keyboard="numeric"
+                    editable
+                    onChangeText={e => handleOtherResistence(item.id, e)}>
+                    {item.other}
+                  </InputBox>
                 </Row>
               </>
             );

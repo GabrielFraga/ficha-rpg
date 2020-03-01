@@ -6,8 +6,19 @@ const INITIAL_STATE = {
   name: null,
   age: null,
   level: { value: 0, experiencePoints: 0, useXP: true },
-  race: [{ name: null, info: null }],
-  classes: [{ id: 0, name: '', level: 0, type: '' }],
+  race: { name: null, info: null },
+  classes: [
+    {
+      id: 0,
+      name: '',
+      level: 0,
+      type: '',
+      initialLifePoints: 0,
+      lifePointsEachLevel: 0,
+      trainedExpertise: 0,
+      bba: 0,
+    },
+  ],
   lifePoints: {
     total: 0,
     epic: 0,
@@ -15,8 +26,9 @@ const INITIAL_STATE = {
     classLifePoints: 0,
     constitutiontLifePoints: 0,
   },
-  resistances: {
-    fortitude: {
+  resistances: [
+    {
+      name: 'fortitude',
       id: 0,
       total: 0,
       half_level: 0,
@@ -25,8 +37,8 @@ const INITIAL_STATE = {
       other: 0,
       habilityName: 'Constituição',
     },
-
-    reaction: {
+    {
+      name: 'reaction',
       id: 1,
       total: 0,
       half_level: 0,
@@ -35,8 +47,9 @@ const INITIAL_STATE = {
       other: 0,
       habilityName: 'Destreza',
     },
-    will: {
+    {
       id: 2,
+      name: 'will',
       total: 0,
       half_level: 0,
       hability: 0,
@@ -44,7 +57,7 @@ const INITIAL_STATE = {
       other: 0,
       habilityName: 'Sabedoria',
     },
-  },
+  ],
 
   bba: 0,
   habilities: [
@@ -222,10 +235,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
       }
 
       const halfLevelValue = Math.trunc(draft.level.value / 2);
-
-      draft.resistances.fortitude.half_level = halfLevelValue;
-
-      Object.values(draft.resistances).forEach(item => {
+      draft.resistances.forEach(item => {
         item.hability = getHabilityModificator(item.habilityName);
         item.half_level = halfLevelValue;
         item.total = item.half_level + item.hability + item.class + item.other;
@@ -493,6 +503,20 @@ export default function editProfile(state = INITIAL_STATE, action) {
         calcResistances();
         break;
       }
+
+      case '@resistence/EDIT_OTHER': {
+        const { id, value } = action;
+
+        const index = draft.resistances.findIndex(c => c.id === id);
+
+        const resistance = draft.resistances[index];
+
+        resistance.other = value;
+
+        calcResistances();
+        break;
+      }
+
       default:
     }
   });

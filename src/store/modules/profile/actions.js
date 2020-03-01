@@ -101,3 +101,11 @@ export function deleteClass(id) {
     id,
   };
 }
+
+export function editOhterFieldResitence(id, value) {
+  return {
+    type: '@resistence/EDIT_OTHER',
+    id,
+    value,
+  };
+}
