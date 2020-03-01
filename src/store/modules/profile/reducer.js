@@ -218,14 +218,9 @@ export default function editProfile(state = INITIAL_STATE, action) {
     function calcBBA(mainClass) {
       const bba = findBBA(mainClass);
 
-      let bonusC = 0;
+      const { bonus } = bba.filter(c => c.level === mainClass.level)[0];
 
-      if (mainClass.level) {
-        const { bonus } = bba.filter(c => c.level === mainClass.level)[0];
-        bonusC = bonus;
-      }
-
-      mainClass.bba = bonusC;
+      mainClass.bba = bonus;
 
       draft.bba = Object.values(draft.classes).reduce((x, y) => x + y.bba, 0);
     }
@@ -493,17 +488,13 @@ export default function editProfile(state = INITIAL_STATE, action) {
         const { id } = action;
 
         const index = draft.classes.findIndex(c => c.id === id);
-        const mainClass = draft.classes[index];
-
-        // torna o nível null para que haja o recalculo correto do BBA
-        if (mainClass.level) {
-          mainClass.level = null;
-          calcBBA(mainClass);
-        }
 
         draft.classes.splice(index, 1);
+        draft.bba = Object.values(draft.classes).reduce((x, y) => x + y.bba, 0);
+
         calcLifePoints();
         calcResistances();
+
         break;
       }
 
