@@ -233,6 +233,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
       }
 
       const halfLevelValue = Math.trunc(draft.level.value / 2);
+
       draft.resistances.forEach(item => {
         item.hability = getHabilityModificator(item.habilityName);
         item.half_level = halfLevelValue;
@@ -330,10 +331,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
         });
 
         const checkValue = element => {
-          if (element === true) {
-            return true;
-          }
-          return false;
+          return !!element;
         };
 
         if (createIndex.every(checkValue)) {
