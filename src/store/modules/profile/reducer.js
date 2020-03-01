@@ -8,7 +8,42 @@ const INITIAL_STATE = {
   level: { value: 0, experiencePoints: 0, useXP: true },
   race: [{ name: null, info: null }],
   classes: [{ id: 0, name: '', level: 0, type: '' }],
-  lifePoints: 0,
+  lifePoints: {
+    total: 0,
+    classLifePoints: 0,
+    constitutiontLifePoints: 0,
+  },
+  resistances: {
+    fortitude: {
+      id: 0,
+      total: 0,
+      half_level: 0,
+      hability: 0,
+      class: 0,
+      other: 0,
+      habilityName: 'Constituição',
+    },
+
+    reaction: {
+      id: 1,
+      total: 0,
+      half_level: 0,
+      hability: 0,
+      class: 0,
+      other: 0,
+      habilityName: 'Destreza',
+    },
+    will: {
+      id: 2,
+      total: 0,
+      half_level: 0,
+      hability: 0,
+      class: 0,
+      other: 0,
+      habilityName: 'Sabedoria',
+    },
+  },
+
   bba: 0,
   habilities: [
     {
@@ -140,16 +175,24 @@ export default function editProfile(state = INITIAL_STATE, action) {
       const constitutiontModificator = draft.habilities[2].mod;
       const profileLevel = draft.level.value;
       const initialClass = draft.classes[0];
-      const pointsForEachLevel = Object.values(draft.classes).reduce(
+      const classPointsForEachLevel = Object.values(draft.classes).reduce(
         (x, y) => x + y.lifePointsEachLevel * y.level,
         0,
       );
 
-      draft.lifePoints =
+      draft.lifePoints.total =
         initialClass.initialLifePoints +
-        pointsForEachLevel +
+        classPointsForEachLevel +
         constitutiontModificator * profileLevel -
         initialClass.lifePointsEachLevel;
+
+      draft.lifePoints.classLifePoints =
+        initialClass.initialLifePoints +
+        classPointsForEachLevel -
+        initialClass.lifePointsEachLevel;
+
+      draft.lifePoints.constitutiontLifePoints =
+        constitutiontModificator * profileLevel;
     }
 
     function calcBBA(mainClass) {
@@ -165,6 +208,24 @@ export default function editProfile(state = INITIAL_STATE, action) {
       mainClass.bba = bonusC;
 
       draft.bba = Object.values(draft.classes).reduce((x, y) => x + y.bba, 0);
+    }
+
+    function calcResistances() {
+      function getHabilityModificator(name) {
+        const index = draft.habilities.findIndex(p => p.name === name);
+        const hability = draft.habilities[index];
+        return hability.mod;
+      }
+
+      const halfLevelValue = Math.trunc(draft.level.value / 2);
+
+      draft.resistances.fortitude.half_level = halfLevelValue;
+
+      Object.values(draft.resistances).forEach(item => {
+        item.hability = getHabilityModificator(item.habilityName);
+        item.half_level = halfLevelValue;
+        item.total = item.half_level + item.hability + item.class + item.other;
+      });
     }
 
     switch (action.type) {
@@ -186,6 +247,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
         hability.finalValue = totalValue;
 
         calcLifePoints();
+        calcResistances();
         break;
       }
 
@@ -207,6 +269,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
         hability.mod = modificator;
 
         calcLifePoints();
+        calcResistances();
         break;
       }
 
@@ -284,6 +347,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
         });
 
         calcLifePoints();
+        calcResistances();
         break;
       }
 
@@ -311,6 +375,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
         });
 
         calcLifePoints();
+        calcResistances();
         break;
       }
 
@@ -329,6 +394,8 @@ export default function editProfile(state = INITIAL_STATE, action) {
           experiencePoints: xp,
         };
         calcLifePoints();
+        calcResistances();
+
         break;
       }
       case '@level/USEXP': {
@@ -375,6 +442,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         calcBBA(mainClass);
         calcLifePoints();
+        calcResistances();
 
         break;
       }
@@ -389,6 +457,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         calcBBA(mainClass);
         calcLifePoints();
+        calcResistances();
 
         break;
       }
@@ -407,7 +476,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         draft.classes.splice(index, 1);
         calcLifePoints();
-
+        calcResistances();
         break;
       }
       default:

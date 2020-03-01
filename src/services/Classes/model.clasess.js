@@ -8,6 +8,12 @@ const ClassesModel = [
     initialLF: 16,
     lfEachLevel: 4,
     trainedExpertise: 2,
+    levelBonus: {
+      damageReduction: {
+        level: 0,
+        bonus: 0,
+      },
+    },
     bba: [
       { level: 1, bonus: 0 },
       { level: 2, bonus: 1 },
@@ -39,6 +45,12 @@ const ClassesModel = [
     initialLF: 12,
     lfEachLevel: 3,
     trainedExpertise: 6,
+    levelBonus: {
+      damageReduction: {
+        level: 0,
+        bonus: 0,
+      },
+    },
     bba: [
       { level: 1, bonus: 0 },
       { level: 2, bonus: 1 },
@@ -70,6 +82,15 @@ const ClassesModel = [
     initialLF: 24,
     lfEachLevel: 6,
     trainedExpertise: 4,
+    levelBonus: {
+      damageReduction: [
+        { level: 7, bonus: 1 },
+        { level: 10, bonus: 1 },
+        { level: 13, bonus: 1 },
+        { level: 16, bonus: 1 },
+        { level: 19, bonus: 1 },
+      ],
+    },
     bba: [
       { level: 1, bonus: 1 },
       { level: 2, bonus: 2 },
@@ -101,6 +122,12 @@ const ClassesModel = [
     initialLF: 12,
     lfEachLevel: 3,
     trainedExpertise: 6,
+    levelBonus: {
+      damageReduction: {
+        level: 0,
+        bonus: 0,
+      },
+    },
     bba: [
       { level: 1, bonus: 0 },
       { level: 2, bonus: 1 },
@@ -132,6 +159,12 @@ const ClassesModel = [
     initialLF: 20,
     lfEachLevel: 5,
     trainedExpertise: 2,
+    levelBonus: {
+      damageReduction: {
+        level: 0,
+        bonus: 0,
+      },
+    },
     bba: [
       { level: 1, bonus: 1 },
       { level: 2, bonus: 2 },
@@ -163,6 +196,12 @@ const ClassesModel = [
     initialLF: 16,
     lfEachLevel: 4,
     trainedExpertise: 2,
+    levelBonus: {
+      damageReduction: {
+        level: 0,
+        bonus: 0,
+      },
+    },
     bba: [
       { level: 1, bonus: 0 },
       { level: 2, bonus: 1 },
@@ -194,6 +233,12 @@ const ClassesModel = [
     initialLF: 16,
     lfEachLevel: 4,
     trainedExpertise: 4,
+    levelBonus: {
+      damageReduction: {
+        level: 0,
+        bonus: 0,
+      },
+    },
     bba: [
       { level: 1, bonus: 0 },
       { level: 2, bonus: 1 },
@@ -225,6 +270,12 @@ const ClassesModel = [
     initialLF: 8,
     lfEachLevel: 2,
     trainedExpertise: 2,
+    levelBonus: {
+      damageReduction: {
+        level: 0,
+        bonus: 0,
+      },
+    },
     bba: [
       { level: 1, bonus: 0 },
       { level: 2, bonus: 1 },
@@ -256,6 +307,12 @@ const ClassesModel = [
     initialLF: 20,
     lfEachLevel: 5,
     trainedExpertise: 2,
+    levelBonus: {
+      damageReduction: {
+        level: 0,
+        bonus: 0,
+      },
+    },
     bba: [
       { level: 1, bonus: 1 },
       { level: 2, bonus: 2 },
@@ -287,6 +344,12 @@ const ClassesModel = [
     initialLF: 12,
     lfEachLevel: 3,
     trainedExpertise: 8,
+    levelBonus: {
+      damageReduction: {
+        level: 0,
+        bonus: 0,
+      },
+    },
     bba: [
       { level: 1, bonus: 0 },
       { level: 2, bonus: 1 },
@@ -318,6 +381,12 @@ const ClassesModel = [
     initialLF: 20,
     lfEachLevel: 5,
     trainedExpertise: 4,
+    levelBonus: {
+      damageReduction: {
+        level: 0,
+        bonus: 0,
+      },
+    },
     bba: [
       { level: 1, bonus: 1 },
       { level: 2, bonus: 2 },
@@ -349,6 +418,12 @@ const ClassesModel = [
     initialLF: 8,
     lfEachLevel: 2,
     trainedExpertise: 2,
+    levelBonus: {
+      damageReduction: {
+        level: 0,
+        bonus: 0,
+      },
+    },
     bba: [
       { level: 1, bonus: 0 },
       { level: 2, bonus: 1 },
@@ -380,6 +455,12 @@ const ClassesModel = [
     initialLF: 16,
     lfEachLevel: 4,
     trainedExpertise: 4,
+    levelBonus: {
+      damageReduction: {
+        level: 0,
+        bonus: 0,
+      },
+    },
     bba: [
       { level: 1, bonus: 1 },
       { level: 2, bonus: 2 },
@@ -411,6 +492,12 @@ const ClassesModel = [
     initialLF: 12,
     lfEachLevel: 3,
     trainedExpertise: 6,
+    levelBonus: {
+      damageReduction: {
+        level: 0,
+        bonus: 0,
+      },
+    },
     bba: [
       { level: 1, bonus: 0 },
       { level: 2, bonus: 1 },
@@ -442,6 +529,12 @@ const ClassesModel = [
     initialLF: 16,
     lfEachLevel: 4,
     trainedExpertise: 6,
+    levelBonus: {
+      damageReduction: {
+        level: 0,
+        bonus: 0,
+      },
+    },
     bba: [
       { level: 1, bonus: 0 },
       { level: 2, bonus: 1 },
@@ -473,6 +566,12 @@ const ClassesModel = [
     initialLF: 20,
     lfEachLevel: 5,
     trainedExpertise: 2,
+    levelBonus: {
+      damageReduction: {
+        level: 0,
+        bonus: 0,
+      },
+    },
     bba: [
       { level: 1, bonus: 1 },
       { level: 2, bonus: 2 },
@@ -504,6 +603,12 @@ const ClassesModel = [
     initialLF: 16,
     lfEachLevel: 4,
     trainedExpertise: 6,
+    levelBonus: {
+      damageReduction: {
+        level: 0,
+        bonus: 0,
+      },
+    },
     bba: [
       { level: 1, bonus: 1 },
       { level: 2, bonus: 2 },
@@ -535,6 +640,12 @@ const ClassesModel = [
     initialLF: 16,
     lfEachLevel: 4,
     trainedExpertise: 4,
+    levelBonus: {
+      damageReduction: {
+        level: 0,
+        bonus: 0,
+      },
+    },
     bba: [
       { level: 1, bonus: 0 },
       { level: 2, bonus: 1 },
@@ -566,6 +677,12 @@ const ClassesModel = [
     initialLF: 20,
     lfEachLevel: 5,
     trainedExpertise: 4,
+    levelBonus: {
+      damageReduction: {
+        level: 0,
+        bonus: 0,
+      },
+    },
     bba: [
       { level: 1, bonus: 1 },
       { level: 2, bonus: 2 },
@@ -598,6 +715,12 @@ const ClassesModel = [
     initialLF: 16,
     lfEachLevel: 4,
     trainedExpertise: 4,
+    levelBonus: {
+      damageReduction: {
+        level: 0,
+        bonus: 0,
+      },
+    },
     bba: [
       { level: 1, bonus: 1 },
       { level: 2, bonus: 2 },

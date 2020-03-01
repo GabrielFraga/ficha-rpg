@@ -9,6 +9,8 @@ import Classes from './pages/Classes';
 
 import Level from './pages/Level';
 
+import Resistences from './pages/Resistences';
+
 const Routes = createAppContainer(
   // createSwitchNavigator(
   createStackNavigator(
@@ -30,6 +32,12 @@ const Routes = createAppContainer(
       },
       Classes: {
         screen: Classes,
+      },
+      Resistences: {
+        screen: Resistences,
+        navigationOptions: {
+          headerTitle: 'Resitências',
+        },
       },
     },
     {
