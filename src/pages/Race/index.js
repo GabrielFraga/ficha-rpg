@@ -17,7 +17,7 @@ import {
   BigTitle,
 } from './styles';
 
-export default function RaceInfo() {
+export default function Race() {
   const dispatch = useDispatch();
 
   const habilities = useSelector(state => state.profile.habilities);

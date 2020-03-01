@@ -3,7 +3,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 
 import Habilities from './pages/Habilities';
 
-import RaceInfo from './pages/RaceInfo';
+import Race from './pages/Race';
 
 import Classes from './pages/Classes';
 
@@ -17,7 +17,7 @@ const Routes = createAppContainer(
         screen: Habilities,
       },
       Raça: {
-        screen: RaceInfo,
+        screen: Race,
         navigationOptions: {
           headerTitle: 'Detalhes da Raça',
         },
