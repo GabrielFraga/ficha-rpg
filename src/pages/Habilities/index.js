@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { Level } from '../../components/Level';
+import HandleLevel from '../../components/Level';
 
 import {
   Container,
@@ -77,7 +77,7 @@ export default function Habilities({ navigation }) {
               />
             </Row>
           </Section>
-          <Level />
+          <HandleLevel />
           <Row>
             <Label>Raça:</Label>
             <PickerView>

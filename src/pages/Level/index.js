@@ -3,17 +3,16 @@ import React from 'react';
 import { ScrollView } from 'react-native';
 import { Container } from '../../components/Global/styles';
 
-import {
-  Level as LevelSelector,
-  HabilityLevelOptions,
-} from '../../components/Level';
+import HandleLevel from '../../components/Level';
+
+import HabilityForLevel from '../../components/Level/HabilityForLevel';
 
 export default function Level() {
   return (
     <Container>
       <ScrollView>
-        <LevelSelector />
-        <HabilityLevelOptions />
+        <HandleLevel />
+        <HabilityForLevel />
       </ScrollView>
     </Container>
   );
