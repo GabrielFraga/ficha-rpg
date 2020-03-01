@@ -22,18 +22,26 @@ import {
 
 import { PVColum, Column } from './styles';
 
+import { editOtherFieldLevel } from '../../store/modules/profile/actions';
+
 export default function Resistences() {
-  const habilities = useSelector(state => state.profile.habilities);
-  const totalLifePoints = useSelector(state => state.profile.lifePoints.total);
-  const classLifePoints = useSelector(
-    state => state.profile.lifePoints.classLifePoints,
-  );
-  const constitutiontLifePoints = useSelector(
-    state => state.profile.lifePoints.constitutiontLifePoints,
-  );
+  const dispatch = useDispatch();
+
+  const {
+    total,
+    classLifePoints,
+    constitutiontLifePoints,
+    epic,
+    other,
+  } = useSelector(state => state.profile.lifePoints);
+
   const BaseBonusAttack = useSelector(state => state.profile.bba);
 
   const resistances = useSelector(state => state.profile.resistances);
+
+  function handleOtherLevel(data) {
+    dispatch(editOtherFieldLevel(Number(data)));
+  }
 
   function getResistenceName(name) {
     switch (name) {
@@ -44,6 +52,7 @@ export default function Resistences() {
       case 'Sabedoria':
         return 'Vontade (Sab)';
       default:
+        return '';
     }
   }
   return (
@@ -82,7 +91,7 @@ export default function Resistences() {
           <Row>
             <PVColum>
               <Label>Total</Label>
-              <InputBox>{totalLifePoints}</InputBox>
+              <InputBox>{total}</InputBox>
             </PVColum>
 
             <PVColum>
@@ -97,12 +106,17 @@ export default function Resistences() {
 
             <PVColum>
               <Label>Épico</Label>
-              <InputBox />
+              <InputBox>{epic}</InputBox>
             </PVColum>
 
             <PVColum>
               <Label>Outros</Label>
-              <InputBox />
+              <InputBox
+                keyboard="numeric"
+                editable
+                onChangeText={handleOtherLevel}>
+                {other}
+              </InputBox>
             </PVColum>
           </Row>
 

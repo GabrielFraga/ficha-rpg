@@ -10,6 +10,8 @@ const INITIAL_STATE = {
   classes: [{ id: 0, name: '', level: 0, type: '' }],
   lifePoints: {
     total: 0,
+    epic: 0,
+    other: 0,
     classLifePoints: 0,
     constitutiontLifePoints: 0,
   },
@@ -175,6 +177,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
       const constitutiontModificator = draft.habilities[2].mod;
       const profileLevel = draft.level.value;
       const initialClass = draft.classes[0];
+      const otherLifePoints = draft.lifePoints.other;
       const classPointsForEachLevel = Object.values(draft.classes).reduce(
         (x, y) => x + y.lifePointsEachLevel * y.level,
         0,
@@ -183,6 +186,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
       draft.lifePoints.total =
         initialClass.initialLifePoints +
         classPointsForEachLevel +
+        otherLifePoints +
         constitutiontModificator * profileLevel -
         initialClass.lifePointsEachLevel;
 
@@ -398,6 +402,16 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         break;
       }
+
+      case '@level/OtherFieldEdit': {
+        const { value } = action;
+
+        draft.lifePoints.other = value;
+
+        calcLifePoints();
+        break;
+      }
+
       case '@level/USEXP': {
         const { value } = action;
 

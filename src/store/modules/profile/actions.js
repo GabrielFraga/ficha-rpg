@@ -28,6 +28,13 @@ export function editLevel(level, xp) {
   };
 }
 
+export function editOtherFieldLevel(value) {
+  return {
+    type: '@level/OtherFieldEdit',
+    value,
+  };
+}
+
 export function editUseXP(value) {
   return {
     type: '@level/USEXP',
