@@ -137,14 +137,18 @@ const INITIAL_STATE = {
 export default function editProfile(state = INITIAL_STATE, action) {
   return produce(state, draft => {
     function calcLifePoints() {
+      const constitutiontModificator = draft.habilities[2].mod;
+      const profileLevel = draft.level.value;
       const initialClass = draft.classes[0];
+      const pointsForEachLevel = Object.values(draft.classes).reduce(
+        (x, y) => x + y.lifePointsEachLevel * y.level,
+        0,
+      );
+
       draft.lifePoints =
         initialClass.initialLifePoints +
-        Object.values(draft.classes).reduce(
-          (x, y) => x + y.lifePointsEachLevel * y.level,
-          0,
-        ) +
-        draft.habilities[2].mod * draft.level -
+        pointsForEachLevel +
+        constitutiontModificator * profileLevel -
         initialClass.lifePointsEachLevel;
     }
 
