@@ -1,6 +1,9 @@
 import produce from 'immer';
 import { checkModificator } from '../../../services/Habilities/HabilitiesService';
-import { findBBA } from '../../../services/Classes/ClassesService';
+import {
+  getAllBBAForClass,
+  filterLevelBBA,
+} from '../../../services/Classes/ClassesService';
 
 const INITIAL_STATE = {
   name: null,
@@ -215,12 +218,12 @@ export default function editProfile(state = INITIAL_STATE, action) {
         constitutiontModificator * profileLevel;
     }
 
-    function calcBBA(mainClass) {
-      const bba = findBBA(mainClass);
+    function calcBBA(caracterClass) {
+      const bba = getAllBBAForClass(caracterClass);
 
-      const { bonus } = bba.filter(c => c.level === mainClass.level)[0];
+      const bonus = filterLevelBBA(bba, caracterClass.level);
 
-      mainClass.bba = bonus;
+      caracterClass.bba = bonus;
 
       draft.bba = Object.values(draft.classes).reduce((x, y) => x + y.bba, 0);
     }
@@ -449,18 +452,18 @@ export default function editProfile(state = INITIAL_STATE, action) {
           trainedExpertise,
         } = action;
 
-        const index = draft.classes.findIndex(c => c.id === id);
-        const mainClass = draft.classes[index];
+        const index = draft.classes.findIndex(item => item.id === id);
+        const caracterClass = draft.classes[index];
 
-        if (mainClass.id === 0) {
-          mainClass.initialLifePoints = initialLifePoints;
+        if (caracterClass.id === 0) {
+          caracterClass.initialLifePoints = initialLifePoints;
         }
 
-        mainClass.name = name;
-        mainClass.lifePointsEachLevel = lifePointsEachLevel;
-        mainClass.trainedExpertise = trainedExpertise;
-
-        calcBBA(mainClass);
+        caracterClass.name = name;
+        caracterClass.lifePointsEachLevel = lifePointsEachLevel;
+        caracterClass.trainedExpertise = trainedExpertise;
+        console.tron.log(caracterClass);
+        calcBBA(caracterClass);
         calcLifePoints();
         calcResistances();
 
@@ -470,12 +473,12 @@ export default function editProfile(state = INITIAL_STATE, action) {
       case '@class/LEVEL_EDIT': {
         const { id, level } = action;
 
-        const index = draft.classes.findIndex(c => c.id === id);
-        const mainClass = draft.classes[index];
+        const index = draft.classes.findIndex(item => item.id === id);
+        const caracterClass = draft.classes[index];
 
-        mainClass.level = level;
+        caracterClass.level = level;
 
-        calcBBA(mainClass);
+        calcBBA(caracterClass);
         calcLifePoints();
         calcResistances();
 
@@ -485,7 +488,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
       case '@class/DELETE': {
         const { id } = action;
 
-        const index = draft.classes.findIndex(c => c.id === id);
+        const index = draft.classes.findIndex(item => item.id === id);
 
         draft.classes.splice(index, 1);
         draft.bba = Object.values(draft.classes).reduce((x, y) => x + y.bba, 0);
@@ -499,7 +502,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
       case '@resistence/EDIT_OTHER': {
         const { id, value } = action;
 
-        const index = draft.resistances.findIndex(c => c.id === id);
+        const index = draft.resistances.findIndex(item => item.id === id);
 
         const resistance = draft.resistances[index];
 

@@ -3,12 +3,18 @@ import { Picker } from '../../components/Global/styles';
 
 import ClassesModel from './model.clasess';
 
-export const findBBA = className => {
+export const getAllBBAForClass = caracterClassName => {
   const { bba } = ClassesModel[
-    ClassesModel.findIndex(c => c.value === className.name)
+    ClassesModel.findIndex(item => item.value === caracterClassName.name)
   ];
 
   return bba;
+};
+
+export const filterLevelBBA = (bba, caracterLevel) => {
+  const { bonus } = bba.filter(item => item.level === caracterLevel)[0];
+
+  return bonus;
 };
 
 export const ClassTypes = [

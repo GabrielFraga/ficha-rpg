@@ -15,6 +15,7 @@ const ClassesModel = [
       },
     },
     bba: [
+      { level: 0, bonus: 0 },
       { level: 1, bonus: 0 },
       { level: 2, bonus: 1 },
       { level: 3, bonus: 2 },
@@ -52,6 +53,7 @@ const ClassesModel = [
       },
     },
     bba: [
+      { level: 0, bonus: 0 },
       { level: 1, bonus: 0 },
       { level: 2, bonus: 1 },
       { level: 3, bonus: 2 },
@@ -92,6 +94,7 @@ const ClassesModel = [
       ],
     },
     bba: [
+      { level: 0, bonus: 0 },
       { level: 1, bonus: 1 },
       { level: 2, bonus: 2 },
       { level: 3, bonus: 3 },
@@ -129,6 +132,7 @@ const ClassesModel = [
       },
     },
     bba: [
+      { level: 0, bonus: 0 },
       { level: 1, bonus: 0 },
       { level: 2, bonus: 1 },
       { level: 3, bonus: 2 },
@@ -166,6 +170,7 @@ const ClassesModel = [
       },
     },
     bba: [
+      { level: 0, bonus: 0 },
       { level: 1, bonus: 1 },
       { level: 2, bonus: 2 },
       { level: 3, bonus: 3 },
@@ -203,6 +208,7 @@ const ClassesModel = [
       },
     },
     bba: [
+      { level: 0, bonus: 0 },
       { level: 1, bonus: 0 },
       { level: 2, bonus: 1 },
       { level: 3, bonus: 2 },
@@ -240,6 +246,7 @@ const ClassesModel = [
       },
     },
     bba: [
+      { level: 0, bonus: 0 },
       { level: 1, bonus: 0 },
       { level: 2, bonus: 1 },
       { level: 3, bonus: 2 },
@@ -277,6 +284,7 @@ const ClassesModel = [
       },
     },
     bba: [
+      { level: 0, bonus: 0 },
       { level: 1, bonus: 0 },
       { level: 2, bonus: 1 },
       { level: 3, bonus: 1 },
@@ -314,6 +322,7 @@ const ClassesModel = [
       },
     },
     bba: [
+      { level: 0, bonus: 0 },
       { level: 1, bonus: 1 },
       { level: 2, bonus: 2 },
       { level: 3, bonus: 3 },
@@ -351,6 +360,7 @@ const ClassesModel = [
       },
     },
     bba: [
+      { level: 0, bonus: 0 },
       { level: 1, bonus: 0 },
       { level: 2, bonus: 1 },
       { level: 3, bonus: 2 },
@@ -388,6 +398,7 @@ const ClassesModel = [
       },
     },
     bba: [
+      { level: 0, bonus: 0 },
       { level: 1, bonus: 1 },
       { level: 2, bonus: 2 },
       { level: 3, bonus: 3 },
@@ -425,6 +436,7 @@ const ClassesModel = [
       },
     },
     bba: [
+      { level: 0, bonus: 0 },
       { level: 1, bonus: 0 },
       { level: 2, bonus: 1 },
       { level: 3, bonus: 1 },
@@ -462,6 +474,7 @@ const ClassesModel = [
       },
     },
     bba: [
+      { level: 0, bonus: 0 },
       { level: 1, bonus: 1 },
       { level: 2, bonus: 2 },
       { level: 3, bonus: 3 },
@@ -499,6 +512,7 @@ const ClassesModel = [
       },
     },
     bba: [
+      { level: 0, bonus: 0 },
       { level: 1, bonus: 0 },
       { level: 2, bonus: 1 },
       { level: 3, bonus: 2 },
@@ -536,6 +550,7 @@ const ClassesModel = [
       },
     },
     bba: [
+      { level: 0, bonus: 0 },
       { level: 1, bonus: 0 },
       { level: 2, bonus: 1 },
       { level: 3, bonus: 2 },
@@ -573,6 +588,7 @@ const ClassesModel = [
       },
     },
     bba: [
+      { level: 0, bonus: 0 },
       { level: 1, bonus: 1 },
       { level: 2, bonus: 2 },
       { level: 3, bonus: 3 },
@@ -610,6 +626,7 @@ const ClassesModel = [
       },
     },
     bba: [
+      { level: 0, bonus: 0 },
       { level: 1, bonus: 1 },
       { level: 2, bonus: 2 },
       { level: 3, bonus: 3 },
@@ -647,6 +664,7 @@ const ClassesModel = [
       },
     },
     bba: [
+      { level: 0, bonus: 0 },
       { level: 1, bonus: 0 },
       { level: 2, bonus: 1 },
       { level: 3, bonus: 1 },
@@ -684,6 +702,7 @@ const ClassesModel = [
       },
     },
     bba: [
+      { level: 0, bonus: 0 },
       { level: 1, bonus: 1 },
       { level: 2, bonus: 2 },
       { level: 3, bonus: 3 },
@@ -722,6 +741,7 @@ const ClassesModel = [
       },
     },
     bba: [
+      { level: 0, bonus: 0 },
       { level: 1, bonus: 1 },
       { level: 2, bonus: 2 },
       { level: 3, bonus: 3 },
