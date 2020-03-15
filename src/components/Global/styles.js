@@ -12,6 +12,20 @@ export const Row = styled.View`
   align-items: center;
 `;
 
+export const Column = styled.View`
+  flex-direction: column;
+`;
+
+export const FlexdCol5 = styled.View`
+  flex: 1;
+  flex-basis: 20%;
+`;
+
+export const FlexCol4 = styled.View`
+  flex: 1;
+  flex-basis: 25%;
+`;
+
 export const Section = styled.View`
   margin-bottom: 25px;
 `;
@@ -27,6 +41,17 @@ export const Label = styled.Text`
   color: #fff;
   font-weight: bold;
   font-size: 17px;
+`;
+
+export const FixedSizedLabel = styled.Text`
+  color: #fff;
+  font-weight: bold;
+  font-size: 17px;
+  flex-basis: 20%;
+`;
+
+export const FirstLine = styled.View`
+  flex-basis: 25%;
 `;
 
 export const PickerView = styled.View`
@@ -56,7 +81,6 @@ export const InputBox = styled.TextInput`
 `;
 
 export const LevelInputBox = styled.TextInput`
-  /* flex: 1; */
   width: 50px;
   margin: 5px;
   opacity: ${props => (props.editableStyle ? 1 : 0.5)};

@@ -10,9 +10,11 @@ import {
   Title,
   Label,
   InputBox,
+  FixedSizedLabel,
+  FirstLine,
+  FlexCol5,
+  Column,
 } from '../../components/Global/styles';
-
-import { PVColum, ResistanceTitle, ResistanceLabel } from './styles';
 
 import {
   editOtherFieldLevel,
@@ -60,27 +62,27 @@ export default function Resistences() {
         <Section>
           <Title>Pontos de vida (PVs)</Title>
           <Row>
-            <PVColum>
+            <FlexCol5>
               <Label>Total</Label>
               <InputBox editable={false}>{total}</InputBox>
-            </PVColum>
+            </FlexCol5>
 
-            <PVColum>
+            <FlexCol5>
               <Label>Classes</Label>
               <InputBox editable={false}>{classLifePoints}</InputBox>
-            </PVColum>
+            </FlexCol5>
 
-            <PVColum>
+            <FlexCol5>
               <Label>Con</Label>
               <InputBox editable={false}>{constitutiontLifePoints}</InputBox>
-            </PVColum>
+            </FlexCol5>
 
-            <PVColum>
+            <FlexCol5>
               <Label>Épico</Label>
               <InputBox editable={false}>{epic}</InputBox>
-            </PVColum>
+            </FlexCol5>
 
-            <PVColum>
+            <FlexCol5>
               <Label>Outros</Label>
               <InputBox
                 keyboard="numeric"
@@ -88,7 +90,7 @@ export default function Resistences() {
                 onChangeText={handleOtherLevel}>
                 {other}
               </InputBox>
-            </PVColum>
+            </FlexCol5>
           </Row>
 
           <Section style={{ marginTop: 20 }}>
@@ -100,19 +102,19 @@ export default function Resistences() {
 
           <Title>Resistências</Title>
           <Row>
-            <ResistanceTitle style={{ flexBasis: 80 }} />
-            <ResistanceTitle>Total</ResistanceTitle>
-            <ResistanceTitle>Nível / 2</ResistanceTitle>
-            <ResistanceTitle>Hab</ResistanceTitle>
-            <ResistanceTitle>Outros</ResistanceTitle>
+            <FirstLine />
+            <FixedSizedLabel>Total</FixedSizedLabel>
+            <FixedSizedLabel>Nível / 2</FixedSizedLabel>
+            <FixedSizedLabel>Hab</FixedSizedLabel>
+            <FixedSizedLabel>Outros</FixedSizedLabel>
           </Row>
 
           {resistances.map(item => {
             return (
               <Row key={item.id}>
-                <ResistanceLabel>
+                <FixedSizedLabel>
                   {getResistenceName(item.habilityName)}
-                </ResistanceLabel>
+                </FixedSizedLabel>
                 <InputBox editable={false}>{item.total}</InputBox>
                 <InputBox editable={false}>{item.half_level}</InputBox>
                 <InputBox editable={false}>{item.hability}</InputBox>

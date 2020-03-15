@@ -15,9 +15,12 @@ import {
   Title,
   Label,
   InputBox,
+  FirstLine,
+  FixedSizedLabel,
+  FlexCol4,
 } from '../../components/Global/styles';
 
-import { FixedSizedColumn, NoFlexInputBox, FixedSizedLabel } from './styles';
+import { NoFlexInputBox } from './styles';
 
 export default function Combat() {
   return (
@@ -25,20 +28,22 @@ export default function Combat() {
       <ScrollView>
         <Section>
           <Row>
-            <FixedSizedColumn>
+            <FlexCol4>
               <Label>Redução de dano</Label>
               <InputBox editable>0</InputBox>
-            </FixedSizedColumn>
-            <FixedSizedColumn>
+            </FlexCol4>
+            <FlexCol4>
               <Label>Pontos de ação</Label>
               <InputBox editable>0</InputBox>
-            </FixedSizedColumn>
+            </FlexCol4>
           </Row>
         </Section>
 
         <Section>
+          <Title>Ataques Básicos</Title>
           <Row>
-            <Title>Ataques Básicos</Title>
+            <FirstLine />
+            <FixedSizedLabel>Teste</FixedSizedLabel>
 
             <FixedSizedLabel>BBA</FixedSizedLabel>
 
@@ -70,45 +75,45 @@ export default function Combat() {
             style={{
               flexWrap: 'wrap',
             }}>
-            <FixedSizedColumn>
+            <FlexCol4>
               <Label>Total</Label>
               <NoFlexInputBox editable={false}>10</NoFlexInputBox>
-            </FixedSizedColumn>
+            </FlexCol4>
 
-            <FixedSizedColumn>
+            <FlexCol4>
               <Label>Base</Label>
               <NoFlexInputBox editable={false}>10</NoFlexInputBox>
-            </FixedSizedColumn>
+            </FlexCol4>
 
-            <FixedSizedColumn>
+            <FlexCol4>
               <Label>Nível / 2</Label>
               <NoFlexInputBox editable={false}>10</NoFlexInputBox>
-            </FixedSizedColumn>
+            </FlexCol4>
 
-            <FixedSizedColumn>
+            <FlexCol4>
               <Label>Des.</Label>
               <NoFlexInputBox editable={false}>10</NoFlexInputBox>
-            </FixedSizedColumn>
+            </FlexCol4>
 
-            <FixedSizedColumn>
+            <FlexCol4>
               <Label>Arm.</Label>
               <NoFlexInputBox editable={false}>10</NoFlexInputBox>
-            </FixedSizedColumn>
+            </FlexCol4>
 
-            <FixedSizedColumn>
+            <FlexCol4>
               <Label>Mod.</Label>
               <NoFlexInputBox editable={false}>10</NoFlexInputBox>
-            </FixedSizedColumn>
+            </FlexCol4>
 
-            <FixedSizedColumn>
+            <FlexCol4>
               <Label>Tam.</Label>
               <NoFlexInputBox editable={false}>10</NoFlexInputBox>
-            </FixedSizedColumn>
+            </FlexCol4>
 
-            <FixedSizedColumn>
+            <FlexCol4>
               <Label>Outros</Label>
               <NoFlexInputBox editable={false}>10</NoFlexInputBox>
-            </FixedSizedColumn>
+            </FlexCol4>
           </Row>
         </Section>
       </ScrollView>
