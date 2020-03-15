@@ -62,22 +62,22 @@ export default function Resistences() {
           <Row>
             <PVColum>
               <Label>Total</Label>
-              <InputBox>{total}</InputBox>
+              <InputBox editable={false}>{total}</InputBox>
             </PVColum>
 
             <PVColum>
               <Label>Classes</Label>
-              <InputBox>{classLifePoints}</InputBox>
+              <InputBox editable={false}>{classLifePoints}</InputBox>
             </PVColum>
 
             <PVColum>
               <Label>Con</Label>
-              <InputBox>{constitutiontLifePoints}</InputBox>
+              <InputBox editable={false}>{constitutiontLifePoints}</InputBox>
             </PVColum>
 
             <PVColum>
               <Label>Épico</Label>
-              <InputBox>{epic}</InputBox>
+              <InputBox editable={false}>{epic}</InputBox>
             </PVColum>
 
             <PVColum>
@@ -94,7 +94,7 @@ export default function Resistences() {
           <Section style={{ marginTop: 20 }}>
             <Row>
               <Label>Bônus Base Ataque (BBA)</Label>
-              <InputBox>{BaseBonusAttack}</InputBox>
+              <InputBox editable={false}>{BaseBonusAttack}</InputBox>
             </Row>
           </Section>
 
@@ -109,22 +109,20 @@ export default function Resistences() {
 
           {resistances.map(item => {
             return (
-              <>
-                <Row key={item.id}>
-                  <ResistanceLabel>
-                    {getResistenceName(item.habilityName)}
-                  </ResistanceLabel>
-                  <InputBox>{item.total}</InputBox>
-                  <InputBox>{item.half_level}</InputBox>
-                  <InputBox>{item.hability}</InputBox>
-                  <InputBox
-                    keyboard="numeric"
-                    editable
-                    onChangeText={e => handleOtherResistence(item.id, e)}>
-                    {item.other}
-                  </InputBox>
-                </Row>
-              </>
+              <Row key={item.id}>
+                <ResistanceLabel>
+                  {getResistenceName(item.habilityName)}
+                </ResistanceLabel>
+                <InputBox editable={false}>{item.total}</InputBox>
+                <InputBox editable={false}>{item.half_level}</InputBox>
+                <InputBox editable={false}>{item.hability}</InputBox>
+                <InputBox
+                  keyboard="numeric"
+                  editable
+                  onChangeText={e => handleOtherResistence(item.id, e)}>
+                  {item.other}
+                </InputBox>
+              </Row>
             );
           })}
         </Section>

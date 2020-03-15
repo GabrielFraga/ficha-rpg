@@ -11,6 +11,8 @@ import Level from './pages/Level';
 
 import Resistences from './pages/Resistences';
 
+import Combat from './pages/Combat';
+
 const Routes = createAppContainer(
   // createSwitchNavigator(
   createStackNavigator(
@@ -33,10 +35,16 @@ const Routes = createAppContainer(
       Classes: {
         screen: Classes,
       },
-      Resistences: {
+      Resistências: {
         screen: Resistences,
         navigationOptions: {
           headerTitle: 'Resitências',
+        },
+      },
+      Combate: {
+        screen: Combat,
+        navigationOptions: {
+          headerTitle: 'Combate',
         },
       },
     },

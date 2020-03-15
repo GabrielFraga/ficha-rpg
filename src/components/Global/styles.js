@@ -46,7 +46,7 @@ export const Picker = styled.Picker`
 
 export const InputBox = styled.TextInput`
   flex: 1;
-  opacity: ${props => (props.editable ? 1 : 0.5)};
+  opacity: ${props => (props.editable === true ? 1 : 0.5)};
   background: #823b38a8;
   color: #fff;
   border: 1px solid #b58886;

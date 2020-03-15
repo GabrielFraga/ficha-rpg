@@ -16,7 +16,7 @@ export const filterLevelBBA = (bba, caracterLevel) => {
 
   return bonus;
 };
-
+// TODO: Definir classes de prestígio
 export const ClassTypes = [
   {
     id: 0,

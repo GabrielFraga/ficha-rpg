@@ -137,9 +137,14 @@ export default function Habilities({ navigation }) {
             <Title>Níveis</Title>
           </TitleView>
         </TouchableHighlight>
-        <TouchableHighlight onPress={() => navigation.navigate('Resistences')}>
+        <TouchableHighlight onPress={() => navigation.navigate('Resistências')}>
           <TitleView>
             <Title>Resistências</Title>
+          </TitleView>
+        </TouchableHighlight>
+        <TouchableHighlight onPress={() => navigation.navigate('Combate')}>
+          <TitleView>
+            <Title>Combate</Title>
           </TitleView>
         </TouchableHighlight>
       </ScrollView>
