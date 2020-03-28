@@ -292,6 +292,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
       const { basicAttacks } = draft.combat;
 
       Object.values(basicAttacks).forEach(item => {
+        item.size = draft.size.combatBonus;
         item.bba = draft.bba;
         item.total = item.bba + item.habilities + item.size + item.other;
       });
@@ -317,6 +318,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         calcLifePoints();
         calcResistances();
+        calcBasicAttacks();
         break;
       }
 
@@ -339,6 +341,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         calcLifePoints();
         calcResistances();
+        calcBasicAttacks();
         break;
       }
 
@@ -414,6 +417,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         calcLifePoints();
         calcResistances();
+        calcBasicAttacks();
         break;
       }
 
@@ -442,6 +446,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         calcLifePoints();
         calcResistances();
+        calcBasicAttacks();
         break;
       }
 
@@ -461,6 +466,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
         };
         calcLifePoints();
         calcResistances();
+        calcBasicAttacks();
 
         break;
       }
@@ -518,6 +524,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
         calcBBA(caracterClass);
         calcLifePoints();
         calcResistances();
+        calcBasicAttacks();
 
         break;
       }
@@ -533,6 +540,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
         calcBBA(caracterClass);
         calcLifePoints();
         calcResistances();
+        calcBasicAttacks();
 
         break;
       }
@@ -547,6 +555,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         calcLifePoints();
         calcResistances();
+        calcBasicAttacks();
 
         break;
       }
@@ -561,6 +570,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
         resistance.other = value;
 
         calcResistances();
+        calcBasicAttacks();
         break;
       }
 
