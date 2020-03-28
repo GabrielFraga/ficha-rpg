@@ -123,3 +123,17 @@ export function editActionPoints(value) {
     value,
   };
 }
+
+export function editMeleeAttack(value) {
+  return {
+    type: '@combat/EDIT_MELEE',
+    value,
+  };
+}
+
+export function editRangeAttack(value) {
+  return {
+    type: '@combat/EDIT_RANGE',
+    value,
+  };
+}

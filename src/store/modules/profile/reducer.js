@@ -1,3 +1,8 @@
+// TODO: Implementar modificadores de tamanho. Conforme explicado em
+// https://tsrd.fandom.com/pt-br/wiki/Combate na seção "Tamanho de Criaturas"
+
+// TODO: Implementar Classes de Prestígio
+
 import produce from 'immer';
 import { checkModificator } from '../../../services/Habilities/HabilitiesService';
 import {
@@ -26,10 +31,20 @@ const INITIAL_STATE = {
     damageReduction: 0,
     actionPoints: 0,
     basicAttacks: {
-      total: 0,
-      bba: 0,
-      habilities: 0,
-      size: 0,
+      melee: {
+        total: 0,
+        bba: 0,
+        habilities: 0,
+        size: 0,
+        other: 0,
+      },
+      range: {
+        total: 0,
+        bba: 0,
+        habilities: 0,
+        size: 0,
+        other: 0,
+      },
     },
     armorClass: {
       total: 0,
@@ -247,19 +262,32 @@ export default function editProfile(state = INITIAL_STATE, action) {
       draft.bba = Object.values(draft.classes).reduce((x, y) => x + y.bba, 0);
     }
 
+    function getHabilityModificator(name) {
+      const index = draft.habilities.findIndex(p => p.name === name);
+      const hability = draft.habilities[index];
+      return hability.mod;
+    }
     function calcResistances() {
-      function getHabilityModificator(name) {
-        const index = draft.habilities.findIndex(p => p.name === name);
-        const hability = draft.habilities[index];
-        return hability.mod;
-      }
-
       const halfLevelValue = Math.trunc(draft.level.value / 2);
 
       draft.resistances.forEach(item => {
         item.hability = getHabilityModificator(item.habilityName);
         item.half_level = halfLevelValue;
         item.total = item.half_level + item.hability + item.class + item.other;
+      });
+    }
+
+    function calcBasicAttacks() {
+      const { melee, range } = draft.combat.basicAttacks;
+
+      melee.habilities = getHabilityModificator('Força');
+      range.habilities = getHabilityModificator('Destreza');
+
+      const { basicAttacks } = draft.combat;
+
+      Object.values(basicAttacks).forEach(item => {
+        item.bba = draft.bba;
+        item.total = item.bba + item.habilities + item.size + item.other;
       });
     }
 
@@ -481,7 +509,6 @@ export default function editProfile(state = INITIAL_STATE, action) {
         caracterClass.name = name;
         caracterClass.lifePointsEachLevel = lifePointsEachLevel;
         caracterClass.trainedExpertise = trainedExpertise;
-        console.tron.log(caracterClass);
         calcBBA(caracterClass);
         calcLifePoints();
         calcResistances();
@@ -544,6 +571,21 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         draft.combat.actionPoints = value;
 
+        break;
+      }
+      case '@combat/EDIT_MELEE': {
+        const { value } = action;
+
+        draft.combat.basicAttacks.melee.other = value;
+
+        calcBasicAttacks();
+        break;
+      }
+      case '@combat/EDIT_RANGE': {
+        const { value } = action;
+
+        draft.combat.basicAttacks.range.other = value;
+        calcBasicAttacks();
         break;
       }
 

@@ -6,6 +6,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
   editDamageReduction,
   editActionPoints,
+  editMeleeAttack,
+  editRangeAttack,
 } from '../../store/modules/profile/actions';
 
 import {
@@ -26,7 +28,12 @@ export default function Combat() {
   const damageReduction = useSelector(
     state => state.profile.combat.damageReduction,
   );
+
   const actionPoints = useSelector(state => state.profile.combat.actionPoints);
+
+  const melee = useSelector(state => state.profile.combat.basicAttacks.melee);
+
+  const range = useSelector(state => state.profile.combat.basicAttacks.range);
 
   function handleDamageReduction(value) {
     dispatch(editDamageReduction(Number(value)));
@@ -34,6 +41,14 @@ export default function Combat() {
 
   function handleActionPoints(value) {
     dispatch(editActionPoints(Number(value)));
+  }
+
+  function handleMeleeAttack(value) {
+    dispatch(editMeleeAttack(Number(value)));
+  }
+
+  function handleRangeAttack(value) {
+    dispatch(editRangeAttack(Number(value)));
   }
 
   return (
@@ -70,19 +85,29 @@ export default function Combat() {
             </FlexCol4>
             <FlexCol4>
               <FixedSizedLabel>Corpo a Corpo</FixedSizedLabel>
-              <InputBox editable={false}>10</InputBox>
-              <InputBox editable={false}>10</InputBox>
-              <InputBox editable={false}>10</InputBox>
-              <InputBox editable={false}>10</InputBox>
-              <InputBox editable>10</InputBox>
+              <InputBox editable={false}>{melee.total}</InputBox>
+              <InputBox editable={false}>{melee.bba}</InputBox>
+              <InputBox editable={false}>{melee.habilities}</InputBox>
+              <InputBox editable={false}>{melee.size}</InputBox>
+              <InputBox
+                keyboard="numeric"
+                editable
+                onChangeText={handleMeleeAttack}>
+                {melee.other}
+              </InputBox>
             </FlexCol4>
             <FlexCol4>
               <FixedSizedLabel>À Distância</FixedSizedLabel>
-              <InputBox editable={false}>10</InputBox>
-              <InputBox editable={false}>10</InputBox>
-              <InputBox editable={false}>10</InputBox>
-              <InputBox editable={false}>10</InputBox>
-              <InputBox editable>10</InputBox>
+              <InputBox editable={false}>{range.total}</InputBox>
+              <InputBox editable={false}>{range.bba}</InputBox>
+              <InputBox editable={false}>{range.habilities}</InputBox>
+              <InputBox editable={false}>{range.size}</InputBox>
+              <InputBox
+                keyboard="numeric"
+                editable
+                onChangeText={handleRangeAttack}>
+                {range.other}
+              </InputBox>
             </FlexCol4>
           </Row>
         </Section>
