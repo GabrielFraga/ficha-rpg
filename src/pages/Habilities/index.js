@@ -18,6 +18,7 @@ import {
   InputBox,
   TitleView,
   HabilitiesRow,
+  FlexCol4,
 } from '../../components/Global/styles';
 
 import { FlexLabel, FixedInput, FinalValue } from './styles';
@@ -27,7 +28,10 @@ import {
   editRace,
   editAge,
   editName,
+  selectSize,
 } from '../../store/modules/profile/actions';
+
+import { PickerSizes, findSize } from '../../services/Size/SizeServices';
 
 import { PickerRaces, findRace } from '../../services/Races/RacesService';
 
@@ -38,6 +42,7 @@ export default function Habilities({ navigation }) {
   const race = useSelector(state => state.profile.race);
   const age = useSelector(state => state.profile.age);
   const name = useSelector(state => state.profile.name);
+  const size = useSelector(state => state.profile.size);
 
   function handleHabilityChange({ nativeEvent: { text } }, item) {
     dispatch(editHability(item.name, Number(text)));
@@ -46,6 +51,11 @@ export default function Habilities({ navigation }) {
   function handleRace(raceName) {
     const mainRace = findRace(raceName);
     dispatch(editRace(mainRace));
+  }
+
+  function handleSize(sizeId) {
+    const mainSize = findSize(sizeId);
+    dispatch(selectSize(mainSize));
   }
 
   function handleAge(ageP) {
@@ -62,34 +72,55 @@ export default function Habilities({ navigation }) {
         <Section>
           <Section>
             <Row>
-              <Label>Nome </Label>
-              <InputBox
-                value={name}
-                editable
-                onChangeText={nameP => handleName(nameP)}
-              />
-              <Label>Idade</Label>
-              <InputBox
-                value={age}
-                editable
-                onChangeText={ageP => handleAge(ageP)}
-                keyboardType="numeric"
-              />
+              <FlexCol4>
+                <Label>Nome </Label>
+                <InputBox
+                  value={name}
+                  editable
+                  onChangeText={nameP => handleName(nameP)}
+                />
+              </FlexCol4>
+              <FlexCol4>
+                <Label>Idade</Label>
+                <InputBox
+                  value={age}
+                  editable
+                  onChangeText={ageP => handleAge(ageP)}
+                  keyboardType="numeric"
+                />
+              </FlexCol4>
             </Row>
           </Section>
-          <HandleLevel />
-          <Row>
-            <Label>Raça:</Label>
-            <PickerView>
-              <Picker
-                prompt="Defina uma raça"
-                selectedValue={race.name}
-                onValueChange={itemValue => handleRace(itemValue)}>
-                {PickerRaces}
-              </Picker>
-            </PickerView>
+          <Row
+            style={{
+              justifyContent: 'center',
+            }}>
+            <FlexCol4>
+              <Label>Tamanho</Label>
+              <PickerView>
+                <Picker
+                  prompt="Defina o tamanho de seu personagem"
+                  selectedValue={size.id}
+                  onValueChange={handleSize}>
+                  {PickerSizes}
+                </Picker>
+              </PickerView>
+            </FlexCol4>
+            <FlexCol4>
+              <Label>Raça</Label>
+              <PickerView>
+                <Picker
+                  prompt="Defina uma raça"
+                  selectedValue={race.name}
+                  onValueChange={handleRace}>
+                  {PickerRaces}
+                </Picker>
+              </PickerView>
+            </FlexCol4>
           </Row>
         </Section>
+
+        <HandleLevel />
 
         <HabilitiesRow style={{ height: 50 }}>
           <Title>Habilidade</Title>

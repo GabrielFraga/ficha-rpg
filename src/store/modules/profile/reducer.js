@@ -13,6 +13,12 @@ import {
 const INITIAL_STATE = {
   name: null,
   age: null,
+  size: {
+    id: 0,
+    name: null,
+    combatBonus: 0,
+    stealthBonus: 0,
+  },
   level: { value: 0, experiencePoints: 0, useXP: true },
   race: { name: null, info: null },
   classes: [
@@ -589,6 +595,13 @@ export default function editProfile(state = INITIAL_STATE, action) {
         break;
       }
 
+      case '@size/SELECT': {
+        const { size } = action;
+
+        draft.size = size;
+        calcBasicAttacks();
+        break;
+      }
       default:
     }
   });

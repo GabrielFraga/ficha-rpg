@@ -137,3 +137,10 @@ export function editRangeAttack(value) {
     value,
   };
 }
+
+export function selectSize(size) {
+  return {
+    type: '@size/SELECT',
+    size,
+  };
+}
