@@ -16,7 +16,7 @@ export const Column = styled.View`
   flex-direction: column;
 `;
 
-export const FlexdCol5 = styled.View`
+export const FlexCol5 = styled.View`
   flex: 1;
   flex-basis: 20%;
 `;

@@ -16,11 +16,10 @@ import {
   Label,
   InputBox,
   FirstLine,
-  FixedSizedLabel,
   FlexCol4,
 } from '../../components/Global/styles';
 
-import { NoFlexInputBox } from './styles';
+import { NoFlexInputBox, FixedSizedLabel } from './styles';
 
 export default function Combat() {
   return (
@@ -42,77 +41,61 @@ export default function Combat() {
         <Section>
           <Title>Ataques Básicos</Title>
           <Row>
-            <FirstLine />
-            <FixedSizedLabel>Teste</FixedSizedLabel>
+            <FlexCol4>
+              <FixedSizedLabel />
 
-            <FixedSizedLabel>BBA</FixedSizedLabel>
-
-            <FixedSizedLabel>Hab.</FixedSizedLabel>
-
-            <FixedSizedLabel>Tam.</FixedSizedLabel>
-
-            <FixedSizedLabel>Outros</FixedSizedLabel>
-          </Row>
-          <Row>
-            <FixedSizedLabel>Corpo a Corpo</FixedSizedLabel>
-            <InputBox editable={false}>10</InputBox>
-            <InputBox editable={false}>10</InputBox>
-            <InputBox editable={false}>10</InputBox>
-            <InputBox editable={false}>10</InputBox>
-          </Row>
-          <Row>
-            <FixedSizedLabel>À Distância</FixedSizedLabel>
-            <InputBox editable={false}>10</InputBox>
-            <InputBox editable={false}>10</InputBox>
-            <InputBox editable={false}>10</InputBox>
-            <InputBox editable={false}>10</InputBox>
+              <FixedSizedLabel>Total</FixedSizedLabel>
+              <FixedSizedLabel>BBA</FixedSizedLabel>
+              <FixedSizedLabel>Hab.</FixedSizedLabel>
+              <FixedSizedLabel>Tam.</FixedSizedLabel>
+              <FixedSizedLabel>Outros</FixedSizedLabel>
+            </FlexCol4>
+            <FlexCol4>
+              <FixedSizedLabel>Corpo a Corpo</FixedSizedLabel>
+              <InputBox editable={false}>10</InputBox>
+              <InputBox editable={false}>10</InputBox>
+              <InputBox editable={false}>10</InputBox>
+              <InputBox editable={false}>10</InputBox>
+              <InputBox editable>10</InputBox>
+            </FlexCol4>
+            <FlexCol4>
+              <FixedSizedLabel>À Distância</FixedSizedLabel>
+              <InputBox editable={false}>10</InputBox>
+              <InputBox editable={false}>10</InputBox>
+              <InputBox editable={false}>10</InputBox>
+              <InputBox editable={false}>10</InputBox>
+              <InputBox editable>10</InputBox>
+            </FlexCol4>
           </Row>
         </Section>
 
         <Section>
           <Title>Classe de Armadura</Title>
-          <Row
-            style={{
-              flexWrap: 'wrap',
-            }}>
-            <FlexCol4>
-              <Label>Total</Label>
-              <NoFlexInputBox editable={false}>10</NoFlexInputBox>
-            </FlexCol4>
 
+          <Row>
             <FlexCol4>
-              <Label>Base</Label>
-              <NoFlexInputBox editable={false}>10</NoFlexInputBox>
+              <FixedSizedLabel>Total</FixedSizedLabel>
+              <FixedSizedLabel>Base</FixedSizedLabel>
+              <FixedSizedLabel>Nível / 2</FixedSizedLabel>
+              <FixedSizedLabel>Des.</FixedSizedLabel>
             </FlexCol4>
-
             <FlexCol4>
-              <Label>Nível / 2</Label>
-              <NoFlexInputBox editable={false}>10</NoFlexInputBox>
+              <InputBox editable={false}>10</InputBox>
+              <InputBox editable={false}>10</InputBox>
+              <InputBox editable={false}>10</InputBox>
+              <InputBox editable={false}>10</InputBox>
             </FlexCol4>
-
             <FlexCol4>
-              <Label>Des.</Label>
-              <NoFlexInputBox editable={false}>10</NoFlexInputBox>
+              <FixedSizedLabel>Arm.</FixedSizedLabel>
+              <FixedSizedLabel>Mod.</FixedSizedLabel>
+              <FixedSizedLabel>Tam.</FixedSizedLabel>
+              <FixedSizedLabel>Outros</FixedSizedLabel>
             </FlexCol4>
-
             <FlexCol4>
-              <Label>Arm.</Label>
-              <NoFlexInputBox editable={false}>10</NoFlexInputBox>
-            </FlexCol4>
-
-            <FlexCol4>
-              <Label>Mod.</Label>
-              <NoFlexInputBox editable={false}>10</NoFlexInputBox>
-            </FlexCol4>
-
-            <FlexCol4>
-              <Label>Tam.</Label>
-              <NoFlexInputBox editable={false}>10</NoFlexInputBox>
-            </FlexCol4>
-
-            <FlexCol4>
-              <Label>Outros</Label>
-              <NoFlexInputBox editable={false}>10</NoFlexInputBox>
+              <InputBox editable={false}>10</InputBox>
+              <InputBox editable={false}>10</InputBox>
+              <InputBox editable={false}>10</InputBox>
+              <InputBox editable={false}>10</InputBox>
             </FlexCol4>
           </Row>
         </Section>

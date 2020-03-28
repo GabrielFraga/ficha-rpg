@@ -22,6 +22,30 @@ const INITIAL_STATE = {
       bba: 0,
     },
   ],
+  combat: [
+    { damageReduction: 0 },
+    { actionPoints: 0 },
+    {
+      basicAttacks: {
+        total: 0,
+        bba: 0,
+        habilities: 0,
+        size: 0,
+      },
+    },
+    {
+      armorClass: {
+        total: 0,
+        base: 0,
+        halfLevel: 0,
+        reaction: 0,
+        armor: 0,
+        modificator: 0,
+        size: 0,
+        others: 0,
+      },
+    },
+  ],
   lifePoints: {
     total: 0,
     epic: 0,
@@ -61,7 +85,6 @@ const INITIAL_STATE = {
       habilityName: 'Sabedoria',
     },
   ],
-
   bba: 0,
   habilities: [
     {
