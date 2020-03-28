@@ -22,30 +22,26 @@ const INITIAL_STATE = {
       bba: 0,
     },
   ],
-  combat: [
-    { damageReduction: 0 },
-    { actionPoints: 0 },
-    {
-      basicAttacks: {
-        total: 0,
-        bba: 0,
-        habilities: 0,
-        size: 0,
-      },
+  combat: {
+    damageReduction: 0,
+    actionPoints: 0,
+    basicAttacks: {
+      total: 0,
+      bba: 0,
+      habilities: 0,
+      size: 0,
     },
-    {
-      armorClass: {
-        total: 0,
-        base: 0,
-        halfLevel: 0,
-        reaction: 0,
-        armor: 0,
-        modificator: 0,
-        size: 0,
-        others: 0,
-      },
+    armorClass: {
+      total: 0,
+      base: 0,
+      halfLevel: 0,
+      reaction: 0,
+      armor: 0,
+      modificator: 0,
+      size: 0,
+      others: 0,
     },
-  ],
+  },
   lifePoints: {
     total: 0,
     epic: 0,
@@ -532,6 +528,22 @@ export default function editProfile(state = INITIAL_STATE, action) {
         resistance.other = value;
 
         calcResistances();
+        break;
+      }
+
+      case '@combat/EDIT_DAMAGE_REDUCTION': {
+        const { value } = action;
+
+        draft.combat.damageReduction = value;
+
+        break;
+      }
+
+      case '@combat/EDIT_ACTION_POINTS': {
+        const { value } = action;
+
+        draft.combat.actionPoints = value;
+
         break;
       }
 

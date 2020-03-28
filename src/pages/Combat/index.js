@@ -1,12 +1,12 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
 
-// import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-// import {
-//   editOtherFieldLevel,
-//   editOhterFieldResitence,
-// } from '../../store/modules/profile/actions';
+import {
+  editDamageReduction,
+  editActionPoints,
+} from '../../store/modules/profile/actions';
 
 import {
   Container,
@@ -15,13 +15,27 @@ import {
   Title,
   Label,
   InputBox,
-  FirstLine,
   FlexCol4,
 } from '../../components/Global/styles';
 
-import { NoFlexInputBox, FixedSizedLabel } from './styles';
+import { FixedSizedLabel } from './styles';
 
 export default function Combat() {
+  const dispatch = useDispatch();
+
+  const damageReduction = useSelector(
+    state => state.profile.combat.damageReduction,
+  );
+  const actionPoints = useSelector(state => state.profile.combat.actionPoints);
+
+  function handleDamageReduction(value) {
+    dispatch(editDamageReduction(Number(value)));
+  }
+
+  function handleActionPoints(value) {
+    dispatch(editActionPoints(Number(value)));
+  }
+
   return (
     <Container>
       <ScrollView>
@@ -29,11 +43,15 @@ export default function Combat() {
           <Row>
             <FlexCol4>
               <Label>Redução de dano</Label>
-              <InputBox editable>0</InputBox>
+              <InputBox editable onChangeText={handleDamageReduction}>
+                {damageReduction}
+              </InputBox>
             </FlexCol4>
             <FlexCol4>
               <Label>Pontos de ação</Label>
-              <InputBox editable>0</InputBox>
+              <InputBox editable onChangeText={handleActionPoints}>
+                {actionPoints}
+              </InputBox>
             </FlexCol4>
           </Row>
         </Section>

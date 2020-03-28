@@ -109,3 +109,17 @@ export function editOhterFieldResitence(id, value) {
     value,
   };
 }
+
+export function editDamageReduction(value) {
+  return {
+    type: '@combat/EDIT_DAMAGE_REDUCTION',
+    value,
+  };
+}
+
+export function editActionPoints(value) {
+  return {
+    type: '@combat/EDIT_ACTION_POINTS',
+    value,
+  };
+}
