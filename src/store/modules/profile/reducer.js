@@ -464,6 +464,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
           value: level,
           experiencePoints: xp,
         };
+
         calcLifePoints();
         calcResistances();
         calcBasicAttacks();
@@ -521,6 +522,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
         caracterClass.name = name;
         caracterClass.lifePointsEachLevel = lifePointsEachLevel;
         caracterClass.trainedExpertise = trainedExpertise;
+
         calcBBA(caracterClass);
         calcLifePoints();
         calcResistances();

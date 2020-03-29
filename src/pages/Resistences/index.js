@@ -10,11 +10,11 @@ import {
   Title,
   Label,
   InputBox,
-  FixedSizedLabel,
-  FirstLine,
   FlexCol5,
-  Column,
+  FlexCol4,
 } from '../../components/Global/styles';
+
+import { FixedSizedLabel } from './styles';
 
 import {
   editOtherFieldLevel,
@@ -102,31 +102,32 @@ export default function Resistences() {
 
           <Title>Resistências</Title>
           <Row>
-            <FirstLine />
-            <FixedSizedLabel>Total</FixedSizedLabel>
-            <FixedSizedLabel>Nível / 2</FixedSizedLabel>
-            <FixedSizedLabel>Hab</FixedSizedLabel>
-            <FixedSizedLabel>Outros</FixedSizedLabel>
+            <FlexCol4>
+              <FixedSizedLabel />
+              <FixedSizedLabel>Total</FixedSizedLabel>
+              <FixedSizedLabel>Nível / 2</FixedSizedLabel>
+              <FixedSizedLabel>Habilidade</FixedSizedLabel>
+              <FixedSizedLabel>Outros</FixedSizedLabel>
+            </FlexCol4>
+            {resistances.map(item => {
+              return (
+                <FlexCol4 key={item.id}>
+                  <FixedSizedLabel>
+                    {getResistenceName(item.habilityName)}
+                  </FixedSizedLabel>
+                  <InputBox editable={false}>{item.total}</InputBox>
+                  <InputBox editable={false}>{item.half_level}</InputBox>
+                  <InputBox editable={false}>{item.hability}</InputBox>
+                  <InputBox
+                    keyboard="numeric"
+                    editable
+                    onChangeText={e => handleOtherResistence(item.id, e)}>
+                    {item.other}
+                  </InputBox>
+                </FlexCol4>
+              );
+            })}
           </Row>
-
-          {resistances.map(item => {
-            return (
-              <Row key={item.id}>
-                <FixedSizedLabel>
-                  {getResistenceName(item.habilityName)}
-                </FixedSizedLabel>
-                <InputBox editable={false}>{item.total}</InputBox>
-                <InputBox editable={false}>{item.half_level}</InputBox>
-                <InputBox editable={false}>{item.hability}</InputBox>
-                <InputBox
-                  keyboard="numeric"
-                  editable
-                  onChangeText={e => handleOtherResistence(item.id, e)}>
-                  {item.other}
-                </InputBox>
-              </Row>
-            );
-          })}
         </Section>
       </ScrollView>
     </Container>
