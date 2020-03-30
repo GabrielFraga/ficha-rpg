@@ -76,11 +76,10 @@ export default function Combat() {
           <Row>
             <FlexCol4>
               <FixedSizedLabel />
-
               <FixedSizedLabel>Total</FixedSizedLabel>
               <FixedSizedLabel>BBA</FixedSizedLabel>
-              <FixedSizedLabel>Hab.</FixedSizedLabel>
-              <FixedSizedLabel>Tam.</FixedSizedLabel>
+              <FixedSizedLabel>Habilidade</FixedSizedLabel>
+              <FixedSizedLabel>Tamanho</FixedSizedLabel>
               <FixedSizedLabel>Outros</FixedSizedLabel>
             </FlexCol4>
             <FlexCol4>
@@ -118,29 +117,25 @@ export default function Combat() {
           <Row>
             <FlexCol4>
               <FixedSizedLabel>Total</FixedSizedLabel>
+              <InputBox editable={false}>10</InputBox>
+            </FlexCol4>
+            <FlexCol4>
               <FixedSizedLabel>Base</FixedSizedLabel>
-              <FixedSizedLabel>Nível / 2</FixedSizedLabel>
-              <FixedSizedLabel>Des.</FixedSizedLabel>
-            </FlexCol4>
-            <FlexCol4>
-              <InputBox editable={false}>10</InputBox>
-              <InputBox editable={false}>10</InputBox>
-              <InputBox editable={false}>10</InputBox>
-              <InputBox editable={false}>10</InputBox>
-            </FlexCol4>
-            <FlexCol4>
-              <FixedSizedLabel>Arm.</FixedSizedLabel>
-              <FixedSizedLabel>Mod.</FixedSizedLabel>
-              <FixedSizedLabel>Tam.</FixedSizedLabel>
-              <FixedSizedLabel>Outros</FixedSizedLabel>
-            </FlexCol4>
-            <FlexCol4>
-              <InputBox editable={false}>10</InputBox>
-              <InputBox editable={false}>10</InputBox>
-              <InputBox editable={false}>10</InputBox>
               <InputBox editable={false}>10</InputBox>
             </FlexCol4>
           </Row>
+          <FixedSizedLabel>Nível / 2</FixedSizedLabel>
+          <InputBox editable={false}>10</InputBox>
+          <FixedSizedLabel>Destreza</FixedSizedLabel>
+          <InputBox editable={false}>10</InputBox>
+          <FixedSizedLabel>Armadura</FixedSizedLabel>
+          <InputBox editable={false}>10</InputBox>
+          <FixedSizedLabel>Modelo</FixedSizedLabel>
+          <InputBox editable={false}>10</InputBox>
+          <FixedSizedLabel>Tamanho</FixedSizedLabel>
+          <InputBox editable={false}>10</InputBox>
+          <FixedSizedLabel>Outros</FixedSizedLabel>
+          <InputBox editable={false}>10</InputBox>
         </Section>
       </ScrollView>
     </Container>

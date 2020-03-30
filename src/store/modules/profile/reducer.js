@@ -1,6 +1,3 @@
-// TODO: Implementar modificadores de tamanho. Conforme explicado em
-// https://tsrd.fandom.com/pt-br/wiki/Combate na seção "Tamanho de Criaturas"
-
 // TODO: Implementar Classes de Prestígio
 
 import produce from 'immer';
@@ -54,11 +51,11 @@ const INITIAL_STATE = {
     },
     armorClass: {
       total: 0,
-      base: 0,
+      base: 10,
       halfLevel: 0,
       reaction: 0,
       armor: 0,
-      modificator: 0,
+      model: 0,
       size: 0,
       others: 0,
     },
@@ -273,12 +270,21 @@ export default function editProfile(state = INITIAL_STATE, action) {
       const hability = draft.habilities[index];
       return hability.mod;
     }
-    function calcResistances() {
-      const halfLevelValue = Math.trunc(draft.level.value / 2);
 
+    function getHalfLevelNumber() {
+      const halfLevel = Math.trunc(draft.level.value / 2);
+      return halfLevel;
+    }
+
+    function getSizeBonus() {
+      const sizeBonus = draft.size.combatBonus;
+      return sizeBonus;
+    }
+
+    function calcResistances() {
       draft.resistances.forEach(item => {
         item.hability = getHabilityModificator(item.habilityName);
-        item.half_level = halfLevelValue;
+        item.half_level = getHalfLevelNumber();
         item.total = item.half_level + item.hability + item.class + item.other;
       });
     }
@@ -292,10 +298,27 @@ export default function editProfile(state = INITIAL_STATE, action) {
       const { basicAttacks } = draft.combat;
 
       Object.values(basicAttacks).forEach(item => {
-        item.size = draft.size.combatBonus;
+        item.size = getSizeBonus();
         item.bba = draft.bba;
         item.total = item.bba + item.habilities + item.size + item.other;
       });
+    }
+
+    function sumObjectValues(object) {
+      const sum = Object.values(object).reduce((x, y) => x + y, 0);
+      return sum;
+    }
+
+    function calcArmorClass() {
+      const { armorClass } = draft.combat;
+
+      armorClass.model = 0;
+      armorClass.armor = 0;
+      armorClass.total = 0;
+      armorClass.size = getSizeBonus();
+      armorClass.reaction = getHabilityModificator('Destreza');
+      armorClass.halfLevel = getHalfLevelNumber();
+      armorClass.total = sumObjectValues(armorClass);
     }
 
     switch (action.type) {
@@ -306,9 +329,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         const hability = draft.habilities[habilityIndex];
 
-        const totalValue =
-          value +
-          Object.values(hability.modificators).reduce((x, y) => x + y, 0);
+        const totalValue = value + sumObjectValues(hability.modificators);
 
         const modificator = checkModificator(totalValue);
 
@@ -318,6 +339,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         calcLifePoints();
         calcResistances();
+        calcArmorClass();
         calcBasicAttacks();
         break;
       }
@@ -331,8 +353,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
         hability.modificators.othersMod = value;
 
         const totalValue =
-          hability.initialValue +
-          Object.values(hability.modificators).reduce((x, y) => x + y, 0);
+          hability.initialValue + sumObjectValues(hability.modificators);
 
         const modificator = checkModificator(totalValue);
 
@@ -341,6 +362,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         calcLifePoints();
         calcResistances();
+        calcArmorClass();
         calcBasicAttacks();
         break;
       }
@@ -406,8 +428,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
             0,
           );
           const totalValue =
-            element.initialValue +
-            Object.values(element.modificators).reduce((x, y) => x + y, 0);
+            element.initialValue + sumObjectValues(element.modificators);
 
           const modificator = checkModificator(totalValue);
 
@@ -417,6 +438,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         calcLifePoints();
         calcResistances();
+        calcArmorClass();
         calcBasicAttacks();
         break;
       }
@@ -435,8 +457,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
           element.modificators.raceMod = race.habilities[i].value;
 
           const totalValue =
-            element.initialValue +
-            Object.values(element.modificators).reduce((x, y) => x + y, 0);
+            element.initialValue + sumObjectValues(element.modificators);
 
           const modificator = checkModificator(totalValue);
 
@@ -446,6 +467,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         calcLifePoints();
         calcResistances();
+        calcArmorClass();
         calcBasicAttacks();
         break;
       }
@@ -467,6 +489,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         calcLifePoints();
         calcResistances();
+        calcArmorClass();
         calcBasicAttacks();
 
         break;
@@ -526,6 +549,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
         calcBBA(caracterClass);
         calcLifePoints();
         calcResistances();
+        calcArmorClass();
         calcBasicAttacks();
 
         break;
@@ -542,6 +566,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
         calcBBA(caracterClass);
         calcLifePoints();
         calcResistances();
+        calcArmorClass();
         calcBasicAttacks();
 
         break;
@@ -557,6 +582,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
 
         calcLifePoints();
         calcResistances();
+        calcArmorClass();
         calcBasicAttacks();
 
         break;
@@ -572,6 +598,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
         resistance.other = value;
 
         calcResistances();
+        calcArmorClass();
         calcBasicAttacks();
         break;
       }
