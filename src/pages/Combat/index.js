@@ -8,6 +8,7 @@ import {
   editActionPoints,
   editMeleeAttack,
   editRangeAttack,
+  editArmorClas,
 } from '../../store/modules/profile/actions';
 
 import {
@@ -18,6 +19,7 @@ import {
   Label,
   InputBox,
   FlexCol4,
+  FlexCol2,
 } from '../../components/Global/styles';
 
 import { FixedSizedLabel } from './styles';
@@ -35,6 +37,8 @@ export default function Combat() {
 
   const range = useSelector(state => state.profile.combat.basicAttacks.range);
 
+  const armorClass = useSelector(state => state.profile.combat.armorClass);
+
   function handleDamageReduction(value) {
     dispatch(editDamageReduction(Number(value)));
   }
@@ -49,6 +53,33 @@ export default function Combat() {
 
   function handleRangeAttack(value) {
     dispatch(editRangeAttack(Number(value)));
+  }
+
+  function handleArmorClass(value) {
+    dispatch(editArmorClas(Number(value)));
+  }
+
+  function translateLabels(label) {
+    switch (label) {
+      case 'total':
+        return 'Total';
+      case 'base':
+        return 'Base';
+      case 'halfLevel':
+        return 'Nível / 2';
+      case 'reaction':
+        return 'Destreza';
+      case 'size':
+        return 'Armadura/Escudo';
+      case 'armor':
+        return 'Modelo';
+      case 'model':
+        return 'Tamanho';
+      case 'others':
+        return 'Outros';
+      default:
+        return '';
+    }
   }
 
   return (
@@ -114,28 +145,23 @@ export default function Combat() {
         <Section>
           <Title>Classe de Armadura</Title>
 
-          <Row>
-            <FlexCol4>
-              <FixedSizedLabel>Total</FixedSizedLabel>
-              <InputBox editable={false}>10</InputBox>
-            </FlexCol4>
-            <FlexCol4>
-              <FixedSizedLabel>Base</FixedSizedLabel>
-              <InputBox editable={false}>10</InputBox>
-            </FlexCol4>
+          <Row
+            style={{
+              flexWrap: 'wrap',
+            }}>
+            {Object.entries(armorClass).map(([key, value]) => {
+              return (
+                <FlexCol2 key={key}>
+                  <Label>{translateLabels(key)}</Label>
+                  <InputBox
+                    editable={key === 'others'}
+                    onChangeText={handleArmorClass}>
+                    {value}
+                  </InputBox>
+                </FlexCol2>
+              );
+            })}
           </Row>
-          <FixedSizedLabel>Nível / 2</FixedSizedLabel>
-          <InputBox editable={false}>10</InputBox>
-          <FixedSizedLabel>Destreza</FixedSizedLabel>
-          <InputBox editable={false}>10</InputBox>
-          <FixedSizedLabel>Armadura</FixedSizedLabel>
-          <InputBox editable={false}>10</InputBox>
-          <FixedSizedLabel>Modelo</FixedSizedLabel>
-          <InputBox editable={false}>10</InputBox>
-          <FixedSizedLabel>Tamanho</FixedSizedLabel>
-          <InputBox editable={false}>10</InputBox>
-          <FixedSizedLabel>Outros</FixedSizedLabel>
-          <InputBox editable={false}>10</InputBox>
         </Section>
       </ScrollView>
     </Container>

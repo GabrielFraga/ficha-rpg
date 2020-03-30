@@ -26,6 +26,12 @@ export const FlexCol4 = styled.View`
   flex-basis: 25%;
 `;
 
+export const FlexCol2 = styled.View`
+  flex: 1;
+  flex-basis: 50%;
+  height: 80px;
+`;
+
 export const Section = styled.View`
   margin-bottom: 25px;
 `;

@@ -138,6 +138,13 @@ export function editRangeAttack(value) {
   };
 }
 
+export function editArmorClas(value) {
+  return {
+    type: '@armor/EDIT_CLASS',
+    value,
+  };
+}
+
 export function selectSize(size) {
   return {
     type: '@size/SELECT',

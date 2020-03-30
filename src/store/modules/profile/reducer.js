@@ -626,11 +626,20 @@ export default function editProfile(state = INITIAL_STATE, action) {
         calcBasicAttacks();
         break;
       }
+
       case '@combat/EDIT_RANGE': {
         const { value } = action;
 
         draft.combat.basicAttacks.range.other = value;
         calcBasicAttacks();
+        break;
+      }
+
+      case '@armor/EDIT_CLASS': {
+        const { value } = action;
+
+        draft.combat.armorClass.others = value;
+        calcArmorClass();
         break;
       }
 
@@ -641,6 +650,7 @@ export default function editProfile(state = INITIAL_STATE, action) {
         calcBasicAttacks();
         break;
       }
+
       default:
     }
   });
